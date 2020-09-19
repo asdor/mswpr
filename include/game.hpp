@@ -7,7 +7,7 @@
 #include "minefield.hpp"
 #include "texture_manager.hpp"
 
-namespace minesweeper
+namespace mswpr
 {
 
 class game
@@ -27,15 +27,15 @@ public:
     }
 
 private:
-    minesweeper::sdl_init_t sdl_init_;
-    minesweeper::sdl_window_t window_;
-    minesweeper::sdl_renderer_t renderer_;
+    mswpr::sdl_init_t sdl_init_;
+    mswpr::sdl_window_t window_;
+    mswpr::sdl_renderer_t renderer_;
 
     bool is_running_;
-    minesweeper::texture_manager texture_manager_;
-    minesweeper::minefield minefield_;
+    mswpr::texture_manager texture_manager_;
+    mswpr::minefield minefield_;
 };
 
-} // namespace minesweeper
+} // namespace mswpr
 
 #endif // MSWPR_GAME_HPP

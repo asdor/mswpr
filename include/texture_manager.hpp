@@ -9,22 +9,22 @@
 
 #include <SDL.h>
 
-namespace minesweeper
+namespace mswpr
 {
 class texture_manager
 {
 public:
     texture_manager();
-    void init(minesweeper::sdl_renderer_t renderer, std::string_view texture_path);
-    void draw(minesweeper::sprite_type, SDL_Rect dst);
+    void init(mswpr::sdl_renderer_t renderer, std::string_view texture_path);
+    void draw(mswpr::sprite_type, SDL_Rect dst);
 
 private:
-    static minesweeper::sdl_texture_t load_texture(minesweeper::sdl_renderer_t renderer, std::string_view path);
+    static mswpr::sdl_texture_t load_texture(mswpr::sdl_renderer_t renderer, std::string_view path);
 
-    std::array<SDL_Rect, minesweeper::SPRITES_COUNT> sprites_config_;
-    minesweeper::sdl_texture_t texture_;
-    minesweeper::sdl_renderer_t renderer_;
+    std::array<SDL_Rect, mswpr::SPRITES_COUNT> sprites_config_;
+    mswpr::sdl_texture_t texture_;
+    mswpr::sdl_renderer_t renderer_;
 };
-} // namespace minesweeper
+} // namespace mswpr
 
 #endif // MSWP_TEXTURE_MANAGER_HPP

@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 
-namespace minesweeper
+namespace mswpr
 {
 class sdl_init_t
 {
@@ -27,6 +27,6 @@ using sdl_window_t = std::unique_ptr<SDL_Window, sdl_deleter>;
 using sdl_renderer_t = std::shared_ptr<SDL_Renderer>;
 
 
-} // namespace minesweeper
+} // namespace mswpr
 
 #endif // MSWPR_SDL_HELPER_HPP

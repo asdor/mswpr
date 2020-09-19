@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace minesweeper
+namespace mswpr
 {
 enum class sprite_type : size_t
 {
@@ -43,6 +43,6 @@ constexpr E to_enum(From value)
     return static_cast<E>(value);
 }
 
-} // namespace minesweeper
+} // namespace mswpr
 
 #endif // MSWPR_TYPES_HPP

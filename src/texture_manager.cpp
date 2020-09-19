@@ -5,19 +5,19 @@
 
 namespace
 {
-constexpr size_t to_index(minesweeper::sprite_type type)
+constexpr size_t to_index(mswpr::sprite_type type)
 {
     return static_cast<size_t>(type);
 }
 } // namespace
 
-namespace minesweeper
+namespace mswpr
 {
 texture_manager::texture_manager()
 {
 }
 
-void texture_manager::init(minesweeper::sdl_renderer_t renderer, std::string_view texture_path)
+void texture_manager::init(mswpr::sdl_renderer_t renderer, std::string_view texture_path)
 {
     renderer_ = renderer;
     texture_ = load_texture(renderer_, texture_path);
@@ -46,9 +46,9 @@ void texture_manager::draw(sprite_type sprite, SDL_Rect dst)
     SDL_RenderCopy(renderer_.get(), texture_.get(), &sprites_config_[index], &dst);
 }
 
-minesweeper::sdl_texture_t texture_manager::load_texture(minesweeper::sdl_renderer_t renderer, std::string_view path)
+mswpr::sdl_texture_t texture_manager::load_texture(mswpr::sdl_renderer_t renderer, std::string_view path)
 {
-    minesweeper::sdl_texture_t texture(IMG_LoadTexture(renderer.get(), path.data()), minesweeper::sdl_deleter{});
+    mswpr::sdl_texture_t texture(IMG_LoadTexture(renderer.get(), path.data()), mswpr::sdl_deleter{});
     if (!texture)
     {
         const std::string err = "Failed to open " + std::string(path);
@@ -58,4 +58,4 @@ minesweeper::sdl_texture_t texture_manager::load_texture(minesweeper::sdl_render
     return texture;
 }
 
-} // namespace minesweeper
+} // namespace mswpr

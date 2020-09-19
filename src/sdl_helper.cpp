@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-namespace minesweeper
+namespace mswpr
 {
 // class sdl_init
 
@@ -17,7 +17,7 @@ bool sdl_init_t::is_init() const
     return SDL_WasInit(SDL_INIT_EVERYTHING);
 }
 
-minesweeper::sdl_init_t::~sdl_init_t()
+mswpr::sdl_init_t::~sdl_init_t()
 {
     SDL_Log("Cleaning up SDL");
     SDL_Quit();
@@ -42,4 +42,4 @@ void sdl_deleter::operator()(SDL_Renderer* ren) const
     SDL_Log("dtor: SDL_Renderer\n");
     SDL_DestroyRenderer(ren);
 }
-} // namespace minesweeper
+} // namespace mswpr

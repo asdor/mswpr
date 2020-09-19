@@ -55,7 +55,7 @@ int main()
     static constexpr int screen_width = 800;
     static constexpr int screen_height = 640;
 
-    minesweeper::game game("Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height);
+    mswpr::game game("mswpr", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height);
 
     while (game.running())
     {
@@ -73,7 +73,7 @@ int main()
 //     static constexpr int screen_height = 640;
 //     // static constexpr size_t FPS = 60;
 //     // static constexpr size_t frame_delay = 1000 / FPS;
-//     auto window = SDL_CreateWindow("Minesweeper", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, 0);
+//     auto window = SDL_CreateWindow("mswpr", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, screen_width, screen_height, 0);
 //     if (!window)
 //     {
 //         SDL_Log("Unable to create SDL_window: %s", SDL_GetError());

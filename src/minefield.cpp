@@ -4,16 +4,16 @@
 
 namespace
 {
-constexpr minesweeper::sprite_type to_sprite(minesweeper::cell_value value)
+constexpr mswpr::sprite_type to_sprite(mswpr::cell_value value)
 {
-    const size_t index = minesweeper::enum_to<size_t>(value);
-    constexpr size_t empty_index = minesweeper::enum_to<size_t>(minesweeper::sprite_type::EMPTY_OPENED);
-    return minesweeper::to_enum<minesweeper::sprite_type>(empty_index + index);
+    const size_t index = mswpr::enum_to<size_t>(value);
+    constexpr size_t empty_index = mswpr::enum_to<size_t>(mswpr::sprite_type::EMPTY_OPENED);
+    return mswpr::to_enum<mswpr::sprite_type>(empty_index + index);
 }
 
 } // namespace
 
-namespace minesweeper
+namespace mswpr
 {
 minefield::minefield(size_t width, size_t height)
     : width_(width), height_(height), field_(width_ * height_, {cell_value::EMPTY, cell_state::CLOSED})
@@ -65,13 +65,7 @@ void minefield::generate()
     elem.state = cell_state::OPENED;
     field_[5 * width_ + 4].state = cell_state::OPENED;
     for (size_t i = 0; i < 9; ++i)
-    {
         field_[4 * width_ + i].value = to_enum<cell_value>(i);
-    }
-
-    field_[4 * width_ + 3].state = cell_state::OPENED;
-    field_[4 * width_ + 4].state = cell_state::OPENED;
-    field_.back().state = cell_state::OPENED;
 }
 
 void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
@@ -102,4 +96,4 @@ void minefield::on_right_click(size_t mouse_x, size_t mouse_y)
         elem.state = cell_state::CLOSED;
 }
 
-} // namespace minesweeper
+} // namespace mswpr

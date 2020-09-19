@@ -3,7 +3,7 @@
 
 #include "game.hpp"
 
-namespace minesweeper
+namespace mswpr
 {
 
 constexpr size_t field_width = 9;
@@ -22,7 +22,7 @@ game::game(std::string_view title, size_t xpos, size_t ypos, size_t width, size_
 
     SDL_Log("Window created!\n");
 
-    renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), minesweeper::sdl_deleter{});
+    renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), mswpr::sdl_deleter{});
     if (!renderer_)
     {
         SDL_Log("Unable to create SDL_Renderer: %s", SDL_GetError());
@@ -92,17 +92,8 @@ void game::render()
     SDL_RenderClear(renderer_.get());
 
     minefield_.render(texture_manager_);
-    // texture_manager_.draw(minesweeper::sprite_type::EMPTY, {0, 0, 32, 32});
-    // texture_manager_.draw(minesweeper::sprite_type::EMPTY_PRESSED, {32, 0, 32, 32});
-
-    // for (size_t i = 0; i < minesweeper::SPRITES_COUNT; ++i)
-    // {
-    //     minesweeper::sprite_type type = static_cast<minesweeper::sprite_type>(i);
-    //     texture_manager_.draw(type, {int(i * 32), 0, 32, 32});
-    // }
-
 
     SDL_RenderPresent(renderer_.get());
 }
 
-} // namespace minesweeper
+} // namespace mswpr

@@ -4,7 +4,7 @@
 #include <vector>
 #include <type_traits>
 
-namespace minesweeper
+namespace mswpr
 {
 class texture_manager;
 
@@ -57,6 +57,6 @@ private:
     std::vector<cell> field_;
 };
 
-} // namespace minesweeper
+} // namespace mswpr
 
 #endif // MSWPR_MINEFIELD_HPP
