@@ -21,11 +21,11 @@ void texture_manager::init(minesweeper::sdl_renderer_t renderer, std::string_vie
 {
     renderer_ = renderer;
     texture_ = load_texture(renderer_, texture_path);
-    sprites_config_[to_index(sprite_type::EMPTY)] = {0, 0, 16, 16};
-    sprites_config_[to_index(sprite_type::EMPTY_PRESSED)] = {16, 0, 16, 16};
+    sprites_config_[to_index(sprite_type::EMPTY_CLOSED)] = {0, 0, 16, 16};
+    sprites_config_[to_index(sprite_type::EMPTY_OPENED)] = {16, 0, 16, 16};
     sprites_config_[to_index(sprite_type::FLAG)] = {32, 0, 16, 16};
     sprites_config_[to_index(sprite_type::QUESTION)] = {48, 0, 16, 16};
-    sprites_config_[to_index(sprite_type::QUESTION_PRESSED)] = {64, 0, 16, 16};
+    sprites_config_[to_index(sprite_type::QUESTION_OPENED)] = {64, 0, 16, 16};
     sprites_config_[to_index(sprite_type::BOMB)] = {80, 0, 16, 16};
     sprites_config_[to_index(sprite_type::BOMB_RED)] = {96, 0, 16, 16};
     sprites_config_[to_index(sprite_type::BOMB_FAILED)] = {112, 0, 16, 16};

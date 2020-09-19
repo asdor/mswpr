@@ -34,8 +34,6 @@ game::game(std::string_view title, size_t xpos, size_t ypos, size_t width, size_
 
     texture_manager_.init(renderer_, "../assets/tile.png");
     is_running_ = true;
-    // std::vector<int> vec(0, 5);
-    // vec[100500] += 1;
 }
 
 void game::handle_input()

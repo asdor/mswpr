@@ -8,10 +8,9 @@ namespace minesweeper
 {
 class texture_manager;
 
-enum class cell_state
+enum class cell_value : size_t
 {
     EMPTY = 0,
-
     ONE,
     TWO,
     THREE,
@@ -20,16 +19,20 @@ enum class cell_state
     SIX,
     SEVEN,
     EIGHT,
-
     BOMB
+};
+
+enum class cell_state
+{
+    CLOSED,
+    OPENED,
+    FLAGGED
 };
 
 struct cell
 {
+    cell_value value;
     cell_state state;
-    bool is_pressed;
-    bool is_flagged;
-
 };
 static_assert(std::is_trivial_v<cell>);
 
