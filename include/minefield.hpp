@@ -39,7 +39,7 @@ static_assert(std::is_trivial_v<cell>);
 class minefield
 {
 public:
-    minefield(size_t width, size_t height);
+    minefield(size_t width, size_t height, size_t bombs_cnt);
 
     void handle_input();
 
@@ -54,6 +54,7 @@ public:
 private:
     size_t width_;
     size_t height_;
+    size_t bombs_cnt_;
     std::vector<cell> field_;
 };
 

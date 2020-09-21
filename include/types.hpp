@@ -17,11 +17,11 @@ enum class sprite_type : size_t
     SIX,
     SEVEN,
     EIGHT,
+    BOMB,
     EMPTY_CLOSED,
     FLAG,
     QUESTION,
     QUESTION_OPENED,
-    BOMB,
     BOMB_RED,
     BOMB_FAILED
 };

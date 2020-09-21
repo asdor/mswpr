@@ -1,6 +1,10 @@
+#include <algorithm>
+#include <random>
+
 #include "minefield.hpp"
 #include "texture_manager.hpp"
 #include "types.hpp"
+
 
 namespace
 {
@@ -15,9 +19,10 @@ constexpr mswpr::sprite_type to_sprite(mswpr::cell_value value)
 
 namespace mswpr
 {
-minefield::minefield(size_t width, size_t height)
-    : width_(width), height_(height), field_(width_ * height_, {cell_value::EMPTY, cell_state::CLOSED})
+minefield::minefield(size_t width, size_t height, size_t bombs_cnt)
+    : width_(width), height_(height), bombs_cnt_(bombs_cnt), field_(width_ * height_, {cell_value::EMPTY, cell_state::CLOSED})
 {
+    generate();
 }
 
 void minefield::handle_input()
@@ -61,18 +66,49 @@ void minefield::render(texture_manager& manager)
 
 void minefield::generate()
 {
-    auto& elem = field_[5 * width_ + 3];
-    elem.state = cell_state::OPENED;
-    field_[5 * width_ + 4].state = cell_state::OPENED;
-    for (size_t i = 0; i < 9; ++i)
-        field_[4 * width_ + i].value = to_enum<cell_value>(i);
+    std::vector<size_t> coords(width_ * height_, 0);
+
+    std::iota(coords.begin(), coords.end(), 0);
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(coords.begin(), coords.end(), g);
+
+    for (size_t i = 0; i < bombs_cnt_; ++i)
+        field_[coords[i]].value = cell_value::BOMB;
+
+    static constexpr std::array<int, 8> dir_x = {-1, 0, 1, -1, 1, -1, 0, 1};
+    static constexpr std::array<int, 8> dir_y = {-1, -1, -1, 0, 0, 1, 1, 1};
+
+    const int width_i = static_cast<int>(width_);
+    const int height_i = static_cast<int>(height_);
+    for (int y = 0; y < width_i; ++y)
+    {
+        for (int x = 0; x < height_i; ++x)
+        {
+            if (field_[y * width_ + x].value == cell_value::BOMB)
+                continue;
+
+            size_t cnt = 0;
+            for (size_t i = 0; i < dir_x.size(); ++i)
+            {
+                int i_x = x - dir_x[i];
+                int i_y = y - dir_y[i];
+                if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i && field_[i_y * width_ + i_x].value == cell_value::BOMB)
+                    ++cnt;
+            }
+
+            field_[y * width_ + x].value = to_enum<cell_value>(cnt);
+        }
+    }
 }
 
 void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
 {
     const size_t x = mouse_x / 32;
     const size_t y = mouse_y / 32;
-    SDL_Log("Left mouse click at (%ld, %ld)", x, y);
+    // SDL_Log("Left mouse click at (%ld, %ld)", x, y);
     if (x >= width_ || y >= height_)
         return;
 
@@ -85,7 +121,7 @@ void minefield::on_right_click(size_t mouse_x, size_t mouse_y)
 {
     const size_t x = mouse_x / 32;
     const size_t y = mouse_y / 32;
-    SDL_Log("Right mouse click at (%ld, %ld)", x, y);
+    // SDL_Log("Right mouse click at (%ld, %ld)", x, y);
     if (x >= width_ || y >= height_)
         return;
 
