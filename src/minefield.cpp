@@ -16,6 +16,15 @@ constexpr mswpr::sprite_type to_sprite(mswpr::cell_value value)
     return mswpr::to_enum<mswpr::sprite_type>(empty_index + index);
 }
 
+constexpr size_t face_width = 48;
+constexpr size_t face_height = 48;
+
+constexpr int board_offset_x = 10;
+constexpr int board_offset_y = 50;
+constexpr size_t cell_width = 30;
+constexpr size_t cell_height = 30;
+
+
 } // namespace
 
 namespace mswpr
@@ -66,7 +75,7 @@ void minefield::render(texture_manager& manager)
         for (size_t j = 0; j < width_; ++j)
         {
             const auto item = field_[i * width_ + j];
-            const SDL_Rect dst_rect = {int(j * 32), int(i * 32), 32, 32};
+            const SDL_Rect dst_rect = {int(j * cell_width) + board_offset_x, int(i * cell_height) + board_offset_y, cell_width, cell_height};
 
             sprite_type sprite = sprite_type::EMPTY_CLOSED;
 
@@ -88,6 +97,10 @@ void minefield::render(texture_manager& manager)
             manager.draw(sprite, dst_rect);
         }
     }
+
+    const int face_x = width_ * cell_width / 2 - face_width / 2 + board_offset_x;
+    const SDL_Rect face_dst = {face_x, 0, face_width, face_height};
+    manager.draw(face_type::SMILE_CLOSED, face_dst);
 }
 
 void minefield::generate()
@@ -146,8 +159,8 @@ void minefield::generate()
 
 void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
 {
-    const size_t x = mouse_x / 32;
-    const size_t y = mouse_y / 32;
+    const size_t x = (mouse_x - board_offset_x) / cell_width;
+    const size_t y = (mouse_y - board_offset_y) / cell_height;
     // SDL_Log("Left mouse click at (%ld, %ld)", x, y);
     if (x >= width_ || y >= height_)
         return;
@@ -161,8 +174,8 @@ void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
 
 void minefield::on_right_click(size_t mouse_x, size_t mouse_y)
 {
-    const size_t x = mouse_x / 32;
-    const size_t y = mouse_y / 32;
+    const size_t x = (mouse_x - board_offset_x) / cell_width;
+    const size_t y = (mouse_y - board_offset_y) / cell_height;
     // SDL_Log("Right mouse click at (%ld, %ld)", x, y);
     if (x >= width_ || y >= height_)
         return;

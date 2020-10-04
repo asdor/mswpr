@@ -6,8 +6,8 @@
 namespace mswpr
 {
 
-constexpr size_t field_width = 8;
-constexpr size_t field_height = 8;
+constexpr size_t field_width = 9;
+constexpr size_t field_height = 9;
 constexpr size_t mines_cnt = 10;
 
 game::game(std::string_view title, size_t xpos, size_t ypos, size_t width, size_t height)
@@ -30,10 +30,10 @@ game::game(std::string_view title, size_t xpos, size_t ypos, size_t width, size_
         return;
     }
 
-    SDL_SetRenderDrawColor(renderer_.get(), 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer_.get(), 190, 190, 190, 0);
     SDL_Log("Renderer created!\n");
 
-    texture_manager_.init(renderer_, "../assets/tile.png");
+    texture_manager_.init(renderer_, "../assets/faces.png", "../assets/tile.png");
     is_running_ = true;
 }
 

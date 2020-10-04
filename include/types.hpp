@@ -28,6 +28,17 @@ enum class sprite_type : size_t
 
 inline constexpr std::size_t SPRITES_COUNT = 16;
 
+enum class face_type : size_t
+{
+    SMILE_CLOSED = 0,
+    SMILE_OPENED,
+    WAITING,
+    BOSS,
+    DEAD
+};
+
+inline constexpr std::size_t FACES_COUNT = 5;
+
 template <class T>
 concept Enumeration = std::is_enum_v<T>;
 
