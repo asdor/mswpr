@@ -33,6 +33,13 @@ struct cell
 {
     cell_value value;
     cell_state state;
+
+    bool is_empty() const;
+    bool is_bomb() const;
+
+    bool is_closed() const;
+    bool is_opened() const;
+    bool is_flagged() const;
 };
 static_assert(std::is_trivial_v<cell>);
 
@@ -51,7 +58,9 @@ public:
 
     void on_left_click(size_t x, size_t y);
     void on_right_click(size_t x, size_t y);
+    void reveal_closed(size_t x, size_t y);
 private:
+
     size_t width_;
     size_t height_;
     size_t bombs_cnt_;

@@ -39,9 +39,21 @@ game::game(std::string_view title, size_t xpos, size_t ypos, size_t width, size_
 
 void game::handle_input()
 {
-    SDL_Event event;
     bool is_released = false;
     int key = -1;
+    // int _ans = SDL_GetMouseState(&mouse_x, &mouse_y);
+    // if (_ans & SDL_BUTTON_LMASK)
+    //     SDL_Log("Left");
+    // else if (_ans & SDL_BUTTON_MMASK)
+    //     SDL_Log("Middle");
+    // else if (_ans & SDL_BUTTON_RMASK)
+    //     SDL_Log("Right");
+    // else
+    //     SDL_Log("ans: %d", _ans);
+
+    size_t cnt = 0;
+
+    SDL_Event event;
     while (SDL_PollEvent(&event))
     {
         switch (event.type)
@@ -60,14 +72,17 @@ void game::handle_input()
             }
             break;
         case SDL_MOUSEBUTTONUP:
+            // SDL_Log("SDL_MOUSEBUTTONUP");
             is_released = true;
             [[fallthrough]];
         case SDL_MOUSEBUTTONDOWN:
+            // SDL_Log("SDL_MOUSEBUTTONDOWN");
             key = event.button.button;
             break;
         default:
             break;
         }
+        SDL_Log("cnt: %ld", cnt++);
     }
 
     if (is_released)
@@ -75,7 +90,7 @@ void game::handle_input()
         int mouse_x = 0;
         int mouse_y = 0;
         SDL_GetMouseState(&mouse_x, &mouse_y);
-        // SDL_Log("(%d, %d)", mouse_x, mouse_y);
+        SDL_Log("(%d, %d)", mouse_x, mouse_y);
         if (key == SDL_BUTTON_LEFT)
             minefield_.on_left_click(mouse_x, mouse_y);
         else if (key == SDL_BUTTON_RIGHT)
