@@ -32,6 +32,8 @@ public:
         state_.emplace<T>(*this, std::forward<Ts>(args)...);
     }
 
+    void set_face(face_type face);
+
 private:
     mswpr::sdl_init_t sdl_init_;
     mswpr::sdl_window_t window_;
@@ -40,6 +42,7 @@ private:
     bool is_running_;
     mswpr::texture_manager texture_manager_;
     mswpr::minefield minefield_;
+    mswpr::face_type face_type_;
 
     using State = std::variant<generating_state, playing_state, ending_state>;
     State state_;

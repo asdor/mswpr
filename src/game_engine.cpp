@@ -1,22 +1,13 @@
 #include <SDL.h>
 
+#include "game_config.hpp"
 #include "game_engine.hpp"
-
-// #include "states/ending_state.hpp"
-// #include "states/generating_state.hpp"
-// #include "states/playing_state.hpp"
-
-namespace
-{
-constexpr size_t field_width = 9;
-constexpr size_t field_height = 9;
-constexpr size_t mines_cnt = 10;
-} // namespace anonymous
 
 namespace mswpr
 {
 game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos, size_t width, size_t height)
-    : is_running_(false), minefield_(field_width, field_height, mines_cnt),
+    : is_running_(false), minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
+      face_type_(face_type::SMILE_CLOSED),
       state_(std::in_place_type<generating_state>, *this)
 {
     const auto window_mode = 0;
@@ -110,6 +101,10 @@ void game_engine::render()
 
     minefield_.render(texture_manager_);
 
+    const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
+    const SDL_Rect face_dst = {face_x, 0, cfg::face_width, cfg::face_height};
+    texture_manager_.draw(face_type_, face_dst);
+
     SDL_RenderPresent(renderer_.get());
 }
 
@@ -117,4 +112,10 @@ void game_engine::update()
 {
 
 }
+
+void game_engine::set_face(face_type face)
+{
+    face_type_ = face;
 }
+
+} // namespace mswpr
