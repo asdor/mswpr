@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-file(GLOB GAME_SRC src/*.cpp)
+file(GLOB GAME_SRC src/*.cpp src/states/*.cpp)
 
 add_library(PROJECT_OPTIONS INTERFACE)
 include(cmake/Sanitizers.cmake)

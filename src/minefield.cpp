@@ -24,7 +24,6 @@ constexpr int board_offset_y = 50;
 constexpr size_t cell_width = 30;
 constexpr size_t cell_height = 30;
 
-
 } // namespace
 
 namespace mswpr
