@@ -16,7 +16,7 @@ namespace mswpr
 class game_engine
 {
 public:
-    game_engine(std::string_view title, size_t xpos, size_t ypos, size_t width, size_t height);
+    game_engine(std::string_view title, size_t xpos, size_t ypos);
 
     bool running() const;
 
@@ -35,9 +35,14 @@ public:
     void set_face(face_type face);
 
 private:
+    void process_click(bool is_released, int key);
+
     mswpr::sdl_init_t sdl_init_;
     mswpr::sdl_window_t window_;
     mswpr::sdl_renderer_t renderer_;
+
+    SDL_Rect face_rect_;
+    SDL_Rect field_rect_;
 
     bool is_running_;
     mswpr::texture_manager texture_manager_;

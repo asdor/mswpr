@@ -3,15 +3,30 @@
 #include "game_config.hpp"
 #include "game_engine.hpp"
 
+namespace
+{
+bool is_inside(const SDL_Rect& rect, int x, int y)
+{
+    return x >= rect.x &&
+           x < rect.x + rect.w &&
+           y >= rect.y &&
+           y < rect.y + rect.h;
+}
+
+} // namespace
+
 namespace mswpr
 {
-game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos, size_t width, size_t height)
+game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos)
     : is_running_(false), minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
       face_type_(face_type::SMILE_CLOSED),
       state_(std::in_place_type<generating_state>, *this)
 {
     const auto window_mode = 0;
-    window_.reset(SDL_CreateWindow(title.data(), xpos, ypos, width, height, window_mode));
+    const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
+    const size_t window_height = cfg::board_offset_y + cfg::board_offset_x + cfg::cell_height * cfg::field_height;
+
+    window_.reset(SDL_CreateWindow(title.data(), xpos, ypos, window_width, window_height, window_mode));
     if (!window_)
     {
         SDL_Log("Unable to create SDL_window: %s", SDL_GetError());
@@ -31,6 +46,12 @@ game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos, size_
     SDL_Log("Renderer created!\n");
 
     texture_manager_.init(renderer_, "../assets/faces.png", "../assets/tile.png");
+
+    const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
+    face_rect_ = {face_x, 0, cfg::face_width, cfg::face_height};
+
+    field_rect_ = {cfg::board_offset_x, cfg::board_offset_y, cfg::cell_width * cfg::field_width, cfg::cell_height * cfg::field_height};
+
     is_running_ = true;
 }
 
@@ -42,7 +63,7 @@ bool game_engine::running() const
 void game_engine::handle_input()
 {
     bool is_released = false;
-    [[maybe_unused]] int key = -1;
+    int key = -1;
 
     SDL_Event event;
     while (SDL_PollEvent(&event))
@@ -63,11 +84,9 @@ void game_engine::handle_input()
             }
             break;
         case SDL_MOUSEBUTTONUP:
-            // SDL_Log("SDL_MOUSEBUTTONUP");
             is_released = true;
             [[fallthrough]];
         case SDL_MOUSEBUTTONDOWN:
-            // SDL_Log("SDL_MOUSEBUTTONDOWN");
             key = event.button.button;
             break;
         default:
@@ -75,23 +94,30 @@ void game_engine::handle_input()
         }
     }
 
-    if (is_released)
+    process_click(is_released, key);
+}
+
+void game_engine::process_click(bool is_released, int key)
+{
+    int mouse_x = 0;
+    int mouse_y = 0;
+    SDL_GetMouseState(&mouse_x, &mouse_y);
+    if (key == SDL_BUTTON_LEFT)
     {
-        int mouse_x = 0;
-        int mouse_y = 0;
-        SDL_GetMouseState(&mouse_x, &mouse_y);
-        // SDL_Log("(%d, %d)", mouse_x, mouse_y);
-        if (key == SDL_BUTTON_LEFT)
+        if (is_inside(face_rect_, mouse_x, mouse_y))
         {
-            std::visit([](auto& st) {
-                st.on_left_face_click();
+            std::visit([is_released](auto& st) {
+                st.on_left_face_click(is_released);
             }, state_);
         }
-
-        // if (key == SDL_BUTTON_LEFT)
-        //     minefield_.on_left_click(mouse_x, mouse_y);
-        // else if (key == SDL_BUTTON_RIGHT)
-        //     minefield_.on_right_click(mouse_x, mouse_y);
+        else if (is_inside(field_rect_, mouse_x, mouse_y))
+        {
+            const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
+            const int y = (mouse_y - cfg::board_offset_y);
+            std::visit([is_released, x, y](auto& st) {
+                st.on_left_field_click(is_released, x, y);
+            }, state_);
+        }
     }
 }
 
@@ -101,9 +127,7 @@ void game_engine::render()
 
     minefield_.render(texture_manager_);
 
-    const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
-    const SDL_Rect face_dst = {face_x, 0, cfg::face_width, cfg::face_height};
-    texture_manager_.draw(face_type_, face_dst);
+    texture_manager_.draw(face_type_, face_rect_);
 
     SDL_RenderPresent(renderer_.get());
 }
