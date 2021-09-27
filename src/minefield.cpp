@@ -48,16 +48,26 @@ bool cell::is_flagged() const
 minefield::minefield(size_t width, size_t height, size_t bombs_cnt)
     : width_(width), height_(height), bombs_cnt_(bombs_cnt), field_(width_ * height_, {cell_value::EMPTY, cell_state::CLOSED})
 {
-    generate();
+    // generate();
 }
 
-void minefield::handle_input()
+cell& minefield::operator()(size_t x, size_t y)
 {
+    return field_[y * width_ + x];
 }
 
-void minefield::update()
+const cell& minefield::operator()(size_t x, size_t y) const
 {
+    return field_[y * width_ + x];
 }
+
+// void minefield::handle_input()
+// {
+// }
+
+// void minefield::update()
+// {
+// }
 
 void minefield::render(texture_manager& manager)
 {
@@ -90,91 +100,37 @@ void minefield::render(texture_manager& manager)
     }
 }
 
-void minefield::generate()
-{
-    // auto bomb = [this](size_t x, size_t y) {
-    //     field_[y * width_ + x].value = cell_value::BOMB;
-    // };
-    // bomb(3, 0);
-    // bomb(7, 0);
-    // bomb(2, 1);
-    // bomb(3, 1);
-    // bomb(6, 1);
-    // bomb(0, 2);
-    // bomb(6, 3);
-    // bomb(7, 4);
-    // bomb(4, 6);
-    // bomb(5, 6);
+// void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
+// {
+//     const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
+//     const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
+//     // SDL_Log("Left mouse click at (%ld, %ld)", x, y);
+//     if (x >= width_ || y >= height_)
+//         return;
 
-    std::vector<size_t> coords(width_ * height_, 0);
+//     auto& elem = field_[y * width_ + x];
+//     if (elem.is_closed() && elem.is_empty())
+//         reveal_closed(x, y);
+//     else if (elem.is_closed())
+//         elem.state = cell_state::OPENED;
+// }
 
-    std::iota(coords.begin(), coords.end(), 0);
+// void minefield::on_right_click(size_t mouse_x, size_t mouse_y)
+// {
+//     const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
+//     const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
+//     // SDL_Log("Right mouse click at (%ld, %ld)", x, y);
+//     if (x >= width_ || y >= height_)
+//         return;
 
-    std::random_device rd;
-    std::mt19937 g(rd());
+//     auto& elem = field_[y * width_ + x];
+//     if (elem.is_closed())
+//         elem.state = cell_state::FLAGGED;
+//     else if (elem.is_flagged())
+//         elem.state = cell_state::CLOSED;
+// }
 
-    std::shuffle(coords.begin(), coords.end(), g);
-
-    for (size_t i = 0; i < bombs_cnt_; ++i)
-        field_[coords[i]].value = cell_value::BOMB;
-
-    static constexpr std::array<int, 8> dir_x = {-1, 0, 1, -1, 1, -1, 0, 1};
-    static constexpr std::array<int, 8> dir_y = {-1, -1, -1, 0, 0, 1, 1, 1};
-
-    const int width_i = static_cast<int>(width_);
-    const int height_i = static_cast<int>(height_);
-    for (int y = 0; y < width_i; ++y)
-    {
-        for (int x = 0; x < height_i; ++x)
-        {
-            if (field_[y * width_ + x].value == cell_value::BOMB)
-                continue;
-
-            size_t cnt = 0;
-            for (size_t i = 0; i < dir_x.size(); ++i)
-            {
-                int i_x = x - dir_x[i];
-                int i_y = y - dir_y[i];
-                if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i && field_[i_y * width_ + i_x].is_bomb())
-                    ++cnt;
-            }
-
-            field_[y * width_ + x].value = to_enum<cell_value>(cnt);
-        }
-    }
-}
-
-void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
-{
-    const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-    const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-    // SDL_Log("Left mouse click at (%ld, %ld)", x, y);
-    if (x >= width_ || y >= height_)
-        return;
-
-    auto& elem = field_[y * width_ + x];
-    if (elem.is_closed() && elem.is_empty())
-        reveal_closed(x, y);
-    else if (elem.is_closed())
-        elem.state = cell_state::OPENED;
-}
-
-void minefield::on_right_click(size_t mouse_x, size_t mouse_y)
-{
-    const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-    const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-    // SDL_Log("Right mouse click at (%ld, %ld)", x, y);
-    if (x >= width_ || y >= height_)
-        return;
-
-    auto& elem = field_[y * width_ + x];
-    if (elem.is_closed())
-        elem.state = cell_state::FLAGGED;
-    else if (elem.is_flagged())
-        elem.state = cell_state::CLOSED;
-}
-
-void minefield::reveal_closed(size_t x, size_t y)
+void minefield::reveal_cell(size_t x, size_t y)
 {
     struct Coord
     {
@@ -225,6 +181,12 @@ void minefield::reveal_closed(size_t x, size_t y)
 
         ++cnt;
     }
+}
+
+void minefield::reset()
+{
+    const mswpr::cell value = {cell_value::EMPTY, cell_state::CLOSED};
+    std::fill(field_.begin(), field_.end(), value);
 }
 
 } // namespace mswpr

@@ -48,22 +48,29 @@ class minefield
 public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
 
-    void handle_input();
+    cell& operator()(size_t x, size_t y);
+    const cell& operator()(size_t x, size_t y) const;
 
-    void update();
+    // void set_flag(size_t x, size_t y);
+
+    void reveal_cell(size_t x, size_t y);
+
+    // void handle_input();
+
+    // void update();
 
     void render(texture_manager& manager);
 
-    void generate();
+    void reset();
 
-    void on_left_click(size_t x, size_t y);
-    void on_right_click(size_t x, size_t y);
-    void reveal_closed(size_t x, size_t y);
+    // void on_left_click(size_t x, size_t y);
+    // void on_right_click(size_t x, size_t y);
+    // void reveal_closed(size_t x, size_t y);
+    const size_t width_;
+    const size_t height_;
+    const size_t bombs_cnt_;
+
 private:
-
-    size_t width_;
-    size_t height_;
-    size_t bombs_cnt_;
     std::vector<cell> field_;
 };
 

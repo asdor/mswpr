@@ -113,7 +113,8 @@ void game_engine::process_click(bool is_released, int key)
         else if (is_inside(field_rect_, mouse_x, mouse_y))
         {
             const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-            const int y = (mouse_y - cfg::board_offset_y);
+            const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
+            // SDL_Log("%d, %d", x, y);
             std::visit([is_released, x, y](auto& st) {
                 st.on_left_field_click(is_released, x, y);
             }, state_);
@@ -126,7 +127,6 @@ void game_engine::render()
     SDL_RenderClear(renderer_.get());
 
     minefield_.render(texture_manager_);
-
     texture_manager_.draw(face_type_, face_rect_);
 
     SDL_RenderPresent(renderer_.get());
@@ -140,6 +140,16 @@ void game_engine::update()
 void game_engine::set_face(face_type face)
 {
     face_type_ = face;
+}
+
+mswpr::minefield& game_engine::get_field()
+{
+    return minefield_;
+}
+
+const mswpr::minefield& game_engine::get_field() const
+{
+    return minefield_;
 }
 
 } // namespace mswpr
