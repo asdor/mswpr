@@ -48,10 +48,6 @@ class minefield
 public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
 
-    void handle_input();
-
-    void update();
-
     void render(texture_manager& manager);
 
     void generate();
@@ -59,6 +55,8 @@ public:
     void on_left_click(size_t x, size_t y);
     void on_right_click(size_t x, size_t y);
     void reveal_closed(size_t x, size_t y);
+
+    void reset();
 private:
 
     size_t width_;

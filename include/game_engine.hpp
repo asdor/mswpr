@@ -34,8 +34,8 @@ public:
 
     void set_face(face_type face);
 
-    mswpr::minefield& get_minefield();
-    const mswpr::minefield& get_minefield() const;
+    mswpr::minefield& get_field();
+    const mswpr::minefield& get_field() const;
 
 private:
     void process_click(bool is_released, int key);

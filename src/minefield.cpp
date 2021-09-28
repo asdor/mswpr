@@ -49,15 +49,7 @@ bool cell::is_flagged() const
 minefield::minefield(size_t width, size_t height, size_t bombs_cnt)
     : width_(width), height_(height), bombs_cnt_(bombs_cnt), field_(width_ * height_, {cell_value::EMPTY, cell_state::CLOSED})
 {
-    generate();
-}
-
-void minefield::handle_input()
-{
-}
-
-void minefield::update()
-{
+    //generate();
 }
 
 void minefield::render(texture_manager& manager)
@@ -149,12 +141,12 @@ void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
 {
     const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
     const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-    // SDL_Log("Left mouse click at (%ld, %ld)", x, y);
+    SDL_Log("Left mouse click at (%ld, %ld)", x, y);
     if (x >= width_ || y >= height_)
         return;
 
     /*auto& elem = field_[y * width_ + x];*/
-    if (auto& elem = field_[y * width_ + x];  elem.is_closed() && elem.is_empty())
+    if (auto& elem = field_[y * width_ + x]; elem.is_closed() && elem.is_empty())
         reveal_closed(x, y);
     else if (elem.is_closed())
         elem.state = cell_state::OPENED;
@@ -226,6 +218,12 @@ void minefield::reveal_closed(size_t x, size_t y)
 
         ++cnt;
     }
+}
+
+void minefield::reset()
+{
+    mswpr::cell empty{ cell_value::EMPTY, cell_state::CLOSED };
+    std::fill(field_.begin(), field_.end(), empty);
 }
 
 } // namespace mswpr

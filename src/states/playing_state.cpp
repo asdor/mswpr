@@ -11,7 +11,7 @@ void playing_state::on_left_face_click(bool is_released)
 
     SDL_Log("playing_state");
     // engine_.set_face(face_type::SMILE_OPENED);
-    engine_.set_state<ending_state>();
+    engine_.set_state<generating_state>();
 }
 
 } // namespace mswpr
