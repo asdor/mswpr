@@ -18,7 +18,7 @@ bool is_inside(const SDL_Rect& rect, int x, int y)
 namespace mswpr
 {
 game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos)
-    : is_running_(false), minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
+    : face_rect_(), field_rect_(), is_running_(false), minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
       face_type_(face_type::SMILE_CLOSED),
       state_(std::in_place_type<generating_state>, *this)
 {
@@ -45,7 +45,7 @@ game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos)
     SDL_SetRenderDrawColor(renderer_.get(), 190, 190, 190, 0);
     SDL_Log("Renderer created!\n");
 
-    texture_manager_.init(renderer_, "../assets/faces.png", "../assets/tile.png");
+    texture_manager_.init(renderer_, "assets/faces.png", "assets/tile.png");
 
     const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
     face_rect_ = {face_x, 0, cfg::face_width, cfg::face_height};
@@ -88,6 +88,16 @@ void game_engine::handle_input()
             [[fallthrough]];
         case SDL_MOUSEBUTTONDOWN:
             key = event.button.button;
+            break;
+        case SDL_WINDOWEVENT:
+            switch (event.window.event)
+            {
+            case SDL_WINDOWEVENT_CLOSE:
+                is_running_ = false;
+                return;
+            default:
+                break;
+            }
             break;
         default:
             break;

@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <SDL_image.h>
 
+#include <stdexcept>
+
 namespace mswpr
 {
 texture_manager::texture_manager()
@@ -58,6 +60,8 @@ mswpr::sdl_texture_t texture_manager::load_texture(mswpr::sdl_renderer_t rendere
     if (!texture)
     {
         const std::string err = "Failed to open " + std::string(path);
+        SDL_Log("%s\n", err.c_str());
+        SDL_Log("Oh My Goodness, an error : %s", IMG_GetError());
         throw std::runtime_error(err.c_str());
     }
 

@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <random>
 #include <stack>
+#include <numeric>
 
 #include "game_config.hpp"
 #include "minefield.hpp"
@@ -152,8 +153,8 @@ void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
     if (x >= width_ || y >= height_)
         return;
 
-    auto& elem = field_[y * width_ + x];
-    if (elem.is_closed() && elem.is_empty())
+    /*auto& elem = field_[y * width_ + x];*/
+    if (auto& elem = field_[y * width_ + x];  elem.is_closed() && elem.is_empty())
         reveal_closed(x, y);
     else if (elem.is_closed())
         elem.state = cell_state::OPENED;

@@ -1,6 +1,6 @@
 #include "sdl_helper.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 namespace mswpr
 {

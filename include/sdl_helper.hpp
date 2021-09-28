@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <SDL.h>
+#undef main
 
 namespace mswpr
 {
