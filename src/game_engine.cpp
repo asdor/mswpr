@@ -152,4 +152,13 @@ void game_engine::set_face(face_type face)
     face_type_ = face;
 }
 
+mswpr::minefield& game_engine::get_minefield()
+{
+    return minefield_;
+}
+
+const mswpr::minefield& game_engine::get_minefield() const
+{
+    return minefield_;
+}
 } // namespace mswpr
