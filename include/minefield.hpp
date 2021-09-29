@@ -6,10 +6,10 @@
 
 namespace mswpr
 {
-class texture_manager;
+  class texture_manager;
 
-enum class cell_value : size_t
-{
+  enum class cell_value : size_t
+  {
     EMPTY = 0,
     ONE,
     TWO,
@@ -20,17 +20,17 @@ enum class cell_value : size_t
     SEVEN,
     EIGHT,
     BOMB
-};
+  };
 
-enum class cell_state
-{
+  enum class cell_state
+  {
     CLOSED,
     OPENED,
     FLAGGED
-};
+  };
 
-struct cell
-{
+  struct cell
+  {
     cell_value value;
     cell_state state;
 
@@ -40,12 +40,12 @@ struct cell
     bool is_closed() const;
     bool is_opened() const;
     bool is_flagged() const;
-};
-static_assert(std::is_trivial_v<cell>);
+  };
+  static_assert(std::is_trivial_v<cell>);
 
-class minefield
-{
-public:
+  class minefield
+  {
+  public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
 
     void render(texture_manager& manager);
@@ -60,14 +60,14 @@ public:
 
     bool open_cell(size_t x, size_t y);
     void set_flag(size_t x, size_t y);
-private:
 
+  private:
     size_t width_;
     size_t height_;
     size_t bombs_cnt_;
     std::vector<cell> field_;
-};
+  };
 
-} // namespace mswpr
+}  // namespace mswpr
 
-#endif // MSWPR_MINEFIELD_HPP
+#endif  // MSWPR_MINEFIELD_HPP

@@ -13,9 +13,9 @@
 
 namespace mswpr
 {
-class game_engine
-{
-public:
+  class game_engine
+  {
+  public:
     game_engine(std::string_view title, size_t xpos, size_t ypos);
 
     bool running() const;
@@ -29,7 +29,7 @@ public:
     template<class T, class... Ts>
     void set_state(Ts&&... args)
     {
-        state_.emplace<T>(*this, std::forward<Ts>(args)...);
+      state_.emplace<T>(*this, std::forward<Ts>(args)...);
     }
 
     void set_face(face_type face);
@@ -37,7 +37,7 @@ public:
     mswpr::minefield& get_field();
     const mswpr::minefield& get_field() const;
 
-private:
+  private:
     void process_click(bool is_released, int key);
 
     mswpr::sdl_init_t sdl_init_;
@@ -54,8 +54,8 @@ private:
 
     using State = std::variant<generating_state, playing_state, ending_state>;
     State state_;
-};
+  };
 
-} // mswpr
+}  // mswpr
 
-#endif // MSWPR_GAME_ENGINE_HPP
+#endif  // MSWPR_GAME_ENGINE_HPP

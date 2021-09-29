@@ -6,8 +6,8 @@
 
 namespace mswpr
 {
-enum class sprite_type : size_t
-{
+  enum class sprite_type : size_t
+  {
     EMPTY_OPENED = 0,
     ONE,
     TWO,
@@ -24,36 +24,36 @@ enum class sprite_type : size_t
     QUESTION_OPENED,
     BOMB_RED,
     BOMB_FAILED
-};
+  };
 
-inline constexpr std::size_t SPRITES_COUNT = 16;
+  inline constexpr std::size_t SPRITES_COUNT = 16;
 
-enum class face_type : size_t
-{
+  enum class face_type : size_t
+  {
     SMILE_CLOSED = 0,
     SMILE_OPENED,
     WAITING,
     BOSS,
     DEAD
-};
+  };
 
-inline constexpr std::size_t FACES_COUNT = 5;
+  inline constexpr std::size_t FACES_COUNT = 5;
 
-template <class T>
-concept Enumeration = std::is_enum_v<T>;
+  template<class T>
+  concept Enumeration = std::is_enum_v<T>;
 
-template <class To, Enumeration E>
-constexpr To enum_to(E value)
-{
+  template<class To, Enumeration E>
+  constexpr To enum_to(E value)
+  {
     return static_cast<To>(value);
-}
+  }
 
-template <Enumeration E, class From>
-constexpr E to_enum(From value)
-{
+  template<Enumeration E, class From>
+  constexpr E to_enum(From value)
+  {
     return static_cast<E>(value);
-}
+  }
 
-} // namespace mswpr
+}  // namespace mswpr
 
-#endif // MSWPR_TYPES_HPP
+#endif  // MSWPR_TYPES_HPP

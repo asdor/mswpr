@@ -11,9 +11,9 @@
 
 namespace mswpr
 {
-class texture_manager
-{
-public:
+  class texture_manager
+  {
+  public:
     texture_manager();
 
     void init(mswpr::sdl_renderer_t renderer, std::string_view faces_path, std::string_view sprites_path);
@@ -21,7 +21,7 @@ public:
     void draw(mswpr::face_type face, SDL_Rect dst);
     void draw(mswpr::sprite_type sprite, SDL_Rect dst);
 
-private:
+  private:
     static mswpr::sdl_texture_t load_texture(mswpr::sdl_renderer_t renderer, std::string_view path);
 
     std::array<SDL_Rect, mswpr::FACES_COUNT> faces_config_;
@@ -30,7 +30,7 @@ private:
     mswpr::sdl_texture_t faces_texture_;
     mswpr::sdl_texture_t sprites_texture_;
     mswpr::sdl_renderer_t renderer_;
-};
-} // namespace mswpr
+  };
+}  // namespace mswpr
 
-#endif // MSWP_TEXTURE_MANAGER_HPP
+#endif  // MSWP_TEXTURE_MANAGER_HPP
