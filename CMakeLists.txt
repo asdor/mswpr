@@ -20,16 +20,31 @@ set(SDL2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/include)
 set(SDL2_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/lib/x64/SDL2.lib)
 
 add_executable(${PROJECT_NAME} ${GAME_SRC})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 # target_link_libraries(${PROJECT_NAME} PUBLIC ${CONAN_LIBS} ${SDL2_IMAGE_LIBRARIES})
 # target_link_libraries(${PROJECT_NAME} PRIVATE PROJECT_OPTIONS)
+
+if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+   message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+   file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+                  "${CMAKE_BINARY_DIR}/conan.cmake")
+endif()
+
+include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+conan_cmake_run(CONANFILE conanfile.txt
+                BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS
+                BUILD missing)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+
+message("Conan libs: ${CONAN_LIBS}")
+
+target_link_libraries(${PROJECT_NAME} PUBLIC CONAN_PKG::gtest ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} )
 
 macro(copy_dll_to_bin dir_path)
     add_custom_command(
