@@ -112,22 +112,31 @@ void game_engine::process_click(bool is_released, int key)
     int mouse_x = 0;
     int mouse_y = 0;
     SDL_GetMouseState(&mouse_x, &mouse_y);
-    if (key == SDL_BUTTON_LEFT)
+    const bool is_left_btn = key == SDL_BUTTON_LEFT;
+    const bool is_right_btn = key == SDL_BUTTON_RIGHT;
+    if (!(is_left_btn || is_right_btn))
+        return;
+ 
+    if (is_left_btn && is_inside(face_rect_, mouse_x, mouse_y))
     {
-        if (is_inside(face_rect_, mouse_x, mouse_y))
-        {
-            std::visit([is_released](auto& st) {
-                st.on_left_face_click(is_released);
-            }, state_);
-        }
-        else if (is_inside(field_rect_, mouse_x, mouse_y))
-        {
-            const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-            const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-            std::visit([is_released, x, y](auto& st) {
+        std::visit([is_released](auto& st) {
+            st.on_left_face_click(is_released);
+        }, state_);
+    }
+    else if (is_inside(field_rect_, mouse_x, mouse_y))
+    {
+        const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
+        const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
+        std::visit([is_released, x, y, is_left_btn, is_right_btn](auto& st) {
+            if (is_left_btn)
+            {
                 st.on_left_field_click(is_released, x, y);
-            }, state_);
-        }
+            }
+            else if (is_right_btn)
+            {
+                st.on_right_field_click(is_released, x, y);
+            }
+        }, state_);
     }
 }
 

@@ -226,4 +226,27 @@ void minefield::reset()
     std::fill(field_.begin(), field_.end(), empty);
 }
 
+bool minefield::open_cell(size_t x, size_t y)
+{
+    auto& cell = field_[y * width_ + x];
+    if (!cell.is_closed())
+        return false;
+
+    cell.state = cell_state::OPENED;
+    return true;
+}
+
+void minefield::set_flag(size_t x, size_t y)
+{
+    auto& cell = field_[y * width_ + x];
+    if (cell.is_flagged())
+    {
+        cell.state = cell_state::CLOSED;
+    }
+    else if (cell.is_closed())
+    {
+        cell.state = cell_state::FLAGGED;
+    }
+}
+
 } // namespace mswpr

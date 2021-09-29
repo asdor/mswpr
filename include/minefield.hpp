@@ -57,6 +57,9 @@ public:
     void reveal_closed(size_t x, size_t y);
 
     void reset();
+
+    bool open_cell(size_t x, size_t y);
+    void set_flag(size_t x, size_t y);
 private:
 
     size_t width_;
