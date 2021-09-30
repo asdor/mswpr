@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 20)
 #find_package(SDL2_image REQUIRED)
 
 file(GLOB GAME_SRC src/*.cpp src/states/*.cpp)
+list(FILTER GAME_SRC EXCLUDE REGEX ".*main.cpp")
+message("---After removing: ${GAME_SRC}")
 
 # add_library(PROJECT_OPTIONS INTERFACE)
 # include(cmake/Sanitizers.cmake)
@@ -19,7 +21,7 @@ set(SDL2_IMAGE_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2_image/lib/x64/SDL2_image.l
 set(SDL2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/include)
 set(SDL2_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/lib/x64/SDL2.lib)
 
-add_executable(${PROJECT_NAME} ${GAME_SRC})
+add_executable(${PROJECT_NAME} ${GAME_SRC} src/main.cpp)
 
 # target_link_libraries(${PROJECT_NAME} PUBLIC ${CONAN_LIBS} ${SDL2_IMAGE_LIBRARIES})
 # target_link_libraries(${PROJECT_NAME} PRIVATE PROJECT_OPTIONS)
@@ -44,7 +46,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 message("Conan libs: ${CONAN_LIBS}")
 
-target_link_libraries(${PROJECT_NAME} PUBLIC CONAN_PKG::gtest ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} )
+target_link_libraries(${PROJECT_NAME} PUBLIC CONAN_PKG::gtest ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
 
 macro(copy_dll_to_bin dir_path)
     add_custom_command(
@@ -73,3 +75,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
     -Wall -Wextra -Wpedantic -Werror -fconcepts>
 )
+
+add_library(${PROJECT_NAME}-lib ${GAME_SRC})
+target_include_directories(${PROJECT_NAME}-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
+
+add_subdirectory(src/test)

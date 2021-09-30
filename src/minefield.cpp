@@ -2,6 +2,7 @@
 #include <random>
 #include <stack>
 #include <numeric>
+#include <iostream>
 
 #include "game_config.hpp"
 #include "minefield.hpp"
@@ -139,6 +140,52 @@ namespace mswpr
 
         field_[y * width_ + x].value = to_enum<cell_value>(cnt);
       }
+    }
+
+    for (int y = 0; y < width_i; ++y)
+    {
+      for (int x = 0; x < height_i; ++x)
+      {
+        auto cell = field_[y * width_ + x].value;
+        std::string cell_name;
+        switch (cell)
+        {
+        case mswpr::cell_value::EMPTY:
+          cell_name = " ";
+          break;
+        case mswpr::cell_value::ONE:
+          cell_name = "1";
+          break;
+        case mswpr::cell_value::TWO:
+          cell_name = "2";
+          break;
+        case mswpr::cell_value::THREE:
+          cell_name = "3";
+          break;
+        case mswpr::cell_value::FOUR:
+          cell_name = "4";
+          break;
+        case mswpr::cell_value::FIVE:
+          cell_name = "5";
+          break;
+        case mswpr::cell_value::SIX:
+          cell_name = "6";
+          break;
+        case mswpr::cell_value::SEVEN:
+          cell_name = "7";
+          break;
+        case mswpr::cell_value::EIGHT:
+          cell_name = "8";
+          break;
+        case mswpr::cell_value::BOMB:
+          cell_name = "*";
+          break;
+        default:
+          break;
+        }
+        std::cout << cell_name;
+      }
+      std::cout << '\n';
     }
   }
 
