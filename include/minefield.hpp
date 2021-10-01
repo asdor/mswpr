@@ -53,8 +53,6 @@ namespace mswpr
 
     void render(texture_manager& manager);
 
-    void on_left_click(size_t x, size_t y);
-    void on_right_click(size_t x, size_t y);
     void reveal_closed(size_t x, size_t y);
 
     bool is_bomb(size_t x, size_t y) const;

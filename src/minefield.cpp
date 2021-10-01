@@ -172,36 +172,6 @@ namespace mswpr
     print_field_to_cout(field_, width_, height_);
   }
 
-  void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
-  {
-    const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-    const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-    SDL_Log("Left mouse click at (%ld, %ld)", x, y);
-    if (x >= width_ || y >= height_)
-      return;
-
-    /*auto& elem = field_[y * width_ + x];*/
-    if (auto& elem = field_[y * width_ + x]; elem.is_closed() && elem.is_empty())
-      reveal_closed(x, y);
-    else if (elem.is_closed())
-      elem.state = cell_state::OPENED;
-  }
-
-  void minefield::on_right_click(size_t mouse_x, size_t mouse_y)
-  {
-    const size_t x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-    const size_t y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-    // SDL_Log("Right mouse click at (%ld, %ld)", x, y);
-    if (x >= width_ || y >= height_)
-      return;
-
-    auto& elem = field_[y * width_ + x];
-    if (elem.is_closed())
-      elem.state = cell_state::FLAGGED;
-    else if (elem.is_flagged())
-      elem.state = cell_state::CLOSED;
-  }
-
   void minefield::reveal_closed(size_t x, size_t y)
   {
     struct Coord
