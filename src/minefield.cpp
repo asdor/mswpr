@@ -104,9 +104,9 @@ namespace mswpr
 
     const int width_i = static_cast<int>(width_);
     const int height_i = static_cast<int>(height_);
-    for (int y = 0; y < width_i; ++y)
+    for (int y = 0; y < height_i; ++y)
     {
-      for (int x = 0; x < height_i; ++x)
+      for (int x = 0; x < width_i; ++x)
       {
         if (field_[y * width_ + x].value == cell_value::BOMB)
           continue;
@@ -129,9 +129,9 @@ namespace mswpr
   {
     const int width_i = static_cast<int>(width);
     const int height_i = static_cast<int>(height);
-    for (int y = 0; y < width_i; ++y)
+    for (int y = 0; y < height_i; ++y)
     {
-      for (int x = 0; x < height_i; ++x)
+      for (int x = 0; x < width_i; ++x)
       {
         auto cell = field[y * width + x].value;
         char cell_name;
@@ -164,6 +164,8 @@ namespace mswpr
     std::mt19937 g(rd());
 
     std::shuffle(coords.begin(), coords.end(), g);
+
+    // coords = { 6 };
 
     for (size_t i = 0; i < bombs_cnt_; ++i)
       field_[coords[i]].value = cell_value::BOMB;

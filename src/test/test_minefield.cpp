@@ -63,42 +63,42 @@ TEST(Minefield, ConstructorWithMines_AllFieldsAreClosed)
 
 TEST(Minefield, IsClosed)
 {
-    const size_t width = 1;
-    const size_t height = 1;
-    const size_t bomb_cnt = 1;
-    mswpr::minefield field(width, height, bomb_cnt);
+  const size_t width = 1;
+  const size_t height = 1;
+  const size_t bomb_cnt = 1;
+  mswpr::minefield field(width, height, bomb_cnt);
 
-    ASSERT_TRUE(field.is_closed(0, 0));
-    ASSERT_FALSE(field.is_opened(0, 0));
-    ASSERT_FALSE(field.is_flagged(0, 0));
+  ASSERT_TRUE(field.is_closed(0, 0));
+  ASSERT_FALSE(field.is_opened(0, 0));
+  ASSERT_FALSE(field.is_flagged(0, 0));
 }
 
 TEST(Minefield, IsOpened)
 {
-    const size_t width = 1;
-    const size_t height = 1;
-    const size_t bomb_cnt = 1;
-    mswpr::minefield field(width, height, bomb_cnt);
+  const size_t width = 1;
+  const size_t height = 1;
+  const size_t bomb_cnt = 1;
+  mswpr::minefield field(width, height, bomb_cnt);
 
-    field.open_cell(0, 0);
+  field.open_cell(0, 0);
 
-    ASSERT_FALSE(field.is_closed(0, 0));
-    ASSERT_TRUE(field.is_opened(0, 0));
-    ASSERT_FALSE(field.is_flagged(0, 0));
+  ASSERT_FALSE(field.is_closed(0, 0));
+  ASSERT_TRUE(field.is_opened(0, 0));
+  ASSERT_FALSE(field.is_flagged(0, 0));
 }
 
 TEST(Minefield, IsFlagged)
 {
-    const size_t width = 1;
-    const size_t height = 1;
-    const size_t bomb_cnt = 1;
-    mswpr::minefield field(width, height, bomb_cnt);
+  const size_t width = 1;
+  const size_t height = 1;
+  const size_t bomb_cnt = 1;
+  mswpr::minefield field(width, height, bomb_cnt);
 
-    field.set_flag(0, 0);
+  field.set_flag(0, 0);
 
-    ASSERT_FALSE(field.is_closed(0, 0));
-    ASSERT_FALSE(field.is_opened(0, 0));
-    ASSERT_TRUE(field.is_flagged(0, 0));
+  ASSERT_FALSE(field.is_closed(0, 0));
+  ASSERT_FALSE(field.is_opened(0, 0));
+  ASSERT_TRUE(field.is_flagged(0, 0));
 }
 
 namespace
@@ -142,26 +142,3 @@ TEST(Minefield, MinesCountAroundCell)
     }
   }
 }
-
-//TEST(Minefield, RevealCells)
-//{
-//  const std::vector<size_t> mines_ind = { 6 };
-//  const size_t width = 3;
-//  const size_t height = 3;
-//  const size_t bomb_cnt = mines_ind.size();
-//  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
-//
-//  field.reveal_closed(0, 1);
-//
-//  EXPECT_TRUE(field.is_opened(0, 0));
-//  EXPECT_TRUE(field.is_opened(1, 0));
-//  EXPECT_TRUE(field.is_opened(2, 0));
-//
-//  EXPECT_TRUE(field.is_opened(0, 1));
-//  EXPECT_TRUE(field.is_opened(1, 1));
-//  EXPECT_TRUE(field.is_opened(2, 1));
-//
-//  EXPECT_TRUE(field.is_closed(0, 2));
-//  EXPECT_TRUE(field.is_opened(1, 2));
-//  EXPECT_TRUE(field.is_opened(2, 2));
-//}
