@@ -52,7 +52,15 @@ namespace mswpr
     bombs_cnt_(bombs_cnt),
     field_(width_ * height_, { cell_value::EMPTY, cell_state::CLOSED })
   {
-    // generate();
+  }
+
+  minefield::minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height, size_t bombs_cnt) :
+    minefield(width, height, bombs_cnt)
+  {
+    for (size_t mine_ind : mines_ind)
+      field_[mine_ind].value = cell_value::BOMB;
+
+    place_values_around_mines();
   }
 
   void minefield::render(texture_manager& manager)
@@ -89,34 +97,8 @@ namespace mswpr
     }
   }
 
-  void minefield::generate()
+  void minefield::place_values_around_mines()
   {
-    // auto bomb = [this](size_t x, size_t y) {
-    //     field_[y * width_ + x].value = cell_value::BOMB;
-    // };
-    // bomb(3, 0);
-    // bomb(7, 0);
-    // bomb(2, 1);
-    // bomb(3, 1);
-    // bomb(6, 1);
-    // bomb(0, 2);
-    // bomb(6, 3);
-    // bomb(7, 4);
-    // bomb(4, 6);
-    // bomb(5, 6);
-
-    std::vector<size_t> coords(width_ * height_, 0);
-
-    std::iota(coords.begin(), coords.end(), 0);
-
-    std::random_device rd;
-    std::mt19937 g(rd());
-
-    std::shuffle(coords.begin(), coords.end(), g);
-
-    for (size_t i = 0; i < bombs_cnt_; ++i)
-      field_[coords[i]].value = cell_value::BOMB;
-
     static constexpr std::array<int, 8> dir_x = { -1, 0, 1, -1, 1, -1, 0, 1 };
     static constexpr std::array<int, 8> dir_y = { -1, -1, -1, 0, 0, 1, 1, 1 };
 
@@ -141,52 +123,53 @@ namespace mswpr
         field_[y * width_ + x].value = to_enum<cell_value>(cnt);
       }
     }
+  }
 
+  void print_field_to_cout(const std::vector<mswpr::cell>& field, size_t width, size_t height)
+  {
+    const int width_i = static_cast<int>(width);
+    const int height_i = static_cast<int>(height);
     for (int y = 0; y < width_i; ++y)
     {
       for (int x = 0; x < height_i; ++x)
       {
-        auto cell = field_[y * width_ + x].value;
-        std::string cell_name;
-        switch (cell)
+        auto cell = field[y * width + x].value;
+        char cell_name;
+        if (cell == mswpr::cell_value::EMPTY)
         {
-        case mswpr::cell_value::EMPTY:
-          cell_name = " ";
-          break;
-        case mswpr::cell_value::ONE:
-          cell_name = "1";
-          break;
-        case mswpr::cell_value::TWO:
-          cell_name = "2";
-          break;
-        case mswpr::cell_value::THREE:
-          cell_name = "3";
-          break;
-        case mswpr::cell_value::FOUR:
-          cell_name = "4";
-          break;
-        case mswpr::cell_value::FIVE:
-          cell_name = "5";
-          break;
-        case mswpr::cell_value::SIX:
-          cell_name = "6";
-          break;
-        case mswpr::cell_value::SEVEN:
-          cell_name = "7";
-          break;
-        case mswpr::cell_value::EIGHT:
-          cell_name = "8";
-          break;
-        case mswpr::cell_value::BOMB:
-          cell_name = "*";
-          break;
-        default:
-          break;
+          cell_name = ' ';
         }
+        else if (cell == mswpr::cell_value::BOMB)
+        {
+          cell_name = '*';
+        }
+        else
+        {
+          cell_name = '1' + (static_cast<size_t>(cell) - static_cast<size_t>(mswpr::cell_value::ONE));
+        }
+
         std::cout << cell_name;
       }
       std::cout << '\n';
     }
+  }
+
+  void minefield::generate()
+  {
+    std::vector<size_t> coords(width_ * height_, 0);
+
+    std::iota(coords.begin(), coords.end(), 0);
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(coords.begin(), coords.end(), g);
+
+    for (size_t i = 0; i < bombs_cnt_; ++i)
+      field_[coords[i]].value = cell_value::BOMB;
+
+    place_values_around_mines();
+    print_field_to_cout(field_, width_, height_);
   }
 
   void minefield::on_left_click(size_t mouse_x, size_t mouse_y)
@@ -278,6 +261,36 @@ namespace mswpr
     std::fill(field_.begin(), field_.end(), empty);
   }
 
+  bool minefield::is_bomb(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.is_bomb();
+  }
+
+  int minefield::get_value(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return !cell.is_bomb() ? static_cast<int>(cell.value) : -1;
+  }
+
+  bool minefield::is_opened(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.is_opened();
+  }
+
+  bool minefield::is_closed(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.is_closed();
+  }
+
+  bool minefield::is_flagged(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.is_flagged();
+  }
+
   bool minefield::open_cell(size_t x, size_t y)
   {
     auto& cell = field_[y * width_ + x];
@@ -300,5 +313,4 @@ namespace mswpr
       cell.state = cell_state::FLAGGED;
     }
   }
-
 }  // namespace mswpr

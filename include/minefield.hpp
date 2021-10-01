@@ -47,21 +47,29 @@ namespace mswpr
   {
   public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
+    minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height, size_t bombs_cnt);
+    void generate();
+    void reset();
 
     void render(texture_manager& manager);
-
-    void generate();
 
     void on_left_click(size_t x, size_t y);
     void on_right_click(size_t x, size_t y);
     void reveal_closed(size_t x, size_t y);
 
-    void reset();
+    bool is_bomb(size_t x, size_t y) const;
+    int get_value(size_t x, size_t y) const;
+
+    bool is_opened(size_t x, size_t y) const;
+    bool is_closed(size_t x, size_t y) const;
+    bool is_flagged(size_t x, size_t y) const;
 
     bool open_cell(size_t x, size_t y);
     void set_flag(size_t x, size_t y);
 
   private:
+    void place_values_around_mines();
+
     size_t width_;
     size_t height_;
     size_t bombs_cnt_;
