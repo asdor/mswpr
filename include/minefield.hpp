@@ -26,7 +26,8 @@ namespace mswpr
   {
     CLOSED,
     OPENED,
-    FLAGGED
+    FLAGGED,
+    DETONATED
   };
 
   struct cell
@@ -40,6 +41,7 @@ namespace mswpr
     bool is_closed() const;
     bool is_opened() const;
     bool is_flagged() const;
+    bool is_detonated() const;
   };
   static_assert(std::is_trivial_v<cell>);
 
@@ -61,9 +63,11 @@ namespace mswpr
     bool is_opened(size_t x, size_t y) const;
     bool is_closed(size_t x, size_t y) const;
     bool is_flagged(size_t x, size_t y) const;
+    bool is_detonated(size_t x, size_t y) const;
 
     bool open_cell(size_t x, size_t y);
     void set_flag(size_t x, size_t y);
+    void detonate_bomb(size_t x, size_t y);
 
   private:
     void place_values_around_mines();

@@ -71,6 +71,7 @@ TEST(Minefield, IsClosed)
   ASSERT_TRUE(field.is_closed(0, 0));
   ASSERT_FALSE(field.is_opened(0, 0));
   ASSERT_FALSE(field.is_flagged(0, 0));
+  ASSERT_FALSE(field.is_detonated(0, 0));
 }
 
 TEST(Minefield, IsOpened)
@@ -85,6 +86,7 @@ TEST(Minefield, IsOpened)
   ASSERT_FALSE(field.is_closed(0, 0));
   ASSERT_TRUE(field.is_opened(0, 0));
   ASSERT_FALSE(field.is_flagged(0, 0));
+  ASSERT_FALSE(field.is_detonated(0, 0));
 }
 
 TEST(Minefield, IsFlagged)
@@ -99,6 +101,23 @@ TEST(Minefield, IsFlagged)
   ASSERT_FALSE(field.is_closed(0, 0));
   ASSERT_FALSE(field.is_opened(0, 0));
   ASSERT_TRUE(field.is_flagged(0, 0));
+  ASSERT_FALSE(field.is_detonated(0, 0));
+}
+
+TEST(Minefield, IsDetonated)
+{
+  const std::vector<size_t> mines_ind = { 0 };
+  const size_t width = 1;
+  const size_t height = 1;
+  const size_t bomb_cnt = mines_ind.size();
+  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+
+  field.detonate_bomb(0, 0);
+
+  ASSERT_FALSE(field.is_closed(0, 0));
+  ASSERT_FALSE(field.is_opened(0, 0));
+  ASSERT_FALSE(field.is_flagged(0, 0));
+  ASSERT_TRUE(field.is_detonated(0, 0));
 }
 
 namespace

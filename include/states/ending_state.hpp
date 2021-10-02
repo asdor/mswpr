@@ -9,6 +9,7 @@ namespace mswpr
   {
   public:
     using state_interface::state_interface;
+    ending_state(mswpr::game_engine& engine, size_t x, size_t y);
 
     void on_left_face_click(bool is_released);
     // void on_left_field_click(size_t x, size_t y);

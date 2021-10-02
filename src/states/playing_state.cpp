@@ -20,8 +20,15 @@ namespace mswpr
       return;
 
     auto& field = engine_.get_field();
-    if (!field.open_cell(x, y))
+    if (field.is_bomb(x, y))
+    {
+      engine_.set_state<ending_state>(x, y);
       return;
+    }
+    else if (!field.open_cell(x, y))
+    {
+      return;
+    }
 
     field.reveal_closed(x, y);
   }

@@ -48,6 +48,11 @@ namespace mswpr
     return state == cell_state::FLAGGED;
   }
 
+  bool cell::is_detonated() const
+  {
+    return state == cell_state::DETONATED;
+  }
+
   minefield::minefield(size_t width, size_t height, size_t bombs_cnt) :
     width_(width),
     height_(height),
@@ -89,6 +94,9 @@ namespace mswpr
           break;
         case cell_state::OPENED:
           sprite = to_sprite(item.value);
+          break;
+        case cell_state::DETONATED:
+          sprite = sprite_type::BOMB_RED;
           break;
         default:
           break;
@@ -273,6 +281,12 @@ namespace mswpr
     return cell.is_flagged();
   }
 
+  bool minefield::is_detonated(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.is_detonated();
+  }
+
   bool minefield::open_cell(size_t x, size_t y)
   {
     auto& cell = field_[y * width_ + x];
@@ -294,5 +308,15 @@ namespace mswpr
     {
       cell.state = cell_state::FLAGGED;
     }
+  }
+
+  void minefield::detonate_bomb(size_t x, size_t y)
+  {
+    auto& cell = field_[y * width_ + x];
+    if (!cell.is_bomb())
+      return;
+
+    // is_detonated?
+    cell.state = cell_state::DETONATED;
   }
 }  // namespace mswpr
