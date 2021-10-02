@@ -11,6 +11,8 @@
 
 namespace
 {
+  constexpr bool PRINT_FIELD = false;
+
   constexpr mswpr::sprite_type to_sprite(mswpr::cell_value value)
   {
     const size_t index = mswpr::enum_to<size_t>(value);
@@ -127,6 +129,9 @@ namespace mswpr
 
   void print_field_to_cout(const std::vector<mswpr::cell>& field, size_t width, size_t height)
   {
+    if (!PRINT_FIELD)
+      return;
+
     const int width_i = static_cast<int>(width);
     const int height_i = static_cast<int>(height);
     for (int y = 0; y < height_i; ++y)
@@ -154,7 +159,7 @@ namespace mswpr
     }
   }
 
-  void minefield::generate()
+  void minefield::generate(size_t x, size_t y)
   {
     std::vector<size_t> coords(width_ * height_, 0);
 
@@ -165,10 +170,15 @@ namespace mswpr
 
     std::shuffle(coords.begin(), coords.end(), g);
 
-    // coords = { 6 };
+    const size_t input_pos = y * width_ + x;
 
     for (size_t i = 0; i < bombs_cnt_; ++i)
+    {
+      if (coords[i] == input_pos)
+        std::swap(coords[i], coords.back());
+
       field_[coords[i]].value = cell_value::BOMB;
+    }
 
     place_values_around_mines();
     print_field_to_cout(field_, width_, height_);

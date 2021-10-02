@@ -142,3 +142,19 @@ TEST(Minefield, MinesCountAroundCell)
     }
   }
 }
+
+TEST(Minefield, NotBombCellAfterGeneration)
+{
+  const size_t width = 5;
+  const size_t height = 5;
+  const size_t bomb_cnt = 24;
+  mswpr::minefield field(width, height, bomb_cnt);
+
+  const size_t attempts = 100;
+  for (size_t i = 0; i < attempts; ++i)
+  {
+    field.reset();
+    field.generate(0, 0);
+    EXPECT_FALSE(field.is_bomb(0, 0));
+  }
+}

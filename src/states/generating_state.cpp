@@ -28,7 +28,7 @@ namespace mswpr
 
     SDL_Log("Generate field");
     auto& field = engine_.get_field();
-    field.generate();
+    field.generate(x, y);
     field.reveal_closed(x, y);
 
     engine_.set_state<playing_state>();
