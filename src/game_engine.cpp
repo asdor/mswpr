@@ -26,7 +26,8 @@ namespace mswpr
     const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
     const size_t window_height = cfg::board_offset_y + cfg::board_offset_x + cfg::cell_height * cfg::field_height;
 
-    window_.reset(SDL_CreateWindow(title.data(), xpos, ypos, window_width, window_height, window_mode));
+    window_.reset(SDL_CreateWindow(
+      title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
     if (!window_)
     {
       SDL_Log("Unable to create SDL_window: %s", SDL_GetError());
@@ -100,6 +101,8 @@ namespace mswpr
         default:
           break;
         }
+        break;
+      case SDL_MOUSEMOTION:
         break;
       default:
         break;

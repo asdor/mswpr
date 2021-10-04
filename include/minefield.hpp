@@ -1,6 +1,7 @@
 #ifndef MSWPR_MINEFIELD_HPP
 #define MSWPR_MINEFIELD_HPP
 
+#include <array>
 #include <vector>
 #include <type_traits>
 
@@ -45,6 +46,20 @@ namespace mswpr
   };
   static_assert(std::is_trivial_v<cell>);
 
+  struct cell_coord
+  {
+    size_t x;
+    size_t y;
+
+    bool operator==(const cell_coord& other) const noexcept = default;
+  };
+
+  enum class open_cell_result
+  {
+    OPENED,
+    DETONATED
+  };
+
   class minefield
   {
   public:
@@ -55,8 +70,6 @@ namespace mswpr
 
     void render(texture_manager& manager);
 
-    void reveal_closed(size_t x, size_t y);
-
     bool is_bomb(size_t x, size_t y) const;
     int get_value(size_t x, size_t y) const;
 
@@ -65,12 +78,22 @@ namespace mswpr
     bool is_flagged(size_t x, size_t y) const;
     bool is_detonated(size_t x, size_t y) const;
 
-    bool open_cell(size_t x, size_t y);
-    void set_flag(size_t x, size_t y);
+    // void reveal_closed(size_t x, size_t y);
     void detonate_bomb(size_t x, size_t y);
+    open_cell_result reveal_closed(size_t x, size_t y);
+
+    void set_flag(size_t x, size_t y);
+
+    std::vector<cell_coord> get_neighbours(cell_coord coord);
+
+    static constexpr std::array<int, 8> neighbours_x_ind = { -1, 0, 1, -1, 1, -1, 0, 1 };
+    static constexpr std::array<int, 8> neighbours_y_ind = { -1, -1, -1, 0, 0, 1, 1, 1 };
 
   private:
     void place_values_around_mines();
+
+    void open_cell(size_t x, size_t y);
+    void open_cell(cell& i_cell);
 
     size_t width_;
     size_t height_;

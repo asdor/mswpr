@@ -109,9 +109,6 @@ namespace mswpr
 
   void minefield::place_values_around_mines()
   {
-    static constexpr std::array<int, 8> dir_x = { -1, 0, 1, -1, 1, -1, 0, 1 };
-    static constexpr std::array<int, 8> dir_y = { -1, -1, -1, 0, 0, 1, 1, 1 };
-
     const int width_i = static_cast<int>(width_);
     const int height_i = static_cast<int>(height_);
     for (int y = 0; y < height_i; ++y)
@@ -122,10 +119,10 @@ namespace mswpr
           continue;
 
         size_t cnt = 0;
-        for (size_t i = 0; i < dir_x.size(); ++i)
+        for (size_t i = 0; i < neighbours_x_ind.size(); ++i)
         {
-          int i_x = x - dir_x[i];
-          int i_y = y - dir_y[i];
+          int i_x = x - neighbours_x_ind[i];
+          int i_y = y - neighbours_y_ind[i];
           if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i && field_[i_y * width_ + i_x].is_bomb())
             ++cnt;
         }
@@ -158,7 +155,7 @@ namespace mswpr
         }
         else
         {
-          cell_name = '1' + (static_cast<size_t>(cell) - static_cast<size_t>(mswpr::cell_value::ONE));
+          cell_name = '1' + (static_cast<char>(cell) - static_cast<char>(mswpr::cell_value::ONE));
         }
 
         std::cout << cell_name;
@@ -190,59 +187,6 @@ namespace mswpr
 
     place_values_around_mines();
     print_field_to_cout(field_, width_, height_);
-  }
-
-  void minefield::reveal_closed(size_t x, size_t y)
-  {
-    struct Coord
-    {
-      int x;
-      int y;
-    };
-
-    std::vector<int> visited(width_ * height_, 0);
-
-    std::stack<Coord> cells;
-    cells.push({ static_cast<int>(x), static_cast<int>(y) });
-
-    static constexpr std::array<int, 8> dir_x = { -1, 0, 1, -1, 1, -1, 0, 1 };
-    static constexpr std::array<int, 8> dir_y = { -1, -1, -1, 0, 0, 1, 1, 1 };
-    const int width_i = static_cast<int>(width_);
-    const int height_i = static_cast<int>(height_);
-
-    size_t cnt = 0;
-
-    while (!cells.empty())
-    {
-      if (cnt == 100)
-      {
-        SDL_Log("BREAKED!");
-        break;
-      }
-
-      auto c = cells.top();
-      cells.pop();
-
-      if (field_[c.y * width_ + c.x].is_closed())
-        field_[c.y * width_ + c.x].state = cell_state::OPENED;
-      visited[c.y * width_ + c.x] = 1;
-
-      for (size_t i = 0; i < dir_x.size(); ++i)
-      {
-        int i_x = c.x + dir_x[i];
-        int i_y = c.y + dir_y[i];
-        if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i)
-        {
-          auto& elem = field_[i_y * width_ + i_x];
-          if (elem.is_empty() && !elem.is_flagged() && visited[i_y * width_ + i_x] != 1)
-            cells.push({ i_x, i_y });
-          else if (elem.is_closed())
-            elem.state = cell_state::OPENED;
-        }
-      }
-
-      ++cnt;
-    }
   }
 
   void minefield::reset()
@@ -287,14 +231,15 @@ namespace mswpr
     return cell.is_detonated();
   }
 
-  bool minefield::open_cell(size_t x, size_t y)
+  void minefield::open_cell(cell& i_cell)
+  {
+    i_cell.state = cell_state::OPENED;
+  }
+
+  void minefield::open_cell(size_t x, size_t y)
   {
     auto& cell = field_[y * width_ + x];
-    if (!cell.is_closed())
-      return false;
-
-    cell.state = cell_state::OPENED;
-    return true;
+    open_cell(cell);
   }
 
   void minefield::set_flag(size_t x, size_t y)
@@ -319,4 +264,84 @@ namespace mswpr
     // is_detonated?
     cell.state = cell_state::DETONATED;
   }
+
+  open_cell_result minefield::reveal_closed(size_t base_x, size_t base_y)
+  {
+    auto& base_cell = field_[base_y * width_ + base_x];
+    if (!base_cell.is_closed())
+    {
+      return open_cell_result::OPENED;
+    }
+
+    if (base_cell.is_bomb())
+    {
+      detonate_bomb(base_x, base_y);
+      return open_cell_result::DETONATED;
+    }
+
+    if (!base_cell.is_bomb() && !base_cell.is_empty())
+    {
+      open_cell(base_cell);
+      return open_cell_result::OPENED;
+    }
+
+    std::stack<cell_coord> cells;
+    cells.emplace(base_x, base_y);
+    std::vector<int> visited(width_ * height_, 0);
+    size_t cnt = 0;
+
+    while (!cells.empty())
+    {
+      ++cnt;
+      auto cell = cells.top();
+      cells.pop();
+      auto& cur_cell = field_[cell.y * width_ + cell.x];
+
+      open_cell(cur_cell);
+      visited[cell.y * width_ + cell.x] = 1;
+
+      if (cur_cell.is_empty())
+      {
+        for (auto coord : get_neighbours(cell))
+        {
+          if (visited[coord.y * width_ + coord.x] == 0)
+          {
+            if (is_opened(coord.x, coord.y))
+            {
+              visited[cell.y * width_ + cell.x] = 1;
+            }
+            else
+            {
+              cells.push(coord);
+            }
+          }
+        }
+      }
+    }
+
+    return open_cell_result::OPENED;
+  }
+
+  std::vector<cell_coord> minefield::get_neighbours(cell_coord coord)
+  {
+    std::vector<cell_coord> neighbours;
+    const int x_i = static_cast<int>(coord.x);
+    const int y_i = static_cast<int>(coord.y);
+
+    for (size_t i = 0; i < neighbours_x_ind.size(); ++i)
+    {
+      const int x_ind = neighbours_x_ind[i];
+      const int y_ind = neighbours_y_ind[i];
+      if (x_i < -x_ind || y_i < -y_ind)
+        continue;
+
+      const size_t x = static_cast<size_t>(x_i + x_ind);
+      const size_t y = static_cast<size_t>(y_i + y_ind);
+      if (x < width_ && y < height_)
+        neighbours.emplace_back(x, y);
+    }
+
+    return neighbours;
+  }
+
 }  // namespace mswpr
