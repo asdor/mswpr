@@ -20,23 +20,15 @@ namespace mswpr
       return;
 
     auto& field = engine_.get_field();
-    /*if (field.is_bomb(x, y))
-    {
-      engine_.set_state<ending_state>(x, y);
-      return;
-    }
-    else if (!field.open_cell(x, y) || (field.get_value(x, y) > 0))
-    {
-      return;
-    }*/
 
     if (field.reveal_closed(x, y) == open_cell_result::DETONATED)
     {
       engine_.set_state<ending_state>(x, y);
-      // field.detonate_bomb(x, y);
     }
-
-    // field.reveal_closed(x, y);
+    else if (field.is_deminied())
+    {
+      engine_.set_state<ending_state>();
+    }
   }
 
   void playing_state::on_right_field_click(bool is_released, size_t x, size_t y)

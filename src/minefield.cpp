@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <random>
-#include <stack>
+#include <queue>
 #include <numeric>
 #include <iostream>
 
@@ -57,6 +57,7 @@ namespace mswpr
     width_(width),
     height_(height),
     bombs_cnt_(bombs_cnt),
+    unopened_cnt_(width_ * height_),
     field_(width_ * height_, { cell_value::EMPTY, cell_state::CLOSED })
   {
   }
@@ -175,7 +176,7 @@ namespace mswpr
 
     std::shuffle(coords.begin(), coords.end(), g);
 
-    coords = { 0 };
+    // coords = { 0 };
 
     const size_t input_pos = y * width_ + x;
 
@@ -195,6 +196,13 @@ namespace mswpr
   {
     mswpr::cell empty{ cell_value::EMPTY, cell_state::CLOSED };
     std::fill(field_.begin(), field_.end(), empty);
+
+    unopened_cnt_ = width_ * height_;
+  }
+
+  bool minefield::is_deminied() const
+  {
+    return unopened_cnt_ == bombs_cnt_;
   }
 
   bool minefield::is_bomb(size_t x, size_t y) const
@@ -236,6 +244,7 @@ namespace mswpr
   void minefield::open_cell(cell& i_cell)
   {
     i_cell.state = cell_state::OPENED;
+    --unopened_cnt_;
   }
 
   void minefield::open_cell(size_t x, size_t y)
@@ -287,18 +296,21 @@ namespace mswpr
       return open_cell_result::OPENED;
     }
 
-    std::stack<cell_coord> cells;
+    std::queue<cell_coord> cells;
     cells.emplace(base_x, base_y);
     std::vector<bool> visited(width_ * height_, false);
     int cnt = 0;
 
     while (!cells.empty())
     {
-      ++cnt;
-      auto cell = cells.top();
-      SDL_Log("%d: (%d, %d)\n", cnt, cell.x, cell.y);
+      auto cell = cells.front();
       cells.pop();
       auto& cur_cell = field_[cell.y * width_ + cell.x];
+      if (visited[cell.y * width_ + cell.x])
+        continue;
+
+      SDL_Log("%d: (%d, %d)\n", cnt, cell.x, cell.y);
+      ++cnt;
 
       open_cell(cur_cell);
       visited[cell.y * width_ + cell.x] = true;
@@ -306,9 +318,9 @@ namespace mswpr
       for (auto [x, y] : get_neighbours(cell))
       {
         auto& elem = field_[y * width_ + x];
-        if (!visited[y * width_ + x] && (get_value(x, y) < 1) && !elem.is_flagged())
+        if (!visited[y * width_ + x] && (elem.is_empty()) && !elem.is_flagged())
         {
-          cells.push({ x, y });
+          cells.emplace(x, y);
         }
         else if (elem.is_closed() && !elem.is_flagged() && !elem.is_bomb())
         {

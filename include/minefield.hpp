@@ -70,6 +70,8 @@ namespace mswpr
 
     void render(texture_manager& manager);
 
+    bool is_deminied() const;
+
     bool is_bomb(size_t x, size_t y) const;
     int get_value(size_t x, size_t y) const;
 
@@ -78,7 +80,6 @@ namespace mswpr
     bool is_flagged(size_t x, size_t y) const;
     bool is_detonated(size_t x, size_t y) const;
 
-    // void reveal_closed(size_t x, size_t y);
     void detonate_bomb(size_t x, size_t y);
     open_cell_result reveal_closed(size_t x, size_t y);
 
@@ -98,6 +99,7 @@ namespace mswpr
     size_t width_;
     size_t height_;
     size_t bombs_cnt_;
+    size_t unopened_cnt_;
     std::vector<cell> field_;
   };
 

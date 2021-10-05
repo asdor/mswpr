@@ -4,6 +4,11 @@
 
 namespace mswpr
 {
+  ending_state::ending_state(mswpr::game_engine& engine) : state_interface(engine)
+  {
+    engine_.set_face(face_type::BOSS);
+  }
+
   ending_state::ending_state(mswpr::game_engine& engine, size_t x, size_t y) : ending_state(engine_)
   {
     // engine_.get_field().detonate_bomb(x, y);

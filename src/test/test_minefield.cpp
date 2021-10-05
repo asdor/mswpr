@@ -190,3 +190,22 @@ TEST(Minefield, Reset)
   field.reset();
   EXPECT_FALSE(field.is_flagged(x, y));
 }
+
+TEST(Minefield, IsDeminied)
+{
+  const std::vector<size_t> mines_ind = { 0 };
+  const size_t width = 5;
+  const size_t height = 5;
+  const size_t bomb_cnt = mines_ind.size();
+  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+
+  const size_t x = 2;
+  const size_t y = 2;
+
+  EXPECT_FALSE(field.is_deminied());
+  field.reveal_closed(x, y);
+  EXPECT_TRUE(field.is_deminied());
+
+  field.reset();
+  EXPECT_FALSE(field.is_deminied());
+}
