@@ -173,3 +173,20 @@ TEST(Minefield, NotBombCellAfterGeneration)
     EXPECT_FALSE(field.is_bomb(0, 0));
   }
 }
+
+TEST(Minefield, Reset)
+{
+  const size_t width = 5;
+  const size_t height = 5;
+  const size_t bomb_cnt = 1;
+  mswpr::minefield field(width, height, bomb_cnt);
+
+  const size_t x = 0;
+  const size_t y = 0;
+
+  field.set_flag(x, y);
+  EXPECT_TRUE(field.is_flagged(x, y));
+
+  field.reset();
+  EXPECT_FALSE(field.is_flagged(x, y));
+}

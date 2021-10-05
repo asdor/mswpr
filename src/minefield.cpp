@@ -175,6 +175,8 @@ namespace mswpr
 
     std::shuffle(coords.begin(), coords.end(), g);
 
+    coords = { 0 };
+
     const size_t input_pos = y * width_ + x;
 
     for (size_t i = 0; i < bombs_cnt_; ++i)
@@ -287,38 +289,35 @@ namespace mswpr
 
     std::stack<cell_coord> cells;
     cells.emplace(base_x, base_y);
-    std::vector<int> visited(width_ * height_, 0);
-    size_t cnt = 0;
+    std::vector<bool> visited(width_ * height_, false);
+    int cnt = 0;
 
     while (!cells.empty())
     {
       ++cnt;
       auto cell = cells.top();
+      SDL_Log("%d: (%d, %d)\n", cnt, cell.x, cell.y);
       cells.pop();
       auto& cur_cell = field_[cell.y * width_ + cell.x];
 
       open_cell(cur_cell);
-      visited[cell.y * width_ + cell.x] = 1;
+      visited[cell.y * width_ + cell.x] = true;
 
-      if (cur_cell.is_empty())
+      for (auto [x, y] : get_neighbours(cell))
       {
-        for (auto coord : get_neighbours(cell))
+        auto& elem = field_[y * width_ + x];
+        if (!visited[y * width_ + x] && (get_value(x, y) < 1) && !elem.is_flagged())
         {
-          if (visited[coord.y * width_ + coord.x] == 0)
-          {
-            if (is_opened(coord.x, coord.y))
-            {
-              visited[cell.y * width_ + cell.x] = 1;
-            }
-            else
-            {
-              cells.push(coord);
-            }
-          }
+          cells.push({ x, y });
+        }
+        else if (elem.is_closed() && !elem.is_flagged() && !elem.is_bomb())
+        {
+          open_cell(elem);
+          visited[y * width_ + x] = true;
         }
       }
     }
-
+    SDL_Log("cnt: %d\n", cnt);
     return open_cell_result::OPENED;
   }
 

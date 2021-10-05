@@ -14,6 +14,7 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::SMILE_OPENED, face_type::SMILE_CLOSED))
       return;
 
+    engine_.get_field().reset();
     SDL_Log("generating_state");
   }
 
@@ -32,5 +33,14 @@ namespace mswpr
     field.reveal_closed(x, y);
 
     engine_.set_state<playing_state>();
+  }
+
+  void generating_state::on_right_field_click(bool is_released, size_t x, size_t y)
+  {
+    if (!is_released)
+      return;
+
+    auto& field = engine_.get_field();
+    field.set_flag(x, y);
   }
 }  // namespace mswpr
