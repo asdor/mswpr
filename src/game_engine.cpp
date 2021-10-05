@@ -20,7 +20,8 @@ namespace mswpr
     is_running_(false),
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
     face_type_(face_type::SMILE_CLOSED),
-    state_(std::in_place_type<generating_state>, *this)
+    state_(std::in_place_type<generating_state>, *this),
+    frame_start_ticks_(0)
   {
     const auto window_mode = 0;
     const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
@@ -65,6 +66,8 @@ namespace mswpr
 
   void game_engine::handle_input()
   {
+    frame_start_ticks_ = SDL_GetTicks();
+
     bool is_released = false;
     int key = -1;
 
@@ -158,6 +161,16 @@ namespace mswpr
 
   void game_engine::update()
   {
+  }
+
+  void game_engine::limit_fps()
+  {
+    const auto frame_ticks = SDL_GetTicks() - frame_start_ticks_;
+
+    if (cfg::frame_delay > frame_ticks)
+    {
+      SDL_Delay(cfg::frame_delay - frame_ticks);
+    }
   }
 
   void game_engine::set_face(face_type face)

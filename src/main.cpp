@@ -9,6 +9,8 @@ int main()
     engine.handle_input();
     engine.update();
     engine.render();
+
+    engine.limit_fps();
   }
 
   return 0;

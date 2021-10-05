@@ -26,6 +26,8 @@ namespace mswpr
 
     void render();
 
+    void limit_fps();
+
     template<class T, class... Ts>
     void set_state(Ts&&... args)
     {
@@ -54,6 +56,8 @@ namespace mswpr
 
     using State = std::variant<generating_state, playing_state, ending_state>;
     State state_;
+
+    Uint32 frame_start_ticks_;
   };
 
 }  // mswpr
