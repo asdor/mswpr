@@ -25,9 +25,6 @@ namespace mswpr
       return;
     }
 
-    SDL_Log("Left mouse click at (%ld, %ld)", x, y);
-
-    SDL_Log("Generate field");
     auto& field = engine_.get_field();
     field.generate(x, y);
     field.reveal_closed(x, y);

@@ -8,7 +8,6 @@ namespace mswpr
   class generating_state : public state_interface
   {
   public:
-    // using state_interface::state_interface;
     generating_state(mswpr::game_engine& engine);
 
     void on_left_face_click(bool is_released);

@@ -4,8 +4,6 @@
 
 namespace mswpr
 {
-  // class sdl_init
-
   sdl_init_t::sdl_init_t()
   {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
@@ -22,8 +20,6 @@ namespace mswpr
     SDL_Log("Cleaning up SDL");
     SDL_Quit();
   }
-
-  // struct sdl_deleter
 
   void sdl_deleter::operator()(SDL_Texture* tex) const
   {

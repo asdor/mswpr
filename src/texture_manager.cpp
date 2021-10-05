@@ -60,8 +60,7 @@ namespace mswpr
     if (!texture)
     {
       const std::string err = "Failed to open " + std::string(path);
-      SDL_Log("%s\n", err.c_str());
-      SDL_Log("Oh My Goodness, an error : %s", IMG_GetError());
+      SDL_Log("%s, error: %s\n", err.c_str(), IMG_GetError());
       throw std::runtime_error(err.c_str());
     }
 

@@ -9,10 +9,8 @@ namespace mswpr
     engine_.set_face(face_type::BOSS);
   }
 
-  ending_state::ending_state(mswpr::game_engine& engine, size_t x, size_t y) : ending_state(engine_)
+  ending_state::ending_state(mswpr::game_engine& engine, size_t x, size_t y) : state_interface(engine)
   {
-    // engine_.get_field().detonate_bomb(x, y);
-
     engine_.set_face(face_type::DEAD);
   }
 

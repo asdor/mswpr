@@ -176,8 +176,6 @@ namespace mswpr
 
     std::shuffle(coords.begin(), coords.end(), g);
 
-    // coords = { 0 };
-
     const size_t input_pos = y * width_ + x;
 
     for (size_t i = 0; i < bombs_cnt_; ++i)
@@ -309,9 +307,7 @@ namespace mswpr
       if (visited[cell.y * width_ + cell.x])
         continue;
 
-      SDL_Log("%d: (%d, %d)\n", cnt, cell.x, cell.y);
       ++cnt;
-
       open_cell(cur_cell);
       visited[cell.y * width_ + cell.x] = true;
 

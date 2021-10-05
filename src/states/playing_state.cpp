@@ -10,7 +10,6 @@ namespace mswpr
       return;
 
     SDL_Log("playing_state");
-    // engine_.set_face(face_type::SMILE_OPENED);
     engine_.set_state<generating_state>();
   }
 
