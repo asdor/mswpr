@@ -1,7 +1,7 @@
 #ifndef MSWPR_PLAYING_STATE_HPP
 #define MSWPR_PLAYING_STATE_HPP
 
-#include "states/state_interface.hpp"
+#include "core/states/state_interface.hpp"
 
 namespace mswpr
 {

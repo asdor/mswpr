@@ -1,4 +1,4 @@
-#include "minefield.hpp"
+#include "core/minefield.hpp"
 
 #include <vector>
 

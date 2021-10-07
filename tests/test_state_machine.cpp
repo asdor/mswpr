@@ -1,6 +1,7 @@
-#include "minefield.hpp"
-#include "types.hpp"
-#include "states/state_machine.hpp"
+#include "core/minefield.hpp"
+#include "core/types.hpp"
+#include "core/states/state_machine.hpp"
+#include "core/states/generating_state.hpp"
 
 #include <gtest/gtest.h>
 

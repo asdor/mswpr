@@ -4,10 +4,10 @@
 #include <numeric>
 #include <iostream>
 
-#include "game_config.hpp"
-#include "minefield.hpp"
-#include "texture_manager.hpp"
-#include "types.hpp"
+#include "core/game_config.hpp"
+#include "core/minefield.hpp"
+// #include "gui/texture_manager.hpp"
+#include "core/types.hpp"
 
 namespace
 {
@@ -71,9 +71,9 @@ namespace mswpr
     place_values_around_mines();
   }
 
-  void minefield::render(texture_manager& manager)
+  void minefield::render(/*texture_manager& manager*/)
   {
-    for (size_t i = 0; i < height_; ++i)
+    /*for (size_t i = 0; i < height_; ++i)
     {
       for (size_t j = 0; j < width_; ++j)
       {
@@ -105,7 +105,7 @@ namespace mswpr
 
         manager.draw(sprite, dst_rect);
       }
-    }
+    }*/
   }
 
   void minefield::place_values_around_mines()
@@ -325,7 +325,7 @@ namespace mswpr
         }
       }
     }
-    SDL_Log("cnt: %d\n", cnt);
+    //SDL_Log("cnt: %d\n", cnt);
     return open_cell_result::OPENED;
   }
 

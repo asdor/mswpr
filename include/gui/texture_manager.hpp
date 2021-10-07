@@ -5,7 +5,7 @@
 #include <string_view>
 
 #include "sdl_helper.hpp"
-#include "types.hpp"
+#include "core/types.hpp"
 
 #include <SDL.h>
 

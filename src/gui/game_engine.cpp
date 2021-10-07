@@ -1,9 +1,8 @@
+#include "core/game_config.hpp"
+#include "core/states/state_machine.hpp"
+#include "gui/game_engine.hpp"
+
 #include <SDL.h>
-
-#include "game_config.hpp"
-#include "game_engine.hpp"
-
-#include "states/state_machine.hpp"
 
 namespace
 {
@@ -150,7 +149,7 @@ namespace mswpr
   {
     SDL_RenderClear(renderer_.get());
 
-    minefield_.render(texture_manager_);
+    minefield_.render(/*texture_manager_*/);
 
     texture_manager_.draw(face_type_, face_rect_);
 

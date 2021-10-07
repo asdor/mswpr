@@ -1,4 +1,5 @@
-#include "texture_manager.hpp"
+#include "gui/texture_manager.hpp"
+#include "core/types.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>

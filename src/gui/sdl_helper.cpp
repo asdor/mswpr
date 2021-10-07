@@ -1,4 +1,4 @@
-#include "sdl_helper.hpp"
+#include "gui/sdl_helper.hpp"
 
 #include <SDL.h>
 

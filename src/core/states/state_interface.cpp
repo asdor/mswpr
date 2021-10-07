@@ -1,5 +1,5 @@
-#include "states/state_interface.hpp"
-#include "game_engine.hpp"
+#include "core/states/state_machine.hpp"
+#include "core/states/state_interface.hpp"
 
 namespace mswpr
 {

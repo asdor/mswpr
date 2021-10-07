@@ -1,6 +1,6 @@
-#include "game_engine.hpp"
-#include "states/ending_state.hpp"
-#include "states/playing_state.hpp"
+#include "core/states/state_machine.hpp"
+#include "core/states/ending_state.hpp"
+#include "core/states/playing_state.hpp"
 
 namespace mswpr
 {
@@ -9,7 +9,7 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::SMILE_OPENED, face_type::SMILE_CLOSED))
       return;
 
-    SDL_Log("playing_state");
+//    SDL_Log("playing_state");
     st_machine_.set_state<generating_state>();
   }
 

@@ -1,4 +1,4 @@
-#include "game_engine.hpp"
+#include "gui/game_engine.hpp"
 
 int main()
 {

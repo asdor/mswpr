@@ -1,12 +1,12 @@
 #ifndef MSWPR_STATE_MACHINE_HPP
 #define MSWPR_STATE_MACHINE_HPP
 
-#include "ending_state.hpp"
-#include "generating_state.hpp"
-#include "playing_state.hpp"
+#include "core/states/ending_state.hpp"
+#include "core/states/generating_state.hpp"
+#include "core/states/playing_state.hpp"
 
-#include "types.hpp"
-#include "minefield.hpp"
+#include "core/types.hpp"
+#include "core/minefield.hpp"
 
 #include <variant>
 

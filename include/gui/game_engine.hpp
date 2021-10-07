@@ -1,16 +1,15 @@
 #ifndef MSWPR_GAME_ENGINE_HPP
 #define MSWPR_GAME_ENGINE_HPP
 
-#include <string_view>
-#include <variant>
+#include "gui/sdl_helper.hpp"
+#include "core/minefield.hpp"
+#include "gui/texture_manager.hpp"
+#include "core/states/state_machine.hpp"
+#include "core/states/ending_state.hpp"
+#include "core/states/generating_state.hpp"
+#include "core/states/playing_state.hpp"
 
-#include "sdl_helper.hpp"
-#include "minefield.hpp"
-#include "texture_manager.hpp"
-#include "states/state_machine.hpp"
-#include "states/ending_state.hpp"
-#include "states/generating_state.hpp"
-#include "states/playing_state.hpp"
+#include <string_view>
 
 namespace mswpr
 {
@@ -40,7 +39,7 @@ namespace mswpr
     mswpr::minefield minefield_;
     mswpr::face_type face_type_;
 
-    state_machine state_;
+    mswpr::state_machine state_;
 
     Uint32 frame_start_ticks_;
   };

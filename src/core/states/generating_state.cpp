@@ -1,6 +1,6 @@
-#include "game_engine.hpp"
-#include "states/generating_state.hpp"
-#include "states/playing_state.hpp"
+#include "core/states/state_machine.hpp"
+#include "core/states/generating_state.hpp"
+#include "core/states/playing_state.hpp"
 
 namespace mswpr
 {
@@ -16,7 +16,7 @@ namespace mswpr
       return;
 
     st_machine_.get_field().reset();
-    SDL_Log("generating_state");
+    //SDL_Log("generating_state");
   }
 
   void generating_state::on_left_field_click(bool is_released, size_t x, size_t y)

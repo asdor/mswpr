@@ -7,7 +7,7 @@
 
 namespace mswpr
 {
-  class texture_manager;
+  //class texture_manager;
 
   enum class cell_value : size_t
   {
@@ -68,7 +68,7 @@ namespace mswpr
     void generate(size_t x, size_t y);
     void reset();
 
-    void render(texture_manager& manager);
+    void render(/*texture_manager& manager*/);
 
     bool is_deminied() const;
 
