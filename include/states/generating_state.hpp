@@ -8,7 +8,7 @@ namespace mswpr
   class generating_state : public state_interface
   {
   public:
-    generating_state(mswpr::game_engine& engine);
+    generating_state(mswpr::state_machine& st_machine);
 
     void on_left_face_click(bool is_released);
     void on_left_field_click(bool is_released, size_t x, size_t y);

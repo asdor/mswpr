@@ -5,14 +5,14 @@
 
 namespace mswpr
 {
-  class game_engine;
+  class state_machine;
 
   enum class face_type : size_t;
 
   class state_interface
   {
   public:
-    state_interface(game_engine& engine);
+    state_interface(state_machine& st_machine);
 
     void on_left_face_click(bool is_released);
     void on_left_field_click(bool is_released, size_t x, size_t y);
@@ -21,7 +21,7 @@ namespace mswpr
   protected:
     bool change_face_on_click(bool is_released, face_type pressed, face_type released);
 
-    game_engine& engine_;
+    state_machine& st_machine_;
   };
 }  // namespace mswpr
 

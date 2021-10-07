@@ -4,14 +4,14 @@
 
 namespace mswpr
 {
-  ending_state::ending_state(mswpr::game_engine& engine) : state_interface(engine)
+  ending_state::ending_state(mswpr::state_machine& st_machine) : state_interface(st_machine)
   {
-    engine_.set_face(face_type::BOSS);
+    st_machine_.set_face(face_type::BOSS);
   }
 
-  ending_state::ending_state(mswpr::game_engine& engine, size_t x, size_t y) : state_interface(engine)
+  ending_state::ending_state(mswpr::state_machine& st_machine, size_t x, size_t y) : state_interface(st_machine)
   {
-    engine_.set_face(face_type::DEAD);
+    st_machine_.set_face(face_type::DEAD);
   }
 
   void ending_state::on_left_face_click(bool is_released)
@@ -20,6 +20,6 @@ namespace mswpr
       return;
 
     SDL_Log("ending_state");
-    engine_.set_state<generating_state>();
+    st_machine_.set_state<generating_state>();
   }
 }  // namespace mswpr

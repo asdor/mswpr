@@ -8,8 +8,8 @@ namespace mswpr
   class ending_state : public state_interface
   {
   public:
-    ending_state(mswpr::game_engine& engine);
-    ending_state(mswpr::game_engine& engine, size_t x, size_t y);
+    ending_state(mswpr::state_machine& st_machine);
+    ending_state(mswpr::state_machine& st_machine, size_t x, size_t y);
 
     void on_left_face_click(bool is_released);
   };
