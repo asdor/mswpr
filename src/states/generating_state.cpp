@@ -6,6 +6,7 @@ namespace mswpr
 {
   generating_state::generating_state(mswpr::game_engine& engine) : state_interface(engine)
   {
+    engine_.set_face(face_type::SMILE_CLOSED);
     engine_.get_field().reset();
   }
 
