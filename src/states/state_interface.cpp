@@ -3,7 +3,7 @@
 
 namespace mswpr
 {
-  state_interface::state_interface(game_engine& engine) : engine_(engine)
+  state_interface::state_interface(state_machine& st_machine) : st_machine_(st_machine)
   {
   }
 
@@ -23,11 +23,11 @@ namespace mswpr
   {
     if (is_released)
     {
-      engine_.set_face(released);
+      st_machine_.set_face(released);
       return false;
     }
 
-    engine_.set_face(pressed);
+    st_machine_.set_face(pressed);
     return true;
   }
 

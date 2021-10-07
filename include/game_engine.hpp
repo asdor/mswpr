@@ -7,6 +7,7 @@
 #include "sdl_helper.hpp"
 #include "minefield.hpp"
 #include "texture_manager.hpp"
+#include "states/state_machine.hpp"
 #include "states/ending_state.hpp"
 #include "states/generating_state.hpp"
 #include "states/playing_state.hpp"
@@ -19,25 +20,10 @@ namespace mswpr
     game_engine(std::string_view title, size_t xpos, size_t ypos);
 
     bool running() const;
-
     void handle_input();
-
     void update();
-
     void render();
-
     void limit_fps();
-
-    template<class T, class... Ts>
-    void set_state(Ts&&... args)
-    {
-      state_.emplace<T>(*this, std::forward<Ts>(args)...);
-    }
-
-    void set_face(face_type face);
-
-    mswpr::minefield& get_field();
-    const mswpr::minefield& get_field() const;
 
   private:
     void process_click(bool is_released, int key);
@@ -54,8 +40,7 @@ namespace mswpr
     mswpr::minefield minefield_;
     mswpr::face_type face_type_;
 
-    using State = std::variant<generating_state, playing_state, ending_state>;
-    State state_;
+    state_machine state_;
 
     Uint32 frame_start_ticks_;
   };

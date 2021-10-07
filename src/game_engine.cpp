@@ -3,6 +3,8 @@
 #include "game_config.hpp"
 #include "game_engine.hpp"
 
+#include "states/state_machine.hpp"
+
 namespace
 {
   bool is_inside(const SDL_Rect& rect, int x, int y)
@@ -20,7 +22,7 @@ namespace mswpr
     is_running_(false),
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
     face_type_(face_type::SMILE_CLOSED),
-    state_(std::in_place_type<generating_state>, *this),
+    state_(minefield_, face_type_),
     frame_start_ticks_(0)
   {
     const auto window_mode = 0;
@@ -127,24 +129,20 @@ namespace mswpr
 
     if (is_left_btn && is_inside(face_rect_, mouse_x, mouse_y))
     {
-      std::visit([is_released](auto& st) { st.on_left_face_click(is_released); }, state_);
+      state_.on_left_face_click(is_released);
     }
     else if (is_inside(field_rect_, mouse_x, mouse_y))
     {
       const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
       const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
-      std::visit(
-        [is_released, x, y, is_left_btn, is_right_btn](auto& st) {
-          if (is_left_btn)
-          {
-            st.on_left_field_click(is_released, x, y);
-          }
-          else if (is_right_btn)
-          {
-            st.on_right_field_click(is_released, x, y);
-          }
-        },
-        state_);
+      if (is_left_btn)
+      {
+        state_.on_left_field_click(is_released, x, y);
+      }
+      else if (is_right_btn)
+      {
+        state_.on_right_field_click(is_released, x, y);
+      }
     }
   }
 
@@ -173,18 +171,4 @@ namespace mswpr
     }
   }
 
-  void game_engine::set_face(face_type face)
-  {
-    face_type_ = face;
-  }
-
-  mswpr::minefield& game_engine::get_field()
-  {
-    return minefield_;
-  }
-
-  const mswpr::minefield& game_engine::get_field() const
-  {
-    return minefield_;
-  }
 }  // namespace mswpr
