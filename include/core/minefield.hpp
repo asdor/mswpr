@@ -7,8 +7,6 @@
 
 namespace mswpr
 {
-  //class texture_manager;
-
   enum class cell_value : size_t
   {
     EMPTY = 0,
@@ -68,12 +66,12 @@ namespace mswpr
     void generate(size_t x, size_t y);
     void reset();
 
-    void render(/*texture_manager& manager*/);
-
     bool is_deminied() const;
 
     bool is_bomb(size_t x, size_t y) const;
     int get_value(size_t x, size_t y) const;
+    cell_state get_cell_state(size_t x, size_t y) const;
+    cell_value get_cell_value(size_t x, size_t y) const;
 
     bool is_opened(size_t x, size_t y) const;
     bool is_closed(size_t x, size_t y) const;

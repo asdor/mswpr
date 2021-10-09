@@ -4,59 +4,17 @@
 
 #include <SDL.h>
 
-namespace
-{
-  bool is_inside(const SDL_Rect& rect, int x, int y)
-  {
-    return x >= rect.x && x < rect.x + rect.w && y >= rect.y && y < rect.y + rect.h;
-  }
-
-}  // namespace
-
 namespace mswpr
 {
   game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos) :
-    face_rect_(),
-    field_rect_(),
+
+    renderer_(title, xpos, ypos),
     is_running_(false),
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
     face_type_(face_type::SMILE_NOT_PRESSED),
     state_(minefield_, face_type_),
     frame_start_ticks_(0)
   {
-    const auto window_mode = 0;
-    const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
-    const size_t window_height = cfg::board_offset_y + cfg::board_offset_x + cfg::cell_height * cfg::field_height;
-
-    window_.reset(SDL_CreateWindow(
-      title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
-    if (!window_)
-    {
-      SDL_Log("Unable to create SDL_window: %s", SDL_GetError());
-      return;
-    }
-
-    SDL_Log("Window created!\n");
-
-    renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), mswpr::sdl_deleter{});
-    if (!renderer_)
-    {
-      SDL_Log("Unable to create SDL_Renderer: %s", SDL_GetError());
-      return;
-    }
-
-    SDL_SetRenderDrawColor(renderer_.get(), 190, 190, 190, 0);
-    SDL_Log("Renderer created!\n");
-
-    texture_manager_.init(renderer_, "assets/faces.png", "assets/tile.png");
-
-    const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
-    face_rect_ = { face_x, 0, cfg::face_width, cfg::face_height };
-
-    field_rect_ = {
-      cfg::board_offset_x, cfg::board_offset_y, cfg::cell_width * cfg::field_width, cfg::cell_height * cfg::field_height
-    };
-
     is_running_ = true;
   }
 
@@ -126,11 +84,11 @@ namespace mswpr
     if (!(is_left_btn || is_right_btn))
       return;
 
-    if (is_left_btn && is_inside(face_rect_, mouse_x, mouse_y))
+    if (is_left_btn && renderer_.is_inside_face(mouse_x, mouse_y))
     {
       state_.on_left_face_click(is_released);
     }
-    else if (is_inside(field_rect_, mouse_x, mouse_y))
+    else if (renderer_.is_inside_field(mouse_x, mouse_y))
     {
       const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
       const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
@@ -147,13 +105,7 @@ namespace mswpr
 
   void game_engine::render()
   {
-    SDL_RenderClear(renderer_.get());
-
-    minefield_.render(/*texture_manager_*/);
-
-    texture_manager_.draw(face_type_, face_rect_);
-
-    SDL_RenderPresent(renderer_.get());
+    renderer_.render(minefield_, face_type_);
   }
 
   void game_engine::update()

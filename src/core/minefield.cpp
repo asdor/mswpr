@@ -6,19 +6,12 @@
 
 #include "core/game_config.hpp"
 #include "core/minefield.hpp"
-// #include "gui/texture_manager.hpp"
 #include "core/types.hpp"
 
 namespace
 {
   constexpr bool PRINT_FIELD = false;
 
-  constexpr mswpr::sprite_type to_sprite(mswpr::cell_value value)
-  {
-    const size_t index = mswpr::enum_to<size_t>(value);
-    constexpr size_t empty_index = mswpr::enum_to<size_t>(mswpr::sprite_type::EMPTY_OPENED);
-    return mswpr::to_enum<mswpr::sprite_type>(empty_index + index);
-  }
 }  // namespace
 
 namespace mswpr
@@ -69,43 +62,6 @@ namespace mswpr
       field_[mine_ind].value = cell_value::BOMB;
 
     place_values_around_mines();
-  }
-
-  void minefield::render(/*texture_manager& manager*/)
-  {
-    /*for (size_t i = 0; i < height_; ++i)
-    {
-      for (size_t j = 0; j < width_; ++j)
-      {
-        const auto item = field_[i * width_ + j];
-        const SDL_Rect dst_rect = { int(j * cfg::cell_width) + cfg::board_offset_x,
-                                    int(i * cfg::cell_height) + cfg::board_offset_y,
-                                    cfg::cell_width,
-                                    cfg::cell_height };
-
-        sprite_type sprite = sprite_type::EMPTY_CLOSED;
-
-        switch (item.state)
-        {
-        case cell_state::CLOSED:
-          sprite = sprite_type::EMPTY_CLOSED;
-          break;
-        case cell_state::FLAGGED:
-          sprite = sprite_type::FLAG;
-          break;
-        case cell_state::OPENED:
-          sprite = to_sprite(item.value);
-          break;
-        case cell_state::DETONATED:
-          sprite = sprite_type::BOMB_RED;
-          break;
-        default:
-          break;
-        }
-
-        manager.draw(sprite, dst_rect);
-      }
-    }*/
   }
 
   void minefield::place_values_around_mines()
@@ -196,6 +152,18 @@ namespace mswpr
     std::fill(field_.begin(), field_.end(), empty);
 
     unopened_cnt_ = width_ * height_;
+  }
+
+  cell_state minefield::get_cell_state(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.state;
+  }
+
+  cell_value minefield::get_cell_value(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.value;
   }
 
   bool minefield::is_deminied() const
@@ -325,7 +293,7 @@ namespace mswpr
         }
       }
     }
-    //SDL_Log("cnt: %d\n", cnt);
+    // SDL_Log("cnt: %d\n", cnt);
     return open_cell_result::OPENED;
   }
 
