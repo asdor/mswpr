@@ -6,16 +6,16 @@ namespace mswpr
 {
   void playing_state::on_left_face_click(bool is_released)
   {
-    if (change_face_on_click(is_released, face_type::SMILE_OPENED, face_type::SMILE_CLOSED))
+    if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::SMILE_NOT_PRESSED))
       return;
 
-//    SDL_Log("playing_state");
+    //    SDL_Log("playing_state");
     st_machine_.set_state<generating_state>();
   }
 
   void playing_state::on_left_field_click(bool is_released, size_t x, size_t y)
   {
-    if (change_face_on_click(is_released, face_type::WAITING, face_type::SMILE_CLOSED))
+    if (change_face_on_click(is_released, face_type::WAITING, face_type::SMILE_NOT_PRESSED))
       return;
 
     auto& field = st_machine_.get_field();

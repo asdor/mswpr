@@ -18,8 +18,8 @@ namespace mswpr
     faces_texture_ = load_texture(renderer_, faces_path);
     sprites_texture_ = load_texture(renderer_, sprites_path);
 
-    faces_config_[enum_to<size_t>(face_type::SMILE_CLOSED)] = { 0, 0, 24, 24 };
-    faces_config_[enum_to<size_t>(face_type::SMILE_OPENED)] = { 24, 0, 24, 24 };
+    faces_config_[enum_to<size_t>(face_type::SMILE_NOT_PRESSED)] = { 0, 0, 24, 24 };
+    faces_config_[enum_to<size_t>(face_type::SMILE_PRESSED)] = { 24, 0, 24, 24 };
     faces_config_[enum_to<size_t>(face_type::WAITING)] = { 48, 0, 24, 24 };
     faces_config_[enum_to<size_t>(face_type::BOSS)] = { 72, 0, 24, 24 };
     faces_config_[enum_to<size_t>(face_type::DEAD)] = { 96, 0, 24, 24 };

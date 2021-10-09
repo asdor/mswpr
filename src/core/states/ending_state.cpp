@@ -16,10 +16,10 @@ namespace mswpr
 
   void ending_state::on_left_face_click(bool is_released)
   {
-    if (change_face_on_click(is_released, face_type::SMILE_OPENED, face_type::DEAD))
+    if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::DEAD))
       return;
 
-    //SDL_Log("ending_state");
+    // SDL_Log("ending_state");
     st_machine_.set_state<generating_state>();
   }
 }  // namespace mswpr

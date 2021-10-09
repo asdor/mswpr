@@ -6,22 +6,22 @@ namespace mswpr
 {
   generating_state::generating_state(mswpr::state_machine& st_machine) : state_interface(st_machine)
   {
-    st_machine_.set_face(face_type::SMILE_CLOSED);
+    st_machine_.set_face(face_type::SMILE_NOT_PRESSED);
     st_machine_.get_field().reset();
   }
 
   void generating_state::on_left_face_click(bool is_released)
   {
-    if (change_face_on_click(is_released, face_type::SMILE_OPENED, face_type::SMILE_CLOSED))
+    if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::SMILE_NOT_PRESSED))
       return;
 
     st_machine_.get_field().reset();
-    //SDL_Log("generating_state");
+    // SDL_Log("generating_state");
   }
 
   void generating_state::on_left_field_click(bool is_released, size_t x, size_t y)
   {
-    if (change_face_on_click(is_released, face_type::WAITING, face_type::SMILE_CLOSED))
+    if (change_face_on_click(is_released, face_type::WAITING, face_type::SMILE_NOT_PRESSED))
     {
       return;
     }

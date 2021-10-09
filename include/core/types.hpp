@@ -30,8 +30,8 @@ namespace mswpr
 
   enum class face_type : size_t
   {
-    SMILE_CLOSED = 0,
-    SMILE_OPENED,
+    SMILE_NOT_PRESSED = 0,
+    SMILE_PRESSED,
     WAITING,
     BOSS,
     DEAD

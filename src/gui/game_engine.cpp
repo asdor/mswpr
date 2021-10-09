@@ -20,7 +20,7 @@ namespace mswpr
     field_rect_(),
     is_running_(false),
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
-    face_type_(face_type::SMILE_CLOSED),
+    face_type_(face_type::SMILE_NOT_PRESSED),
     state_(minefield_, face_type_),
     frame_start_ticks_(0)
   {
