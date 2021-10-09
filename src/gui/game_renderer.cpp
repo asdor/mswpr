@@ -45,7 +45,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   SDL_SetRenderDrawColor(renderer_.get(), 190, 190, 190, 0);
   SDL_Log("Renderer created!\n");
 
-  texture_manager_.init(renderer_, "assets/faces.png", "assets/tile.png");
+  texture_manager_.init(renderer_, "assets/winxpskin.bmp");
 
   const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
   face_rect_ = { face_x, 0, cfg::face_width, cfg::face_height };

@@ -17,13 +17,11 @@ namespace mswpr
     SIX,
     SEVEN,
     EIGHT,
-    BOMB,
     EMPTY_CLOSED,
+    BOMB,
     FLAG,
-    QUESTION,
-    QUESTION_OPENED,
-    BOMB_RED,
-    BOMB_FAILED
+    BOMB_FAILED,
+    BOMB_RED
   };
 
   inline constexpr std::size_t SPRITES_COUNT = 16;
@@ -31,10 +29,10 @@ namespace mswpr
   enum class face_type : size_t
   {
     SMILE_NOT_PRESSED = 0,
-    SMILE_PRESSED,
     WAITING,
+    DEAD,
     BOSS,
-    DEAD
+    SMILE_PRESSED
   };
 
   inline constexpr std::size_t FACES_COUNT = 5;
