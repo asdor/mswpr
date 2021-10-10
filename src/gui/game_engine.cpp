@@ -12,6 +12,7 @@ namespace mswpr
     is_running_(false),
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
     face_type_(face_type::SMILE_NOT_PRESSED),
+    counter_(cfg::mines_cnt),
     state_(minefield_, face_type_),
     frame_start_ticks_(0)
   {
@@ -105,7 +106,7 @@ namespace mswpr
 
   void game_engine::render()
   {
-    renderer_.render(minefield_, face_type_);
+    renderer_.render(minefield_, face_type_, counter_);
   }
 
   void game_engine::update()

@@ -40,6 +40,16 @@ namespace mswpr
     sprites_config_[enum_to<size_t>(sprite_type::FLAG)] = { 48, 16, CELL_SIZE, CELL_SIZE };
     sprites_config_[enum_to<size_t>(sprite_type::BOMB_FAILED)] = { 64, 16, CELL_SIZE, CELL_SIZE };
     sprites_config_[enum_to<size_t>(sprite_type::BOMB_RED)] = { 80, 16, CELL_SIZE, CELL_SIZE };
+
+    static constexpr int DIGIT_WIDTH = 11;
+    static constexpr int DIGIT_HEIGHT = 21;
+    display_digits_config_[enum_to<size_t>(display_digits_type::EMPTY_DISPLAY)] = { 28, 82, 41, 25 };
+
+    for (size_t i = enum_to<size_t>(display_digits_type::ZERO); i <= enum_to<size_t>(display_digits_type::MINUS); ++i)
+    {
+      const size_t rect_x = (DIGIT_WIDTH + 1) * (i - enum_to<size_t>(display_digits_type::ZERO));
+      display_digits_config_[i] = { static_cast<int>(rect_x), 33, DIGIT_WIDTH, DIGIT_HEIGHT };
+    }
   }
 
   void texture_manager::draw(face_type face, SDL_Rect dst)
@@ -52,6 +62,12 @@ namespace mswpr
   {
     const auto index = enum_to<size_t>(sprite);
     SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &sprites_config_[index], &dst);
+  }
+
+  void texture_manager::draw(mswpr::display_digits_type digits, SDL_Rect dst)
+  {
+    const auto index = enum_to<size_t>(digits);
+    SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &display_digits_config_[index], &dst);
   }
 
   mswpr::sdl_texture_t texture_manager::load_texture(mswpr::sdl_renderer_t renderer, std::string_view path)

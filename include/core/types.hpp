@@ -6,6 +6,21 @@
 
 namespace mswpr
 {
+  template<class T>
+  concept Enumeration = std::is_enum_v<T>;
+
+  template<class To, Enumeration E>
+  constexpr To enum_to(E value)
+  {
+    return static_cast<To>(value);
+  }
+
+  template<Enumeration E, class From>
+  constexpr E to_enum(From value)
+  {
+    return static_cast<E>(value);
+  }
+
   enum class sprite_type : size_t
   {
     EMPTY_OPENED = 0,
@@ -21,10 +36,12 @@ namespace mswpr
     BOMB,
     FLAG,
     BOMB_FAILED,
-    BOMB_RED
+    BOMB_RED,
+
+    SPRITES_COUNT
   };
 
-  inline constexpr std::size_t SPRITES_COUNT = 16;
+  inline constexpr std::size_t SPRITES_COUNT = enum_to<std::size_t>(sprite_type::SPRITES_COUNT);
 
   enum class face_type : size_t
   {
@@ -32,25 +49,32 @@ namespace mswpr
     WAITING,
     DEAD,
     BOSS,
-    SMILE_PRESSED
+    SMILE_PRESSED,
+
+    FACES_COUNT
   };
 
-  inline constexpr std::size_t FACES_COUNT = 5;
+  inline constexpr std::size_t FACES_COUNT = enum_to<std::size_t>(face_type::FACES_COUNT);
 
-  template<class T>
-  concept Enumeration = std::is_enum_v<T>;
-
-  template<class To, Enumeration E>
-  constexpr To enum_to(E value)
+  enum class display_digits_type : size_t
   {
-    return static_cast<To>(value);
-  }
+    EMPTY_DISPLAY,
+    ZERO,
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    FIVE,
+    SIX,
+    SEVEN,
+    EIGHT,
+    NINE,
+    MINUS,
 
-  template<Enumeration E, class From>
-  constexpr E to_enum(From value)
-  {
-    return static_cast<E>(value);
-  }
+    DIPLAY_DIGITS_COUNT
+  };
+
+  inline constexpr std::size_t DIPLAY_DIGITS_COUNT = enum_to<std::size_t>(display_digits_type::DIPLAY_DIGITS_COUNT);
 
 }  // namespace mswpr
 

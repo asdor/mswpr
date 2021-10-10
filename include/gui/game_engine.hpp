@@ -3,6 +3,7 @@
 
 #include "gui/game_renderer.hpp"
 #include "core/minefield.hpp"
+#include "core/mines_counter.hpp"
 #include "core/states/state_machine.hpp"
 #include "core/states/ending_state.hpp"
 #include "core/states/generating_state.hpp"
@@ -32,6 +33,7 @@ namespace mswpr
 
     mswpr::minefield minefield_;
     mswpr::face_type face_type_;
+    mswpr::mines_counter counter_;
 
     mswpr::state_machine state_;
 
