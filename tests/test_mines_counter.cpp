@@ -67,7 +67,10 @@ TEST(MinesCounter, ValueToString_OneDigit)
 
 TEST(MinesCounter, ValueToString_TwoDigitsNegative)
 {
-  mines_counter counter(-42);
+  mines_counter counter(0);
+
+  for (size_t i = 0; i < 42; ++i)
+    --counter;
 
   static constexpr std::array str = { '-', '4', '2' };
   EXPECT_THAT(counter.value_to_str(), str);
@@ -75,9 +78,12 @@ TEST(MinesCounter, ValueToString_TwoDigitsNegative)
 
 TEST(MinesCounter, ValueToString_OneDigitNegative)
 {
-  mines_counter counter(-7);
+  mines_counter counter(0);
 
-  static constexpr std::array str = { '0', '-', '7' };
+  for (size_t i = 0; i < 7; ++i)
+    --counter;
+
+  static constexpr std::array str = { '-', '0', '7' };
   EXPECT_THAT(counter.value_to_str(), str);
 }
 

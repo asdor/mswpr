@@ -136,10 +136,9 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
 
   for (size_t i = 0; i < digits.size(); ++i)
   {
-    static constexpr size_t digit_offset = 2;
-    const int rect_x = cfg::counter_offset_x + cfg::digit_offset + (digit_offset + cfg::digit_width) * i;
+    const size_t rect_x = cfg::counter_offset_x + cfg::digit_offset + (cfg::digit_offset + cfg::digit_width) * i;
     const SDL_Rect first_digit_rect = {
-      rect_x, cfg::digit_offset + cfg::hud_offset_y, cfg::digit_width, cfg::digit_height
+      static_cast<int>(rect_x), cfg::digit_offset + cfg::hud_offset_y, cfg::digit_width, cfg::digit_height
     };
 
     display_digits_type sprite = digits[i] == '-'

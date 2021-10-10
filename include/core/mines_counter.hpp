@@ -8,10 +8,10 @@ namespace mswpr
   class mines_counter
   {
   public:
-    mines_counter(int counter);
+    mines_counter(size_t counter);
 
     int get_value() const;
-    void reset(int counter);
+    void reset(size_t counter);
     std::array<char, 3> value_to_str() const;
 
     mines_counter& operator++();

@@ -7,6 +7,7 @@
 
 #include "core/types.hpp"
 #include "core/minefield.hpp"
+#include "core/mines_counter.hpp"
 
 #include <variant>
 
@@ -15,7 +16,7 @@ namespace mswpr
   class state_machine
   {
   public:
-    state_machine(mswpr::minefield& minefield, mswpr::face_type& face_type);
+    state_machine(mswpr::minefield& minefield, mswpr::face_type& face_type, mswpr::mines_counter& counter);
 
     template<class NewState, class... Args>
     void set_state(Args&&... args)
@@ -35,10 +36,12 @@ namespace mswpr
 
     mswpr::minefield& get_field();
     void set_face(mswpr::face_type face);
+    mswpr::mines_counter& get_counter();
 
   private:
     mswpr::minefield& minefield_;
     mswpr::face_type& face_type_;
+    mswpr::mines_counter& counter_;
 
     using State = std::variant<generating_state, playing_state, ending_state>;
     State state_;

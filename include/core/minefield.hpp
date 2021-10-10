@@ -66,6 +66,8 @@ namespace mswpr
     void generate(size_t x, size_t y);
     void reset();
 
+    size_t get_bomb_cnt() const;
+
     bool is_deminied() const;
 
     bool is_bomb(size_t x, size_t y) const;

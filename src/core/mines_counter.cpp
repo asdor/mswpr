@@ -12,12 +12,6 @@ namespace
 
     size_t rank = 0;
 
-    if (counter < 0)
-    {
-      counter = std::abs(counter);
-      ++rank;
-    }
-
     for (size_t x : size_table)
     {
       if (counter <= x)
@@ -30,7 +24,7 @@ namespace
   }
 }
 
-mswpr::mines_counter::mines_counter(int counter) : counter_(counter)
+mswpr::mines_counter::mines_counter(size_t counter) : counter_(static_cast<int>(counter))
 {
 }
 
@@ -39,9 +33,9 @@ int mswpr::mines_counter::get_value() const
   return counter_;
 }
 
-void mswpr::mines_counter::reset(int counter)
+void mswpr::mines_counter::reset(size_t counter)
 {
-  counter_ = counter;
+  counter_ = static_cast<int>(counter);
 }
 
 mswpr::mines_counter& mswpr::mines_counter::operator++()
@@ -60,8 +54,15 @@ std::array<char, 3> mswpr::mines_counter::value_to_str() const
 {
   std::array<char, 3> str = { '0', '0', '0' };
 
-  const size_t rank = get_number_ranks(counter_);
+  int counter = counter_;
+  if (counter_ < 0)
+  {
+    str[0] = '-';
+    counter = -counter;
+  }
 
-  std::to_chars(str.data() + (3 - rank), str.data() + str.size(), counter_);
+  const size_t rank = get_number_ranks(counter);
+
+  std::to_chars(str.data() + (3 - rank), str.data() + str.size(), counter);
   return str;
 }

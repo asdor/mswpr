@@ -1,5 +1,6 @@
 #include "core/minefield.hpp"
 #include "core/types.hpp"
+#include "core/mines_counter.hpp"
 #include "core/states/state_machine.hpp"
 #include "core/states/generating_state.hpp"
 
@@ -25,7 +26,8 @@ protected:
   StateMachineTransitionTest() :
     field_(MINES, FIELD_WIDTH, FIELD_HEIGHT, MINES.size()),
     face_(face_type::SMILE_NOT_PRESSED),
-    st_machine_(field_, face_)
+    counter_(MINES.size()),
+    st_machine_(field_, face_, counter_)
   {
   }
 
@@ -39,6 +41,7 @@ protected:
 
   minefield field_;
   face_type face_;
+  mines_counter counter_;
   state_machine st_machine_;
 };
 

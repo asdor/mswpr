@@ -154,6 +154,11 @@ namespace mswpr
     unopened_cnt_ = width_ * height_;
   }
 
+  size_t minefield::get_bomb_cnt() const
+  {
+    return bombs_cnt_;
+  }
+
   cell_state minefield::get_cell_state(size_t x, size_t y) const
   {
     const auto cell = field_[y * width_ + x];

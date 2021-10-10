@@ -2,9 +2,12 @@
 
 namespace mswpr
 {
-  state_machine::state_machine(mswpr::minefield& minefield, mswpr::face_type& face_type) :
+  state_machine::state_machine(mswpr::minefield& minefield,
+                               mswpr::face_type& face_type,
+                               mswpr::mines_counter& counter) :
     minefield_(minefield),
     face_type_(face_type),
+    counter_(counter),
     state_(std::in_place_type<generating_state>, *this)
   {
   }
@@ -17,6 +20,11 @@ namespace mswpr
   mswpr::minefield& state_machine::get_field()
   {
     return minefield_;
+  }
+
+  mswpr::mines_counter& state_machine::get_counter()
+  {
+    return counter_;
   }
 
   void state_machine::on_left_face_click(bool is_released)
