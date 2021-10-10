@@ -151,3 +151,27 @@ TEST_F(StateMachineTransitionTest, FromEnding_OnRightFieldClick)
   st_machine_.on_right_field_click(RELEASED, 0, 0);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
 }
+
+TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick_PlayCounter)
+{
+  ASSERT_EQ(counter_.get_value(), 1);
+
+  st_machine_.on_right_field_click(RELEASED, 0, 0);
+  ASSERT_EQ(counter_.get_value(), 0);
+
+  st_machine_.on_right_field_click(RELEASED, 0, 0);
+  ASSERT_EQ(counter_.get_value(), 1);
+}
+
+TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick_PlayCounter)
+{
+  change_state<playing_state>();
+
+  ASSERT_EQ(counter_.get_value(), 1);
+
+  st_machine_.on_right_field_click(RELEASED, 0, 0);
+  ASSERT_EQ(counter_.get_value(), 0);
+
+  st_machine_.on_right_field_click(RELEASED, 0, 0);
+  ASSERT_EQ(counter_.get_value(), 1);
+}

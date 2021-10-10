@@ -12,7 +12,6 @@ namespace mswpr
 
     void on_left_face_click(bool is_released);
     void on_left_field_click(bool is_released, size_t x, size_t y);
-    void on_right_field_click(bool is_released, size_t x, size_t y);
   };
 }  // namespace mswpr
 

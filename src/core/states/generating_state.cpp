@@ -34,21 +34,4 @@ namespace mswpr
     st_machine_.set_state<playing_state>();
   }
 
-  void generating_state::on_right_field_click(bool is_released, size_t x, size_t y)
-  {
-    if (!is_released)
-      return;
-
-    auto& field = st_machine_.get_field();
-    if (field.is_flagged(x, y))
-    {
-      ++st_machine_.get_counter();
-    }
-    else if (field.is_closed(x, y))
-    {
-      --st_machine_.get_counter();
-    }
-
-    field.set_flag(x, y);
-  }
 }  // namespace mswpr

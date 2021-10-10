@@ -22,4 +22,8 @@ namespace mswpr
     // SDL_Log("ending_state");
     st_machine_.set_state<generating_state>();
   }
+
+  void ending_state::on_right_field_click(bool is_released, size_t x, size_t y)
+  {
+  }
 }  // namespace mswpr
