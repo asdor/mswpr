@@ -1,13 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 project(sdl2_minesweeper VERSION 0.0.1 LANGUAGES CXX)
 
-# list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
-
 set(CMAKE_CXX_STANDARD 20)
 
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-   message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-   file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
+    message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
                   "${CMAKE_BINARY_DIR}/conan.cmake")
 endif()
 
@@ -15,9 +13,6 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_cmake_run(CONANFILE conanfile.txt
                 BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS
                 BUILD missing)
-
-#find_package(SDL2 REQUIRED)
-#find_package(SDL2_image REQUIRED)
 
 file(GLOB GAME_CORE_SRC src/core/*.cpp src/core/states/*.cpp)
 file(GLOB GAME_GUI_SRC src/gui/*.cpp)
@@ -28,10 +23,16 @@ file(GLOB GAME_GUI_SRC src/gui/*.cpp)
 
 add_executable(${PROJECT_NAME} ${GAME_CORE_SRC} ${GAME_GUI_SRC} main.cpp)
 
-set(SDL2_IMAGE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2_image/include)
-set(SDL2_IMAGE_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2_image/lib/x64/SDL2_image.lib)
-set(SDL2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/include)
-set(SDL2_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/lib/x64/SDL2.lib)
+if (NOT MSVC)
+    list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
+    find_package(SDL2 REQUIRED)
+    find_package(SDL2_image REQUIRED)
+elseif()
+    set(SDL2_IMAGE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2_image/include)
+    set(SDL2_IMAGE_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2_image/lib/x64/SDL2_image.lib)
+    set(SDL2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/include)
+    set(SDL2_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/lib/x64/SDL2.lib)
+endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${SDL2_INCLUDE_DIR}

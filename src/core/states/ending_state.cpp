@@ -9,7 +9,7 @@ namespace mswpr
     st_machine_.set_face(face_type::BOSS);
   }
 
-  ending_state::ending_state(mswpr::state_machine& st_machine, size_t x, size_t y) : state_interface(st_machine)
+  ending_state::ending_state(mswpr::state_machine& st_machine, size_t /* x */, size_t /* y */) : state_interface(st_machine)
   {
     st_machine_.set_face(face_type::DEAD);
   }
@@ -23,7 +23,7 @@ namespace mswpr
     st_machine_.set_state<generating_state>();
   }
 
-  void ending_state::on_right_field_click(bool is_released, size_t x, size_t y)
+  void ending_state::on_right_field_click(bool /* is_released */, size_t /* x */, size_t /* y */)
   {
   }
 }  // namespace mswpr

@@ -8,8 +8,8 @@ namespace mswpr
 {
   game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos) :
 
-    renderer_(title, xpos, ypos),
     is_running_(false),
+    renderer_(title, xpos, ypos),
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
     face_type_(face_type::SMILE_NOT_PRESSED),
     counter_(cfg::mines_cnt),
