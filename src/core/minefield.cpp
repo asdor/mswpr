@@ -123,22 +123,29 @@ namespace mswpr
 
   void minefield::generate(size_t x, size_t y)
   {
-    std::vector<size_t> coords(width_ * height_, 0);
+    const auto neighbours_vec = get_neighbours({ x, y });
+    std::vector<size_t> glade(neighbours_vec.size());
+    for (size_t i = 0; i < glade.size(); ++i)
+    {
+      glade[i] = neighbours_vec[i].y * width_ + neighbours_vec[i].x;
+    }
+    glade.push_back(y * width_ + x);
 
-    std::iota(coords.begin(), coords.end(), 0);
+    std::vector<size_t> coords;
+    for (size_t i = 0; i < width_ * height_; ++i)
+    {
+      if (auto it = std::find(glade.begin(), glade.end(), i); it == glade.end())
+      {
+        coords.push_back(i);
+      }
+    }
 
     std::random_device rd;
     std::mt19937 g(rd());
-
     std::shuffle(coords.begin(), coords.end(), g);
-
-    const size_t input_pos = y * width_ + x;
 
     for (size_t i = 0; i < bombs_cnt_; ++i)
     {
-      if (coords[i] == input_pos)
-        std::swap(coords[i], coords.back());
-
       field_[coords[i]].value = cell_value::BOMB;
     }
 
@@ -298,7 +305,7 @@ namespace mswpr
         }
       }
     }
-    // SDL_Log("cnt: %d\n", cnt);
+    // std::cout << "cnt: " << cnt << '\n';
     return open_cell_result::OPENED;
   }
 

@@ -165,6 +165,12 @@ TEST(Minefield, NotBombCellAfterGeneration)
   const size_t bomb_cnt = 24;
   mswpr::minefield field(width, height, bomb_cnt);
 
+  // p = bomb_cnt / (width * height) - the probability that cell contains a bomb
+  // 1 - p - the probability that cell doesn't contains a bomb
+  // (1 - p) ^ K - the probability that cell doesn't contain a bomb in K attempts
+  // P(A) = 1 - (1 - p)^ K - the probability that cell contains a bomb in K attempts
+  // If the probability P(A) of opening a bomb cell with the first click tends to 1.0
+  // then the test will fail if generation allows the first clicked cell to be a mine.
   const size_t attempts = 100;
   for (size_t i = 0; i < attempts; ++i)
   {
@@ -208,4 +214,26 @@ TEST(Minefield, IsDeminied)
 
   field.reset();
   EXPECT_FALSE(field.is_deminied());
+}
+
+TEST(Minefield, EmptyGladeAroundFirstCell)
+{
+  const size_t width = 5;
+  const size_t height = 5;
+  const size_t bomb_cnt = 16;
+  mswpr::minefield field(width, height, bomb_cnt);
+
+  // N = width * height - cells amount
+  // K = bomb_cnt
+  // C_N^K - amount of all possible field states with N cells and K bombs
+  // 1 - only one state for field 5*5 with 16 bombs where central cell and its neighbors don't contain a bomb
+  // 1 / C_N^K ~ 4.9 * 10^(-7) - probability of this state to be observed
+  // the test will fail if generation allows the first clicked cell to have neighbors mines
+  const size_t attempts = 100;
+  for (size_t i = 0; i < attempts; ++i)
+  {
+    field.reset();
+    field.generate(2, 2);
+    EXPECT_EQ(field.get_value(2, 2), 0);
+  }
 }
