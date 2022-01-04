@@ -85,7 +85,7 @@ namespace mswpr
 
     void set_flag(size_t x, size_t y);
 
-    std::vector<cell_coord> get_neighbours(cell_coord coord);
+    std::vector<cell_coord> get_neighbours(cell_coord coord) const;
 
     static constexpr std::array<int, 8> neighbours_x_ind = { -1, 0, 1, -1, 1, -1, 0, 1 };
     static constexpr std::array<int, 8> neighbours_y_ind = { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -95,6 +95,8 @@ namespace mswpr
 
     void open_cell(size_t x, size_t y);
     void open_cell(cell& i_cell);
+
+    std::vector<size_t> get_mines_candidates(size_t x, size_t y) const;
 
     size_t width_;
     size_t height_;

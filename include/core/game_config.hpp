@@ -5,8 +5,8 @@
 
 namespace cfg
 {
-  inline constexpr size_t field_width = 16;
-  inline constexpr size_t field_height = 16;
+  inline constexpr size_t field_width = 8;
+  inline constexpr size_t field_height = 8;
   inline constexpr size_t mines_cnt = 10;
 
   inline constexpr size_t face_width = 26;

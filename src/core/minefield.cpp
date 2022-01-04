@@ -121,15 +121,20 @@ namespace mswpr
     }
   }
 
-  void minefield::generate(size_t x, size_t y)
+  std::vector<size_t> minefield::get_mines_candidates(size_t x, size_t y) const
   {
-    const auto neighbours_vec = get_neighbours({ x, y });
-    std::vector<size_t> glade(neighbours_vec.size());
-    for (size_t i = 0; i < glade.size(); ++i)
+    const bool is_generate_glade = (width_ > 3) && (height_ > 3) && (width_ * height_ - 9 >= bombs_cnt_);
+    const auto cur_index = y * width_ + x;
+
+    std::vector<size_t> glade = { cur_index };
+    if (is_generate_glade)
     {
-      glade[i] = neighbours_vec[i].y * width_ + neighbours_vec[i].x;
+      const auto neighbours_vec = get_neighbours({ x, y });
+      for (const auto cell : neighbours_vec)
+      {
+        glade.push_back(cell.y * width_ + cell.x);
+      }
     }
-    glade.push_back(y * width_ + x);
 
     std::vector<size_t> coords;
     for (size_t i = 0; i < width_ * height_; ++i)
@@ -139,6 +144,13 @@ namespace mswpr
         coords.push_back(i);
       }
     }
+
+    return coords;
+  }
+
+  void minefield::generate(size_t x, size_t y)
+  {
+    auto coords = get_mines_candidates(x, y);
 
     std::random_device rd;
     std::mt19937 g(rd());
@@ -309,7 +321,7 @@ namespace mswpr
     return open_cell_result::OPENED;
   }
 
-  std::vector<cell_coord> minefield::get_neighbours(cell_coord coord)
+  std::vector<cell_coord> minefield::get_neighbours(cell_coord coord) const
   {
     std::vector<cell_coord> neighbours;
     const int x_i = static_cast<int>(coord.x);
