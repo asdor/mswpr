@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(sdl2_minesweeper VERSION 0.0.1 LANGUAGES CXX)
 
+include(CTest)
+
 set(CMAKE_CXX_STANDARD 20)
 
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -40,8 +42,6 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-message("Conan libs: ${CONAN_LIBS}")
-
 target_compile_options(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
     -Wall -Wextra -Wpedantic -Werror -fconcepts>
@@ -56,7 +56,9 @@ file(GLOB ASSETS_DATA ${CMAKE_CURRENT_SOURCE_DIR}/assets/*)
 file(COPY ${ASSETS_DATA}
      DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/assets)
 
-add_subdirectory(tests)
+if(BUILD_TESTING)
+     add_subdirectory(tests)
+endif()
 
 macro(copy_dll_to_bin dir_path)
     add_custom_command(
