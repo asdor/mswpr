@@ -25,11 +25,11 @@ file(GLOB GAME_GUI_SRC src/gui/*.cpp)
 
 add_executable(${PROJECT_NAME} ${GAME_CORE_SRC} ${GAME_GUI_SRC} main.cpp)
 
-if (NOT MSVC)
+if (NOT WIN32)
     list(INSERT CMAKE_MODULE_PATH 0 ${CMAKE_SOURCE_DIR}/cmake)
     find_package(SDL2 REQUIRED)
     find_package(SDL2_image REQUIRED)
-elseif()
+else()
     set(SDL2_IMAGE_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2_image/include)
     set(SDL2_IMAGE_LIBRARIES ${CMAKE_SOURCE_DIR}/lib/SDL2_image/lib/x64/SDL2_image.lib)
     set(SDL2_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2-2.0.16/include)
