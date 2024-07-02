@@ -1,0 +1,88 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 28,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "base_msvc_x64_config",
+            "displayName": "base_msvc_x64_config",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "environment": {
+                "CONAN_HOME": "${sourceDir}/.conan_local_cache"
+            },
+            "cacheVariables": {
+                "CONAN_COMMAND": "${sourceDir}/venv_conan/Scripts/conan.exe",
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl",
+                "BUILD_TESTING": "ON"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            }
+        },
+        {
+            "name": "msvc_x64_release",
+            "inherits": "base_msvc_x64_config",
+            "displayName": "MSVC x64 release configuration",
+            "description": "This build is for release builds on Windows with MSVC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "msvc_x64_debug",
+            "inherits": "base_msvc_x64_config",
+            "displayName": "MSVC x64 debug configuration",
+            "description": "This build is for debug builds on Windows with MSVC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "msvc_x64_release",
+            "displayName": "MSVC x64 release build",
+            "configurePreset": "msvc_x64_release"
+        },
+        {
+            "name": "msvc_x64_debug",
+            "displayName": "MSVC x64 debug build",
+            "configurePreset": "msvc_x64_debug"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "msvc_x64_release",
+            "displayName": "MSVC x64 release test",
+            "configurePreset": "msvc_x64_release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "msvc_x64_debug",
+            "displayName": "MSVC x64 debug test",
+            "configurePreset": "msvc_x64_debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        }
+    ]
+}

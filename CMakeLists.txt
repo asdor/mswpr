@@ -1,20 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.28)
 project(sdl2_minesweeper VERSION 0.0.1 LANGUAGES CXX)
 
 include(CTest)
 
 set(CMAKE_CXX_STANDARD 20)
-
-if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
-    message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
-    file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/master/conan.cmake"
-                  "${CMAKE_BINARY_DIR}/conan.cmake")
-endif()
-
-include(${CMAKE_BINARY_DIR}/conan.cmake)
-conan_cmake_run(CONANFILE conanfile.txt
-                BASIC_SETUP NO_OUTPUT_DIRS CMAKE_TARGETS
-                BUILD missing)
 
 file(GLOB GAME_CORE_SRC src/core/*.cpp src/core/states/*.cpp)
 file(GLOB GAME_GUI_SRC src/gui/*.cpp)
@@ -44,7 +33,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 target_compile_options(${PROJECT_NAME} PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
-    -Wall -Wextra -Wpedantic -Werror -fconcepts>
+    -Wall -Wextra -Wpedantic -Werror>
+    $<$<CXX_COMPILER_ID:MSVC>:
+    /W4 /WX>
 )
 
 add_library(${PROJECT_NAME}-lib ${GAME_CORE_SRC})
