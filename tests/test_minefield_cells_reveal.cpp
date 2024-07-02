@@ -3,7 +3,6 @@
 #include <vector>
 
 #include <gtest/gtest.h>
-#include <gmock/gmock.h>
 
 using namespace mswpr;
 
@@ -23,7 +22,7 @@ TEST(MinefieldRevealCells, GetNeighbours_LeftTop)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 1, 0 }, { 0, 1 }, { 1, 1 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_RightTop)
@@ -34,7 +33,7 @@ TEST(MinefieldRevealCells, GetNeighbours_RightTop)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 3, 0 }, { 3, 1 }, { 4, 1 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_LeftBottom)
@@ -45,7 +44,7 @@ TEST(MinefieldRevealCells, GetNeighbours_LeftBottom)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 0, 3 }, { 1, 3 }, { 1, 4 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_RightBottom)
@@ -56,7 +55,7 @@ TEST(MinefieldRevealCells, GetNeighbours_RightBottom)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 3, 3 }, { 4, 3 }, { 3, 4 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_Top)
@@ -67,7 +66,7 @@ TEST(MinefieldRevealCells, GetNeighbours_Top)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 1, 0 }, { 3, 0 }, { 1, 1 }, { 2, 1 }, { 3, 1 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_Right)
@@ -78,7 +77,7 @@ TEST(MinefieldRevealCells, GetNeighbours_Right)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 3, 1 }, { 4, 1 }, { 3, 2 }, { 3, 3 }, { 4, 3 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_Bottom)
@@ -89,7 +88,7 @@ TEST(MinefieldRevealCells, GetNeighbours_Bottom)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 1, 3 }, { 2, 3 }, { 3, 3 }, { 1, 4 }, { 3, 4 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_Left)
@@ -100,7 +99,7 @@ TEST(MinefieldRevealCells, GetNeighbours_Left)
   const auto neighbours = field.get_neighbours(coord);
 
   const std::vector<cell_coord> cells = { { 0, 1 }, { 1, 1 }, { 1, 2 }, { 0, 3 }, { 1, 3 } };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, GetNeighbours_Central)
@@ -113,7 +112,7 @@ TEST(MinefieldRevealCells, GetNeighbours_Central)
   const std::vector<cell_coord> cells = {
     { 1, 1 }, { 2, 1 }, { 3, 1 }, { 1, 2 }, { 3, 2 }, { 1, 3 }, { 2, 3 }, { 3, 3 }
   };
-  EXPECT_THAT(neighbours, cells);
+  EXPECT_EQ(neighbours, cells);
 }
 
 TEST(MinefieldRevealCells, RevealCells)
