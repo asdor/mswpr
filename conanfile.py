@@ -1,11 +1,51 @@
 from conan import ConanFile
+from conan.tools.files import copy
+import pathlib
 
 
 class Sdl2MinesweeperRecipe(ConanFile):
     settings = 'os', 'compiler', 'build_type', 'arch'
     generators = 'CMakeDeps'
+    default_options = {
+        'sdl_image/*:shared': True,
+        "sdl_image/*:bmp": True,
+        "sdl_image/*:gif": False,
+        "sdl_image/*:lbm": False,
+        "sdl_image/*:pcx": False,
+        "sdl_image/*:pnm": False,
+        "sdl_image/*:svg": False,
+        "sdl_image/*:tga": False,
+        "sdl_image/*:qoi": False,
+        "sdl_image/*:xcf": False,
+        "sdl_image/*:xpm": False,
+        "sdl_image/*:xv": False,
+        "sdl_image/*:with_libjpeg": False,
+        "sdl_image/*:with_libtiff": False,
+        "sdl_image/*:with_libpng": False,
+        "sdl_image/*:with_libwebp": False,
+        'sdl/*:shared': True,
+        "sdl/*:directx": False,
+        "sdl/*:sdl2main": False,
+        "sdl/*:opengl": False,
+        "sdl/*:opengles": False,
+        "sdl/*:vulkan": False
+    }
 
     def requirements(self):
         self.requires("gtest/1.14.0")
         self.requires("sdl/2.28.3")
         self.requires("sdl_image/2.6.3")
+
+    def generate(self):
+        for dep in self.dependencies.values():
+            dst_folder = pathlib.Path(self.build_folder).parent
+            copy(
+                self, pattern='*.dll',
+                src=dep.cpp_info.bindir,
+                dst=dst_folder
+            )
+            copy(
+                self, pattern='*.so',
+                src=dep.cpp_info.bindir,
+                dst=dst_folder
+            )
