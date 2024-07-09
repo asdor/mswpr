@@ -1,0 +1,42 @@
+name: Build and test
+
+on:
+  push:
+    branches:
+        - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - preset_name: msvc_x64_release
+            os: windows-latest
+          - preset_name: msvc_x64_debug
+            os: windows-latest
+
+    runs-on: ${{ matrix.os }}
+
+    name: Build with ${{ matrix.preset_name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: matrix.os == 'windows-latest'
+
+      - name: Get specific version CMake, v3.28.1
+        uses: lukka/get-cmake@v3.28.1
+
+      - name: Install conan
+        run: python -m pip install conan
+
+      - name: Configure CMake
+        run: cmake -UCONAN_COMMAND --preset ${{ matrix.preset_name }}
+
+      - name: Compile
+        run: cmake --build --preset ${{ matrix.preset_name }}
+
+      - name: Run tests
+        run: ctest --preset ${{ matrix.preset_name }}
