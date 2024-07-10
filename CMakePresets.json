@@ -53,6 +53,60 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
+        },
+        {
+            "name": "base_gcc_x64_config",
+            "displayName": "base_gcc_x64_config",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "environment": {
+                "CONAN_HOME": "${sourceDir}/.conan_local_cache"
+            },
+            "cacheVariables": {
+                "CONAN_COMMAND": "${sourceDir}/venv_conan/bin/conan",
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+                },
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "linux-gcc-x64",
+                    "hostOS": [
+                        "Linux"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "gcc_x64_release",
+            "inherits": "base_gcc_x64_config",
+            "displayName": "GCC x64 release configuration",
+            "description": "This build is for debug builds on Linux with GCC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "gcc_x64_debug",
+            "inherits": "base_gcc_x64_config",
+            "displayName": "GCC x64 release configuration",
+            "description": "This build is for debug builds on Linux with GCC",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
         }
     ],
     "buildPresets": [
@@ -65,6 +119,16 @@
             "name": "msvc_x64_debug",
             "displayName": "MSVC x64 debug build",
             "configurePreset": "msvc_x64_debug"
+        },
+        {
+            "name": "gcc_x64_release",
+            "displayName": "GCC x64 release build",
+            "configurePreset": "gcc_x64_release"
+        },
+        {
+            "name": "gcc_x64_debug",
+            "displayName": "GCC x64 debug build",
+            "configurePreset": "gcc_x64_debug"
         }
     ],
     "testPresets": [
@@ -80,6 +144,22 @@
             "name": "msvc_x64_debug",
             "displayName": "MSVC x64 debug test",
             "configurePreset": "msvc_x64_debug",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "gcc_x64_release",
+            "displayName": "GCC x64 release test",
+            "configurePreset": "gcc_x64_release",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "gcc_x64_debug",
+            "displayName": "GCC x64 release test",
+            "configurePreset": "gcc_x64_debug",
             "output": {
                 "outputOnFailure": true
             }
