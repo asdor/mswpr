@@ -2,17 +2,22 @@
 
 #include <SDL.h>
 
+namespace
+{
+  constexpr Uint32 INIT_FLAG = SDL_INIT_VIDEO;
+}
+
 namespace mswpr
 {
   sdl_init_t::sdl_init_t()
   {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+    if (SDL_Init(INIT_FLAG) != 0)
       SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
   }
 
   bool sdl_init_t::is_init() const
   {
-    return SDL_WasInit(SDL_INIT_EVERYTHING);
+    return SDL_WasInit(INIT_FLAG);
   }
 
   mswpr::sdl_init_t::~sdl_init_t()
