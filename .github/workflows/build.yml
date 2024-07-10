@@ -10,6 +10,8 @@ jobs:
   build:
     strategy:
       matrix:
+        preset_name: [gcc_x64_release, gcc_x64_debug]
+        os: [ubuntu-latest]
         include:
           - preset_name: msvc_x64_release
             os: windows-latest
