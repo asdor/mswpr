@@ -28,7 +28,26 @@ class Sdl2MinesweeperRecipe(ConanFile):
         "sdl/*:sdl2main": False,
         "sdl/*:opengl": False,
         "sdl/*:opengles": False,
-        "sdl/*:vulkan": False
+        "sdl/*:vulkan": False,
+        "sdl/*:alsa": False,
+        "sdl/*:jack": False,
+        "sdl/*:pulse": False,
+        "sdl/*:sndio": False,
+        "sdl/*:nas": False,
+        "sdl/*:esd": False,
+        "sdl/*:arts": False,
+        "sdl/*:x11": False,
+        "sdl/*:xcursor": False,
+        "sdl/*:xinerama": False,
+        "sdl/*:xinput": False,
+        "sdl/*:xrandr": False,
+        "sdl/*:xscrnsaver": False,
+        "sdl/*:xshape": False,
+        "sdl/*:xvm": False,
+        "sdl/*:wayland": False,
+        "sdl/*:directfb": False,
+        "sdl/*:video_rpi": False,
+        "sdl/*:libunwind": False,
     }
 
     def requirements(self):
