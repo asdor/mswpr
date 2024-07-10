@@ -36,7 +36,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
         "sdl/*:nas": False,
         "sdl/*:esd": False,
         "sdl/*:arts": False,
-        "sdl/*:x11": False,
+        "sdl/*:x11": True,
         "sdl/*:xcursor": False,
         "sdl/*:xinerama": False,
         "sdl/*:xinput": False,
@@ -48,6 +48,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
         "sdl/*:directfb": False,
         "sdl/*:video_rpi": False,
         "sdl/*:libunwind": False,
+        "sdl/*:iconv": False
     }
 
     def requirements(self):
