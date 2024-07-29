@@ -164,5 +164,12 @@
                 "outputOnFailure": true
             }
         }
+    ],
+    "packagePresets": [
+        {
+            "name": "msvc_x64_release",
+            "displayName": "MSVC x64 build package",
+            "configurePreset": "msvc_x64_release"
+        }
     ]
 }

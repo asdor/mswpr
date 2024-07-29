@@ -28,8 +28,8 @@ target_compile_options(${PROJECT_NAME} PRIVATE
 add_library(${PROJECT_NAME}-lib ${GAME_CORE_SRC})
 target_include_directories(${PROJECT_NAME}-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
+find_package(SDL2 CONFIG REQUIRED)
+find_package(SDL2_image CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC SDL2::SDL2 SDL2_image::SDL2_image ${PROJECT_NAME}-lib)
 
 file(GLOB ASSETS_DATA ${CMAKE_CURRENT_SOURCE_DIR}/assets/*)
@@ -39,3 +39,14 @@ file(COPY ${ASSETS_DATA}
 if(BUILD_TESTING)
      add_subdirectory(tests)
 endif()
+
+set(CPACK_GENERATOR ZIP)
+include(GNUInstallDirs)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows") # TODO I hope it is temporary. Consider to use CONAN_RUNTIME_LIB_DIRS and conan CMakeToolchain generator.
+    install(FILES ${sdl_BIN_DIRS_RELEASE}/SDL2.dll DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(FILES ${sdl_image_BIN_DIRS_RELEASE}/SDL2_image.dll DESTINATION ${CMAKE_INSTALL_BINDIR})
+endif()
+
+install(DIRECTORY assets DESTINATION ${CMAKE_INSTALL_BINDIR})
+include(CPack)
