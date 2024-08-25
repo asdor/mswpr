@@ -40,13 +40,36 @@ if(BUILD_TESTING)
      add_subdirectory(tests)
 endif()
 
-set(CPACK_GENERATOR ZIP)
 include(GNUInstallDirs)
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows") # TODO I hope it is temporary. Consider to use CONAN_RUNTIME_LIB_DIRS and conan CMakeToolchain generator.
-    install(FILES ${sdl_BIN_DIRS_RELEASE}/SDL2.dll DESTINATION ${CMAKE_INSTALL_BINDIR})
-    install(FILES ${sdl_image_BIN_DIRS_RELEASE}/SDL2_image.dll DESTINATION ${CMAKE_INSTALL_BINDIR})
-endif()
+
+install(
+    TARGETS ${PROJECT_NAME}
+    RUNTIME_DEPENDENCY_SET ${PROJECT_NAME}-deps
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+install(
+    RUNTIME_DEPENDENCY_SET ${PROJECT_NAME}-deps
+    PRE_EXCLUDE_REGEXES
+        [[api-ms-win-.*]]
+        [[ext-ms-.*]]
+        [[hvsifiletrust\.dll]]
+        [[kernel32\.dll]]
+        [[libc\.so\..*]] [[libgcc_s\.so\..*]] [[libm\.so\..*]] [[libstdc\+\+\.so\..*]]
+    POST_EXCLUDE_REGEXES
+        [[.*/system32/.*\.dll]]
+        [[^/lib.*]]
+        [[^/usr/lib.*]]
+    DIRECTORIES ${CONAN_RUNTIME_LIB_DIRS}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
 install(DIRECTORY assets DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(CPACK_GENERATOR TGZ)
+else()
+    set(CPACK_GENERATOR ZIP)
+endif()
+
 include(CPack)

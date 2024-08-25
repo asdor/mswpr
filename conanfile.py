@@ -5,7 +5,7 @@ import pathlib
 
 class Sdl2MinesweeperRecipe(ConanFile):
     settings = 'os', 'compiler', 'build_type', 'arch'
-    generators = 'CMakeDeps'
+    generators = 'CMakeDeps', 'CMakeToolchain'
     default_options = {
         'sdl_image/*:shared': True,
         "sdl_image/*:bmp": True,
