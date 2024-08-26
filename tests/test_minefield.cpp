@@ -122,6 +122,9 @@ namespace
 {
   int get_bombs_count(const mswpr::minefield& field, size_t width, size_t height, size_t x, size_t y)
   {
+    const int signed_width = static_cast<int>(width);
+    const int signed_height = static_cast<int>(height);
+
     if (field.is_bomb(x, y))
       return -1;
 
@@ -130,7 +133,7 @@ namespace
     {
       const int i_x = static_cast<int>(x) + minefield::neighbours_x_ind[i];
       const int i_y = static_cast<int>(y) + minefield::neighbours_y_ind[i];
-      if (i_x >= 0 && i_x < width && i_y >= 0 && i_y < height && field.is_bomb(i_x, i_y))
+      if (i_x >= 0 && i_x < signed_width && i_y >= 0 && i_y < signed_height && field.is_bomb(i_x, i_y))
         ++count;
     }
 
