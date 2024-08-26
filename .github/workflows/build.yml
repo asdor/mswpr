@@ -1,6 +1,8 @@
 name: Build and test
 
 on:
+  schedule:
+    - cron: '0 18 * * 5'
   push:
     branches:
         - main
