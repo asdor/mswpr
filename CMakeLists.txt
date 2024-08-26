@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(sdl2_minesweeper VERSION 0.0.1 LANGUAGES CXX)
+project(sdl2_minesweeper VERSION 0.2.0 LANGUAGES CXX)
 
 include(CTest)
 
