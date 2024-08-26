@@ -170,6 +170,11 @@
             "name": "msvc_x64_release",
             "displayName": "MSVC x64 build package",
             "configurePreset": "msvc_x64_release"
+        },
+        {
+            "name": "gcc_x64_release",
+            "displayName": "GCC x64 build package",
+            "configurePreset": "gcc_x64_release"
         }
     ]
 }
