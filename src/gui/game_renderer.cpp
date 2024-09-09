@@ -1,4 +1,5 @@
 #include "gui/game_renderer.hpp"
+#include "gui/game_version.hpp"
 #include "core/game_config.hpp"
 
 #include <SDL.h>
@@ -31,6 +32,8 @@ namespace
 
 mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : face_rect_(), field_rect_()
 {
+  SDL_Log("sdl2_minesweeper version: %s\n", mswpr::get_game_version());
+
   const Uint32 window_mode = 0;
   const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
   const size_t window_height = cfg::board_offset_y + cfg::board_offset_x + cfg::cell_height * cfg::field_height;

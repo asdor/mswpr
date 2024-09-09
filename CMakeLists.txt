@@ -12,7 +12,15 @@ file(GLOB GAME_GUI_SRC src/gui/*.cpp)
 # include(cmake/Sanitizers.cmake)
 # enable_sanitizers(PROJECT_OPTIONS)
 
-add_executable(${PROJECT_NAME} ${GAME_CORE_SRC} ${GAME_GUI_SRC} main.cpp)
+set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
+configure_file(src/gui/game_version.cpp.in src/gui/game_version.cpp)
+
+add_executable(${PROJECT_NAME}
+    ${GAME_CORE_SRC}
+    ${GAME_GUI_SRC}
+    main.cpp
+    src/gui/game_version.cpp
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include

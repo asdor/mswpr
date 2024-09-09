@@ -1,0 +1,9 @@
+#include "gui/game_version.hpp"
+
+namespace mswpr
+{
+  const char* get_game_version() noexcept
+  {
+    return "@SDL2_MINESWEEPER_VERSION@";
+  }
+}
