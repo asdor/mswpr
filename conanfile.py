@@ -52,7 +52,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
     }
 
     def requirements(self):
-        self.requires("gtest/1.14.0")
+        self.requires("gtest/1.15.0")
         self.requires("sdl/2.28.3")
         self.requires("sdl_image/2.6.3")
 
