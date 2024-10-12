@@ -36,8 +36,8 @@ jobs:
       - name: Install conan
         shell: bash
         run: |
-           python -m pip install conan
-           CONAN_PIP_VERSION=$(python -m pip freeze | grep conan | tr =. _)
+           pipx install conan
+           CONAN_PIP_VERSION=$(conan version --format=json | jq -r '.version' | tr . _)
            echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
 
       - name: Cache Conan packages
