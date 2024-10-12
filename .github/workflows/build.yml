@@ -44,7 +44,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
-          key: ${{ env.CONAN_PIP_VERSION }}-${{ matrix.preset_name }}-${{ hashFiles('conanfile.py') }}
+          key: conan-${{ env.CONAN_PIP_VERSION }}-${{ matrix.preset_name }}-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
         run: cmake -UCONAN_COMMAND --preset ${{ matrix.preset_name }}
