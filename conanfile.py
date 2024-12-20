@@ -5,7 +5,7 @@ import pathlib
 
 class Sdl2MinesweeperRecipe(ConanFile):
     settings = 'os', 'compiler', 'build_type', 'arch'
-    generators = 'CMakeDeps', 'CMakeToolchain'
+    generators = 'CMakeDeps'
     default_options = {
         'sdl_image/*:shared': True,
         "sdl_image/*:bmp": True,
@@ -54,7 +54,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
     def requirements(self):
         self.requires("gtest/1.15.0")
         self.requires("sdl/2.28.3")
-        self.requires("sdl_image/2.6.3")
+        self.requires("sdl_image/2.8.2")
 
     def generate(self):
         for dep in self.dependencies.values():
