@@ -21,7 +21,7 @@
                 "CONAN_HOME": "${sourceDir}/.conan_local_cache"
             },
             "cacheVariables": {
-                "CONAN_COMMAND": "${sourceDir}/venv_conan/Scripts/conan.exe",
+                "CONAN_COMMAND": "${sourceDir}/.venv/Scripts/conan.exe",
                 "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
                 "CMAKE_C_COMPILER": "cl",
                 "CMAKE_CXX_COMPILER": "cl",
@@ -69,7 +69,7 @@
                 "CONAN_HOME": "${sourceDir}/.conan_local_cache"
             },
             "cacheVariables": {
-                "CONAN_COMMAND": "${sourceDir}/venv_conan/bin/conan",
+                "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
                 "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
                 "CMAKE_C_COMPILER": "gcc",
                 "CMAKE_CXX_COMPILER": "g++"

@@ -1,5 +1,5 @@
 build/
 .vs/
 .conan*
-venv*
+.venv
 CMakeUserPresets.json
