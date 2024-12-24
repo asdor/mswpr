@@ -5,6 +5,8 @@ include(CTest)
 
 set(CMAKE_CXX_STANDARD 20)
 
+option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
+
 file(GLOB GAME_CORE_SRC src/core/*.cpp src/core/states/*.cpp)
 file(GLOB GAME_GUI_SRC src/gui/*.cpp)
 
@@ -49,6 +51,11 @@ add_custom_command(
 
 if(BUILD_TESTING)
      add_subdirectory(tests)
+endif()
+
+if(SDL2_MINESWEEPER_ENABLE_COVERAGE)
+    include(cmake/CodeCoverage.cmake)
+    setup_target_for_coverage_lcov(${PROJECT_NAME}-lib)
 endif()
 
 include(GNUInstallDirs)
