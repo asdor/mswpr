@@ -102,7 +102,7 @@
         {
             "name": "gcc_x64_debug",
             "inherits": "base_gcc_x64_config",
-            "displayName": "GCC x64 release configuration",
+            "displayName": "GCC x64 debug configuration",
             "description": "This build is for debug builds on Linux with GCC",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
@@ -158,7 +158,7 @@
         },
         {
             "name": "gcc_x64_debug",
-            "displayName": "GCC x64 release test",
+            "displayName": "GCC x64 debug test",
             "configurePreset": "gcc_x64_debug",
             "output": {
                 "outputOnFailure": true
