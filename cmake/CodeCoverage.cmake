@@ -2,7 +2,7 @@ if(MSVC)
     message(FATAL_ERROR "Code coverage is not supported on MSVC")
 endif()
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     message(FATAL_ERROR "Code coverage results with an optimised (non-Debug) build may be misleading")
 endif()
 
