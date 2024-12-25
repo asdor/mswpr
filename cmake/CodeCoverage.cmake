@@ -1,3 +1,11 @@
+if(MSVC)
+    message(FATAL_ERROR "Code coverage is not supported on MSVC")
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(FATAL_ERROR "Code coverage results with an optimised (non-Debug) build may be misleading")
+endif()
+
 function(setup_target_for_coverage_lcov target)
     find_program(GCOV_CMD gcov REQUIRED)
     message(STATUS "gcov executable found: ${GCOV_CMD}")
