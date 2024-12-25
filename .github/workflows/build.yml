@@ -80,7 +80,7 @@ jobs:
            echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
 
       - name: Cache Conan packages
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
           key: conan-${{ env.CONAN_PIP_VERSION }}-gcc_x64_debug-${{ hashFiles('conanfile.py') }}
