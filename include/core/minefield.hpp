@@ -26,7 +26,8 @@ namespace mswpr
     CLOSED,
     OPENED,
     FLAGGED,
-    DETONATED
+    DETONATED,
+    NOT_FLAGGED_BOMB
   };
 
   struct cell
@@ -41,6 +42,7 @@ namespace mswpr
     bool is_opened() const;
     bool is_flagged() const;
     bool is_detonated() const;
+    bool is_not_flagged_bomb() const;
   };
   static_assert(std::is_trivial_v<cell>);
 
@@ -70,15 +72,16 @@ namespace mswpr
 
     bool is_deminied() const;
 
-    bool is_bomb(size_t x, size_t y) const;
     int get_value(size_t x, size_t y) const;
     cell_state get_cell_state(size_t x, size_t y) const;
     cell_value get_cell_value(size_t x, size_t y) const;
 
+    bool is_bomb(size_t x, size_t y) const;
     bool is_opened(size_t x, size_t y) const;
     bool is_closed(size_t x, size_t y) const;
     bool is_flagged(size_t x, size_t y) const;
     bool is_detonated(size_t x, size_t y) const;
+    bool is_not_flagged_bomb(size_t x, size_t y) const;
 
     void detonate_bomb(size_t x, size_t y);
     open_cell_result reveal_closed(size_t x, size_t y);
@@ -86,6 +89,9 @@ namespace mswpr
     void set_flag(size_t x, size_t y);
 
     std::vector<cell_coord> get_neighbours(cell_coord coord) const;
+
+    void flag_bombs();
+    void reveal_bombs();
 
     static constexpr std::array<int, 8> neighbours_x_ind = { -1, 0, 1, -1, 1, -1, 0, 1 };
     static constexpr std::array<int, 8> neighbours_y_ind = { -1, -1, -1, 0, 0, 1, 1, 1 };

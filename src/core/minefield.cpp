@@ -46,6 +46,11 @@ namespace mswpr
     return state == cell_state::DETONATED;
   }
 
+  bool cell::is_not_flagged_bomb() const
+  {
+    return state == cell_state::NOT_FLAGGED_BOMB;
+  }
+
   minefield::minefield(size_t width, size_t height, size_t bombs_cnt) :
     width_(width),
     height_(height),
@@ -201,6 +206,12 @@ namespace mswpr
     return cell.is_bomb();
   }
 
+  bool minefield::is_not_flagged_bomb(size_t x, size_t y) const
+  {
+    const auto cell = field_[y * width_ + x];
+    return cell.is_not_flagged_bomb();
+  }
+
   int minefield::get_value(size_t x, size_t y) const
   {
     const auto cell = field_[y * width_ + x];
@@ -341,6 +352,47 @@ namespace mswpr
     }
 
     return neighbours;
+  }
+
+  void minefield::flag_bombs()
+  {
+    std::vector<cell_coord> flags;
+
+    const int width_i = static_cast<int>(width_);
+    const int height_i = static_cast<int>(height_);
+    for (int y = 0; y < height_i; ++y)
+    {
+      for (int x = 0; x < width_i; ++x)
+      {
+        if (field_[y * width_ + x].is_bomb())
+          flags.emplace_back(x, y);
+      }
+    }
+
+    for (auto [x, y] : flags)
+    {
+      if (!is_flagged(x, y))
+      {
+        set_flag(x, y);
+      }
+    }
+  }
+
+  void minefield::reveal_bombs()
+  {
+    const int width_i = static_cast<int>(width_);
+    const int height_i = static_cast<int>(height_);
+    for (int y = 0; y < height_i; ++y)
+    {
+      for (int x = 0; x < width_i; ++x)
+      {
+        auto& cell_el = field_[y * width_ + x];
+        if (cell_el.is_bomb() && !cell_el.is_flagged() && !cell_el.is_detonated())
+        {
+          cell_el.state = cell_state::NOT_FLAGGED_BOMB;
+        }
+      }
+    }
   }
 
 }  // namespace mswpr

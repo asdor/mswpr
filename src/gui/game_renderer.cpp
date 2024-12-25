@@ -119,6 +119,9 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
       case cell_state::DETONATED:
         sprite = sprite_type::BOMB_RED;
         break;
+      case cell_state::NOT_FLAGGED_BOMB:
+        sprite = sprite_type::BOMB_FAILED;
+        break;
       default:
         break;
       }

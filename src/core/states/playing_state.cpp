@@ -22,10 +22,12 @@ namespace mswpr
 
     if (field.reveal_closed(x, y) == open_cell_result::DETONATED)
     {
+      field.reveal_bombs();
       st_machine_.set_state<ending_state>(x, y);
     }
     else if (field.is_deminied())
     {
+      field.flag_bombs();
       st_machine_.set_state<ending_state>();
     }
   }
