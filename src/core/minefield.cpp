@@ -343,9 +343,4 @@ namespace mswpr
     return neighbours;
   }
 
-  int some_unused_function_for_test(int x)
-  {
-    return x * 2;
-  }
-
 }  // namespace mswpr

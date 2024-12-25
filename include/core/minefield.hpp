@@ -105,8 +105,6 @@ namespace mswpr
     std::vector<cell> field_;
   };
 
-  int some_unused_function_for_test(int x);
-
 }  // namespace mswpr
 
 #endif  // MSWPR_MINEFIELD_HPP
