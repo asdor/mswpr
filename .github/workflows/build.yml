@@ -21,7 +21,6 @@ jobs:
             os: windows-latest
 
     runs-on: ${{ matrix.os }}
-
     name: Build with ${{ matrix.preset_name }}
 
     steps:
@@ -54,3 +53,53 @@ jobs:
 
       - name: Run tests
         run: ctest --preset ${{ matrix.preset_name }}
+
+#------------------------------------------------------------------------------
+# Build with coverage
+#------------------------------------------------------------------------------
+  coverage:
+    needs: build
+    name: Build coverage with gcc_x64_debug on ubuntu-latest
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get specific version CMake, v3.28.1
+        uses: lukka/get-cmake@v3.28.1
+
+      - name: Install lcov
+        run: |
+           sudo apt install -y lcov
+
+      - name: Install conan
+        shell: bash
+        run: |
+           pipx install conan
+           CONAN_PIP_VERSION=$(conan version --format=json | jq -r '.version' | tr . _)
+           echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
+
+      - name: Cache Conan packages
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.conan_local_cache
+          key: conan-${{ env.CONAN_PIP_VERSION }}-gcc_x64_debug-${{ hashFiles('conanfile.py') }}
+
+      - name: Configure CMake
+        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_COVERAGE=ON --preset gcc_x64_debug
+
+      - name: Compile
+        run: cmake --build --preset gcc_x64_debug
+
+      - name: Run coverage task
+        run: cmake --build --preset gcc_x64_debug --target merge-coverage
+
+      - name: Upload code coverage info
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./build/coverage_report_lcov/total.info
+          flags: gcc_x64_debug
+          disable_search: true
+          fail_ci_if_error: true
+          plugins: noop
