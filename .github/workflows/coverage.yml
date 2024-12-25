@@ -39,12 +39,14 @@ jobs:
         run: cmake --build --preset gcc_x64_debug
 
       - name: Run coverage task
-        run: cmake --build --preset gcc_x64_debug --target coverage-html-report
+        run: cmake --build --preset gcc_x64_debug --target merge-coverage
 
       - name: Upload code coverage info
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./build/coverage_report_lcov/total.info
+          flags: gcc_x64_debug
           disable_search: true
           fail_ci_if_error: true
+          plugins: noop
