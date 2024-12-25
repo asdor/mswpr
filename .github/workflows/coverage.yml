@@ -38,7 +38,6 @@ jobs:
         run: cmake --build --preset gcc_x64_debug --target coverage-html-report
 
       - name: Upload code coverage info
-        if:  matrix.config.coverage == 'Yes'
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
