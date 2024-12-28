@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 project(sdl2_minesweeper VERSION 0.2.0 LANGUAGES CXX)
 
 include(CTest)

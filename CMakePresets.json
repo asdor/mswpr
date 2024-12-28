@@ -8,7 +8,6 @@
     "configurePresets": [
         {
             "name": "base_msvc_x64_config",
-            "displayName": "base_msvc_x64_config",
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
@@ -56,7 +55,6 @@
         },
         {
             "name": "base_gcc_x64_config",
-            "displayName": "base_gcc_x64_config",
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
@@ -71,8 +69,8 @@
             "cacheVariables": {
                 "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
                 "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++"
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
             },
             "architecture": {
                 "value": "x64",
@@ -115,9 +113,19 @@
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
             "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Darwin"
+                "type": "anyOf",
+                "conditions": [
+                    {
+                        "type": "equals",
+                        "lhs": "${hostSystemName}",
+                        "rhs": "Linux"
+                    },
+                    {
+                        "type": "equals",
+                        "lhs": "${hostSystemName}",
+                        "rhs": "Darwin"
+                    }
+                ]
             },
             "environment": {
                 "CONAN_HOME": "${sourceDir}/.conan_local_cache"
@@ -137,7 +145,7 @@
             "name": "clang_x64_release",
             "inherits": "base_clang_x64_config",
             "displayName": "Clang x64 release configuration",
-            "description": "This build is for release builds on macOS with Clang",
+            "description": "This build is for release builds on Linux or macOS with Clang",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
@@ -146,7 +154,7 @@
             "name": "clang_x64_debug",
             "inherits": "base_clang_x64_config",
             "displayName": "Clang x64 debug configuration",
-            "description": "This build is for debug builds on macOS with Clang",
+            "description": "This build is for debug builds on Linux or macOS with Clang",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
