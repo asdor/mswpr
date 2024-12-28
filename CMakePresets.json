@@ -54,23 +54,16 @@
             }
         },
         {
-            "name": "base_gcc_x64_config",
+            "name": "base_unix_x64_config",
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Linux"
-            },
             "environment": {
                 "CONAN_HOME": "${sourceDir}/.conan_local_cache"
             },
             "cacheVariables": {
                 "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
-                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
-                "CMAKE_C_COMPILER": "clang",
-                "CMAKE_CXX_COMPILER": "clang++"
+                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake"
             },
             "architecture": {
                 "value": "x64",
@@ -79,11 +72,59 @@
             "vendor": {
                 "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
                     "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
-                },
+                }
+            }
+        },
+        {
+            "name": "base_gcc_x64_config",
+            "inherits": "base_unix_x64_config",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Linux"
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            },
+            "vendor": {
                 "microsoft.com/VisualStudioSettings/CMake/1.0": {
                     "intelliSenseMode": "linux-gcc-x64",
                     "hostOS": [
                         "Linux"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "base_clang_x64_config",
+            "inherits": "base_unix_x64_config",
+            "hidden": true,
+            "condition": {
+                "type": "anyOf",
+                "conditions": [
+                    {
+                        "type": "equals",
+                        "lhs": "${hostSystemName}",
+                        "rhs": "Linux"
+                    },
+                    {
+                        "type": "equals",
+                        "lhs": "${hostSystemName}",
+                        "rhs": "Darwin"
+                    }
+                ]
+            },
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [
+                        "Linux",
+                        "macOS"
                     ]
                 }
             }
@@ -104,41 +145,6 @@
             "description": "This build is for debug builds on Linux with GCC",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "base_clang_x64_config",
-            "displayName": "base_clang_x64_config",
-            "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build",
-            "condition": {
-                "type": "anyOf",
-                "conditions": [
-                    {
-                        "type": "equals",
-                        "lhs": "${hostSystemName}",
-                        "rhs": "Linux"
-                    },
-                    {
-                        "type": "equals",
-                        "lhs": "${hostSystemName}",
-                        "rhs": "Darwin"
-                    }
-                ]
-            },
-            "environment": {
-                "CONAN_HOME": "${sourceDir}/.conan_local_cache"
-            },
-            "cacheVariables": {
-                "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
-                "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
-                "CMAKE_C_COMPILER": "clang",
-                "CMAKE_CXX_COMPILER": "clang++"
-            },
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
             }
         },
         {
