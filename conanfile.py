@@ -50,11 +50,9 @@ class Sdl2MinesweeperRecipe(ConanFile):
         "sdl/*:iconv": False
     }
 
-    def configure(self):
-        if self.settings.os == "Macos":
-            self.options["sdl/*"].opengl = True
-        else:
-            self.options["sdl/*"].opengl = False
+    def config_options(self):
+        # Work around for https://github.com/libsdl-org/SDL/issues/6226
+        self.options["sdl/*"].opengl = self.settings.os == "Macos"
 
     def requirements(self):
         self.requires("gtest/1.15.0")
