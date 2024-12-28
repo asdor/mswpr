@@ -3,3 +3,4 @@ build/
 .conan*
 .venv
 CMakeUserPresets.json
+.vscode

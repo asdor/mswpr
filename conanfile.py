@@ -26,7 +26,6 @@ class Sdl2MinesweeperRecipe(ConanFile):
         'sdl/*:shared': True,
         "sdl/*:directx": False,
         "sdl/*:sdl2main": False,
-        "sdl/*:opengl": False,
         "sdl/*:opengles": False,
         "sdl/*:vulkan": False,
         "sdl/*:alsa": False,
@@ -50,6 +49,12 @@ class Sdl2MinesweeperRecipe(ConanFile):
         "sdl/*:libunwind": False,
         "sdl/*:iconv": False
     }
+
+    def configure(self):
+        if self.settings.os == "Macos":
+            self.options["sdl/*"].opengl = True
+        else:
+            self.options["sdl/*"].opengl = False
 
     def requirements(self):
         self.requires("gtest/1.15.0")
