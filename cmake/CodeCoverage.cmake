@@ -22,7 +22,7 @@ function(setup_target_for_coverage_lcov target)
     set(coverage_info_total ${coverage_info_dir}/total.info)
     set(coverage_info_html_dir ${coverage_info_dir}/html)
 
-    target_compile_options(${target} PUBLIC -g -O0 --coverage)
+    target_compile_options(${target} PUBLIC -g -O0 --coverage -fno-elide-constructors)
     target_link_libraries(${target} PUBLIC --coverage)
 
     set(LCOV_CLEAN_CMD
