@@ -301,7 +301,6 @@ namespace mswpr
     std::queue<cell_coord> cells;
     cells.emplace(base_x, base_y);
     std::vector<bool> visited(width_ * height_, false);
-    // int cnt = 0;
 
     while (!cells.empty())
     {
@@ -311,7 +310,6 @@ namespace mswpr
       if (visited[cell.y * width_ + cell.x])
         continue;
 
-      // ++cnt;
       open_cell(cur_cell);
       visited[cell.y * width_ + cell.x] = true;
 
@@ -329,7 +327,7 @@ namespace mswpr
         }
       }
     }
-    // std::cout << "cnt: " << cnt << '\n';
+
     return open_cell_result::OPENED;
   }
 
