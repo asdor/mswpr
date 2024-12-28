@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 
 #include <stdexcept>
+#include <string>
 
 namespace mswpr
 {

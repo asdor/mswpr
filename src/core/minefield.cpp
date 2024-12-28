@@ -3,6 +3,7 @@
 #include <queue>
 #include <numeric>
 #include <iostream>
+#include <string>
 
 #include "core/game_config.hpp"
 #include "core/minefield.hpp"
@@ -300,7 +301,7 @@ namespace mswpr
     std::queue<cell_coord> cells;
     cells.emplace(base_x, base_y);
     std::vector<bool> visited(width_ * height_, false);
-    int cnt = 0;
+    // int cnt = 0;
 
     while (!cells.empty())
     {
@@ -310,7 +311,7 @@ namespace mswpr
       if (visited[cell.y * width_ + cell.x])
         continue;
 
-      ++cnt;
+      // ++cnt;
       open_cell(cur_cell);
       visited[cell.y * width_ + cell.x] = true;
 
