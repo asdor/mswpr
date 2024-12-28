@@ -1,8 +1,8 @@
 #include <algorithm>
-#include <random>
-#include <queue>
-#include <numeric>
 #include <iostream>
+#include <numeric>
+#include <queue>
+#include <random>
 #include <string>
 
 #include "core/game_config.hpp"
