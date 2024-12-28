@@ -35,7 +35,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
         "sdl/*:nas": False,
         "sdl/*:esd": False,
         "sdl/*:arts": False,
-        "sdl/*:x11": True,
+        "sdl/*:x11": False,
         "sdl/*:xcursor": False,
         "sdl/*:xinerama": False,
         "sdl/*:xinput": False,
@@ -51,6 +51,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
     }
 
     def config_options(self):
+        self.options["sdl/*"].x11 = self.settings.os == "Linux"
         # Work around for https://github.com/libsdl-org/SDL/issues/6226
         self.options["sdl/*"].opengl = self.settings.os == "Macos"
 
