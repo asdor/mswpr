@@ -3,7 +3,6 @@
 #include <numeric>
 #include <queue>
 #include <random>
-#include <string>
 
 #include "core/game_config.hpp"
 #include "core/minefield.hpp"
