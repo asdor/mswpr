@@ -15,6 +15,10 @@ jobs:
         preset_name: [gcc_x64_release, gcc_x64_debug]
         os: [ubuntu-latest]
         include:
+          - preset_name: clang_x64_release
+            os: macos-15
+          - preset_name: clang_x64_debug
+            os: macos-15
           - preset_name: msvc_x64_release
             os: windows-latest
           - preset_name: msvc_x64_debug
@@ -28,6 +32,14 @@ jobs:
 
       - uses: ilammy/msvc-dev-cmd@v1
         if: matrix.os == 'windows-latest'
+
+      - name: Configure environment for MacOS
+        if: matrix.os == 'macos-15'
+        run: |
+          echo "$(brew --prefix llvm@18)/bin" >> $GITHUB_PATH
+          export PATH=$(brew --prefix llvm@18)/bin:$PATH
+          export CC=$(brew --prefix llvm@18)/bin/clang
+          export CXX=$(brew --prefix llvm@18)/bin/clang++
 
       - name: Get specific version CMake, v3.28.1
         uses: lukka/get-cmake@v3.28.1
