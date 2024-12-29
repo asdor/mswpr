@@ -13,9 +13,9 @@ namespace cfg
   inline constexpr size_t face_height = 26;
 
   inline constexpr int board_offset_x = 12;
-  inline constexpr int board_offset_y = 50;
+  inline constexpr int board_offset_y = 55;
   inline constexpr size_t counter_offset_x = 16;
-  inline constexpr size_t hud_offset_y = 0;
+  inline constexpr size_t hud_offset_y = 15;
 
   inline constexpr size_t cell_width = 16;
   inline constexpr size_t cell_height = 16;
