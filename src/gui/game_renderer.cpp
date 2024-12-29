@@ -85,6 +85,7 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
   SDL_RenderClear(renderer_.get());
 
   draw_mines_counter(counter);
+  draw_timer();
   texture_manager_.draw(face, face_rect_);
   draw_field(field);
 
@@ -134,7 +135,7 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
 void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counter)
 {
   const SDL_Rect empty_display_rect = {
-    cfg::counter_offset_x, cfg::hud_offset_y, cfg::counter_width, cfg::counter_height
+    .x = cfg::counter_offset_x, .y = cfg::hud_offset_y, .w = cfg::counter_width, .h = cfg::counter_height
   };
   texture_manager_.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
@@ -143,13 +144,38 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
   for (size_t i = 0; i < digits.size(); ++i)
   {
     const size_t rect_x = cfg::counter_offset_x + cfg::digit_offset + (cfg::digit_offset + cfg::digit_width) * i;
-    const SDL_Rect first_digit_rect = {
-      static_cast<int>(rect_x), cfg::digit_offset + cfg::hud_offset_y, cfg::digit_width, cfg::digit_height
-    };
+    const SDL_Rect first_digit_rect = { .x = static_cast<int>(rect_x),
+                                        .y = cfg::digit_offset + cfg::hud_offset_y,
+                                        .w = cfg::digit_width,
+                                        .h = cfg::digit_height };
 
     display_digits_type sprite = digits[i] == '-'
                                    ? display_digits_type::MINUS
                                    : to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i] - '0');
+    texture_manager_.draw(sprite, first_digit_rect);
+  }
+}
+
+void mswpr::game_renderer::draw_timer()
+{
+  const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
+  const size_t x_timer = window_width - cfg::counter_offset_x - cfg::counter_width - 2;
+  const SDL_Rect empty_display_rect = {
+    .x = static_cast<int>(x_timer), .y = cfg::hud_offset_y, .w = cfg::counter_width, .h = cfg::counter_height
+  };
+  texture_manager_.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
+
+  const std::array<int, 3> digits = { 0, 0, 0 };
+
+  for (size_t i = 0; i < digits.size(); ++i)
+  {
+    const size_t rect_x = x_timer + cfg::digit_offset + (cfg::digit_offset + cfg::digit_width) * i;
+    const SDL_Rect first_digit_rect = { .x = static_cast<int>(rect_x),
+                                        .y = cfg::digit_offset + cfg::hud_offset_y,
+                                        .w = cfg::digit_width,
+                                        .h = cfg::digit_height };
+
+    const display_digits_type sprite = to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i]);
     texture_manager_.draw(sprite, first_digit_rect);
   }
 }

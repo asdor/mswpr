@@ -23,6 +23,7 @@ namespace mswpr
   private:
     void draw_field(const mswpr::minefield& field);
     void draw_mines_counter(const mswpr::mines_counter& counter);
+    void draw_timer();
 
     mswpr::sdl_init_t sdl_init_;
     mswpr::sdl_window_t window_;
