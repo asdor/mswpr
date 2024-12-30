@@ -80,12 +80,13 @@ bool mswpr::game_renderer::is_inside_field(int mouse_x, int mouse_y)
 
 void mswpr::game_renderer::render(const mswpr::minefield& field,
                                   mswpr::face_type face,
-                                  const mswpr::mines_counter& counter)
+                                  const mswpr::mines_counter& counter,
+                                  const mswpr::game_timer& i_timer)
 {
   SDL_RenderClear(renderer_.get());
 
   draw_mines_counter(counter);
-  draw_timer();
+  draw_timer(i_timer);
   texture_manager_.draw(face, face_rect_);
   draw_field(field);
 
@@ -156,7 +157,7 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
   }
 }
 
-void mswpr::game_renderer::draw_timer()
+void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
 {
   const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
   const size_t x_timer = window_width - cfg::counter_offset_x - cfg::counter_width - 2;
@@ -165,7 +166,7 @@ void mswpr::game_renderer::draw_timer()
   };
   texture_manager_.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
-  const std::array<int, 3> digits = { 0, 0, 0 };
+  const auto digits = i_timer.as_digit_array();
 
   for (size_t i = 0; i < digits.size(); ++i)
   {

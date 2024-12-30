@@ -2,6 +2,7 @@
 #define MSWPR_GAME_ENGINE_HPP
 
 #include "gui/game_renderer.hpp"
+#include "core/game_timer.hpp"
 #include "core/minefield.hpp"
 #include "core/mines_counter.hpp"
 #include "core/states/state_machine.hpp"
@@ -34,6 +35,7 @@ namespace mswpr
     mswpr::minefield minefield_;
     mswpr::face_type face_type_;
     mswpr::mines_counter counter_;
+    mswpr::game_timer timer_;
 
     mswpr::state_machine state_;
 

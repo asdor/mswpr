@@ -17,6 +17,7 @@ namespace mswpr
     frame_start_ticks_(0)
   {
     is_running_ = true;
+    timer_.start(game_timer::now());
   }
 
   bool game_engine::running() const
@@ -106,11 +107,13 @@ namespace mswpr
 
   void game_engine::render()
   {
-    renderer_.render(minefield_, face_type_, counter_);
+    renderer_.render(minefield_, face_type_, counter_, timer_);
   }
 
   void game_engine::update()
   {
+    // const auto now = std::chrono::steady_clock::now();
+    timer_.update(game_timer::now());
   }
 
   void game_engine::limit_fps()
