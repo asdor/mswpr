@@ -40,10 +40,12 @@ mswpr::game_timer::TimePoint mswpr::game_timer::now()
   return Clock::now();
 }
 
-std::array<uint8_t, 3> mswpr::game_timer::as_digit_array() const
+std::array<uint8_t, 3> mswpr::game_timer::extract_digits_from_seconds() const
 {
+  static constexpr auto max_digits = static_cast<TimePoint::rep>(999);
   std::array<uint8_t, 3> arr = { 0, 0, 0 };
-  auto seconds = get_elapsed_time().count();
+  auto seconds = std::min(get_elapsed_time().count(), max_digits);
+
   for (auto it = arr.rbegin(); it != arr.rend(); ++it)
   {
     *it = seconds % 10;

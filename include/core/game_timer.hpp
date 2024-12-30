@@ -20,7 +20,7 @@ namespace mswpr
     void stop(const TimePoint& i_stop_time);
 
     std::chrono::seconds get_elapsed_time() const;
-    std::array<uint8_t, 3> as_digit_array() const;
+    std::array<uint8_t, 3> extract_digits_from_seconds() const;
 
     static TimePoint now();
 

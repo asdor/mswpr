@@ -166,7 +166,7 @@ void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
   };
   texture_manager_.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
-  const auto digits = i_timer.as_digit_array();
+  const auto digits = i_timer.extract_digits_from_seconds();
 
   for (size_t i = 0; i < digits.size(); ++i)
   {
