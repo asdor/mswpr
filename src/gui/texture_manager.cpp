@@ -53,22 +53,19 @@ namespace mswpr
     }
   }
 
-  void texture_manager::draw(face_type face, SDL_Rect dst)
+  void texture_manager::draw(face_type i_face, SDL_Rect i_dst)
   {
-    const auto index = enum_to<size_t>(face);
-    SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &faces_config_[index], &dst);
+    render_sprite(i_face, i_dst, faces_config_);
   }
 
-  void texture_manager::draw(sprite_type sprite, SDL_Rect dst)
+  void texture_manager::draw(sprite_type i_sprite, SDL_Rect i_dst)
   {
-    const auto index = enum_to<size_t>(sprite);
-    SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &sprites_config_[index], &dst);
+    render_sprite(i_sprite, i_dst, sprites_config_);
   }
 
-  void texture_manager::draw(mswpr::display_digits_type digits, SDL_Rect dst)
+  void texture_manager::draw(mswpr::display_digits_type i_digits, SDL_Rect i_dst)
   {
-    const auto index = enum_to<size_t>(digits);
-    SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &display_digits_config_[index], &dst);
+    render_sprite(i_digits, i_dst, display_digits_config_);
   }
 
   mswpr::sdl_texture_t texture_manager::load_texture(mswpr::sdl_renderer_t renderer, std::string_view path)

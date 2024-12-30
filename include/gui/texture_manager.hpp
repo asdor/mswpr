@@ -18,12 +18,19 @@ namespace mswpr
 
     void init(mswpr::sdl_renderer_t renderer, std::string_view sprite_path);
 
-    void draw(mswpr::face_type face, SDL_Rect dst);
-    void draw(mswpr::sprite_type sprite, SDL_Rect dst);
-    void draw(mswpr::display_digits_type digits, SDL_Rect dst);
+    void draw(mswpr::face_type i_face, SDL_Rect i_dst);
+    void draw(mswpr::sprite_type i_sprite, SDL_Rect i_dst);
+    void draw(mswpr::display_digits_type i_digits, SDL_Rect i_dst);
 
   private:
     static mswpr::sdl_texture_t load_texture(mswpr::sdl_renderer_t renderer, std::string_view path);
+
+    template<mswpr::Enumeration Enum, size_t N>
+    void render_sprite(Enum i_index_val, SDL_Rect i_dst_rect, const std::array<SDL_Rect, N>& i_sprites_config)
+    {
+      const auto index = enum_to<size_t>(i_index_val);
+      SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &i_sprites_config[index], &i_dst_rect);
+    }
 
     std::array<SDL_Rect, mswpr::FACES_COUNT> faces_config_;
     std::array<SDL_Rect, mswpr::SPRITES_COUNT> sprites_config_;
