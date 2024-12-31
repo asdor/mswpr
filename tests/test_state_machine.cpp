@@ -65,11 +65,13 @@ TEST_F(StateMachineTransitionTest, FromGenerating_OnLeftFaceClick)
 
 TEST_F(StateMachineTransitionTest, FromGenerating_OnLeftFieldClick)
 {
+  EXPECT_FALSE(timer_.is_running());
   st_machine_.on_left_field_click(PRESSED, 0, 0);
   ASSERT_EQ(face_, face_type::WAITING);
 
   st_machine_.on_left_field_click(RELEASED, 0, 0);
   ASSERT_TRUE(st_machine_.is_in_state<playing_state>());
+  EXPECT_TRUE(timer_.is_running());
 }
 
 TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick)
@@ -81,12 +83,14 @@ TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick)
 TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick)
 {
   change_state<playing_state>();
+  EXPECT_TRUE(timer_.is_running());
 
   st_machine_.on_left_face_click(PRESSED);
   ASSERT_EQ(face_, face_type::SMILE_PRESSED);
 
   st_machine_.on_left_face_click(RELEASED);
   ASSERT_TRUE(st_machine_.is_in_state<generating_state>());
+  EXPECT_FALSE(timer_.is_running());
 }
 
 TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnEmpty)
@@ -105,10 +109,12 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_Demined)
   const size_t x = 4;
   const size_t y = 4;
   change_state<playing_state>();
+  EXPECT_TRUE(timer_.is_running());
   ASSERT_EQ(field_.get_value(x, y), 0);
 
   st_machine_.on_left_field_click(RELEASED, x, y);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
+  EXPECT_FALSE(timer_.is_running());
 }
 
 TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
@@ -116,10 +122,12 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
   const size_t x = 0;
   const size_t y = 0;
   change_state<playing_state>();
+  EXPECT_TRUE(timer_.is_running());
   ASSERT_TRUE(field_.is_bomb(x, y));
 
   st_machine_.on_left_field_click(RELEASED, x, y);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
+  EXPECT_FALSE(timer_.is_running());
 }
 
 TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick)
@@ -133,9 +141,11 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick)
 TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFaceClick)
 {
   change_state<ending_state>();
+  EXPECT_FALSE(timer_.is_running());
 
   st_machine_.on_left_face_click(RELEASED);
   ASSERT_TRUE(st_machine_.is_in_state<generating_state>());
+  EXPECT_FALSE(timer_.is_running());
 }
 
 TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFieldClick)

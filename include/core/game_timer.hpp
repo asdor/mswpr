@@ -15,6 +15,8 @@ namespace mswpr
 
     game_timer();
 
+    bool is_running() const;
+
     void start(const TimePoint& i_start_time);
     void update(const TimePoint& i_current_time);
     void stop(const TimePoint& i_stop_time);

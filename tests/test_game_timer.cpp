@@ -16,6 +16,7 @@ TEST(GameTimer, Constructor)
 {
   mswpr::game_timer timer;
 
+  EXPECT_FALSE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 0s);
 }
 
@@ -24,8 +25,10 @@ TEST(GameTimer, Start)
   mswpr::game_timer timer;
 
   timer.start(initial_time);
+  EXPECT_TRUE(timer.is_running());
   timer.update(initial_time + 2s);
 
+  EXPECT_TRUE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 2s);
 }
 
@@ -37,6 +40,7 @@ TEST(GameTimer, Stop)
   timer.update(initial_time + 2s);
   timer.stop(initial_time + 3s);
 
+  EXPECT_FALSE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
 }
 
@@ -49,6 +53,7 @@ TEST(GameTimer, Reset)
 
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
   timer.reset();
+  EXPECT_FALSE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 0s);
 }
 

@@ -4,6 +4,11 @@ mswpr::game_timer::game_timer() : d_is_running(false)
 {
 }
 
+bool mswpr::game_timer::is_running() const
+{
+  return d_is_running;
+}
+
 void mswpr::game_timer::start(const TimePoint& i_start_time)
 {
   if (d_is_running)
