@@ -29,6 +29,13 @@ void mswpr::game_timer::stop(const TimePoint& i_stop_time)
   d_is_running = false;
 }
 
+void mswpr::game_timer::reset()
+{
+  d_start_time = {};
+  d_current_time = {};
+  d_is_running = false;
+}
+
 std::chrono::seconds mswpr::game_timer::get_elapsed_time() const
 {
   const auto diff = d_current_time - d_start_time;

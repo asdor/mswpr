@@ -18,6 +18,7 @@ namespace mswpr
     void start(const TimePoint& i_start_time);
     void update(const TimePoint& i_current_time);
     void stop(const TimePoint& i_stop_time);
+    void reset();
 
     std::chrono::seconds get_elapsed_time() const;
     std::array<uint8_t, 3> extract_digits_from_seconds() const;

@@ -40,6 +40,18 @@ TEST(GameTimer, Stop)
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
 }
 
+TEST(GameTimer, Reset)
+{
+  mswpr::game_timer timer;
+
+  timer.start(initial_time);
+  timer.stop(initial_time + 3s);
+
+  EXPECT_EQ(timer.get_elapsed_time(), 3s);
+  timer.reset();
+  EXPECT_EQ(timer.get_elapsed_time(), 0s);
+}
+
 TEST(GameTimer, UpdateOnNotStarted)
 {
   mswpr::game_timer timer;
