@@ -13,11 +13,10 @@ namespace mswpr
     minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
     face_type_(face_type::SMILE_NOT_PRESSED),
     counter_(cfg::mines_cnt),
-    state_(minefield_, face_type_, counter_),
+    state_(minefield_, face_type_, counter_, timer_),
     frame_start_ticks_(0)
   {
     is_running_ = true;
-    timer_.start(game_timer::now());
   }
 
   bool game_engine::running() const

@@ -1,3 +1,4 @@
+#include "core/game_timer.hpp"
 #include "core/minefield.hpp"
 #include "core/types.hpp"
 #include "core/mines_counter.hpp"
@@ -27,7 +28,7 @@ protected:
     field_(MINES, FIELD_WIDTH, FIELD_HEIGHT, MINES.size()),
     face_(face_type::SMILE_NOT_PRESSED),
     counter_(MINES.size()),
-    st_machine_(field_, face_, counter_)
+    st_machine_(field_, face_, counter_, timer_)
   {
   }
 
@@ -42,6 +43,7 @@ protected:
   minefield field_;
   face_type face_;
   mines_counter counter_;
+  game_timer timer_;
   state_machine st_machine_;
 };
 

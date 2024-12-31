@@ -10,6 +10,7 @@ namespace mswpr
     auto& field = st_machine_.get_field();
     field.reset();
     st_machine_.get_counter().reset(field.get_bomb_cnt());
+    st_machine_.get_timer().reset();
   }
 
   void generating_state::on_left_face_click(bool is_released)

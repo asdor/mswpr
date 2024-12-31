@@ -8,7 +8,7 @@ namespace mswpr
   class playing_state : public state_interface
   {
   public:
-    using state_interface::state_interface;
+    playing_state(state_machine& st_machine);
 
     void on_left_face_click(bool is_released);
     void on_left_field_click(bool is_released, size_t x, size_t y);

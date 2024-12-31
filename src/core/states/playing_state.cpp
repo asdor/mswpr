@@ -4,6 +4,11 @@
 
 namespace mswpr
 {
+  playing_state::playing_state(state_machine& st_machine) : state_interface(st_machine)
+  {
+    st_machine_.get_timer().start(game_timer::now());
+  }
+
   void playing_state::on_left_face_click(bool is_released)
   {
     if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::SMILE_NOT_PRESSED))
