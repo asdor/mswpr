@@ -111,7 +111,6 @@ namespace mswpr
 
   void game_engine::update()
   {
-    // const auto now = std::chrono::steady_clock::now();
     timer_.update(game_timer::now());
   }
 
