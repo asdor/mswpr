@@ -4,8 +4,8 @@
 #include <array>
 #include <string_view>
 
-#include "sdl_helper.hpp"
 #include "core/types.hpp"
+#include "gui/sdl_helper.hpp"
 
 #include <SDL.h>
 

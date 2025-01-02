@@ -2,8 +2,8 @@
 #define MSWPR_MINEFIELD_HPP
 
 #include <array>
-#include <vector>
 #include <type_traits>
+#include <vector>
 
 namespace mswpr
 {

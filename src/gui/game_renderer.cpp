@@ -1,6 +1,6 @@
 #include "gui/game_renderer.hpp"
-#include "gui/game_version.hpp"
 #include "core/game_config.hpp"
+#include "gui/game_version.hpp"
 
 #include <SDL.h>
 

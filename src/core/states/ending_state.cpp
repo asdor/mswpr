@@ -1,6 +1,6 @@
-#include "core/states/state_machine.hpp"
 #include "core/states/ending_state.hpp"
 #include "core/states/generating_state.hpp"
+#include "core/states/state_machine.hpp"
 
 namespace mswpr
 {

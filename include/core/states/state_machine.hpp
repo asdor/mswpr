@@ -6,9 +6,9 @@
 #include "core/states/playing_state.hpp"
 
 #include "core/game_timer.hpp"
-#include "core/types.hpp"
 #include "core/minefield.hpp"
 #include "core/mines_counter.hpp"
+#include "core/types.hpp"
 
 #include <variant>
 

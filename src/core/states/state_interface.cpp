@@ -1,5 +1,5 @@
-#include "core/states/state_machine.hpp"
 #include "core/states/state_interface.hpp"
+#include "core/states/state_machine.hpp"
 
 namespace mswpr
 {

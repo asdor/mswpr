@@ -1,11 +1,11 @@
 #ifndef MSWPR_GAME_RENDERER_HPP
 #define MSWPR_GAME_RENDERER_HPP
 
-#include "gui/sdl_helper.hpp"
-#include "gui/texture_manager.hpp"
 #include "core/game_timer.hpp"
 #include "core/minefield.hpp"
 #include "core/mines_counter.hpp"
+#include "gui/sdl_helper.hpp"
+#include "gui/texture_manager.hpp"
 
 #include <string_view>
 

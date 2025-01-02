@@ -1,6 +1,6 @@
+#include "gui/game_engine.hpp"
 #include "core/game_config.hpp"
 #include "core/states/state_machine.hpp"
-#include "gui/game_engine.hpp"
 
 #include <SDL.h>
 

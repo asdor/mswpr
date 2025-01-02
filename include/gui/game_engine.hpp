@@ -1,14 +1,14 @@
 #ifndef MSWPR_GAME_ENGINE_HPP
 #define MSWPR_GAME_ENGINE_HPP
 
-#include "gui/game_renderer.hpp"
 #include "core/game_timer.hpp"
 #include "core/minefield.hpp"
 #include "core/mines_counter.hpp"
-#include "core/states/state_machine.hpp"
 #include "core/states/ending_state.hpp"
 #include "core/states/generating_state.hpp"
 #include "core/states/playing_state.hpp"
+#include "core/states/state_machine.hpp"
+#include "gui/game_renderer.hpp"
 
 #include <string_view>
 
