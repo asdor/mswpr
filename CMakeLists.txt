@@ -4,7 +4,6 @@ project(sdl2_minesweeper VERSION 0.3.0 LANGUAGES CXX)
 
 set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
 
-include(CTest)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -13,10 +12,7 @@ option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
 add_subdirectory(src/core)
 add_subdirectory(src/gui)
 
-# add_library(PROJECT_OPTIONS INTERFACE)
-# include(cmake/Sanitizers.cmake)
-# enable_sanitizers(PROJECT_OPTIONS)
-
+include(CTest)
 if(BUILD_TESTING)
      add_subdirectory(tests)
 endif()
@@ -25,6 +21,10 @@ if(SDL2_MINESWEEPER_ENABLE_COVERAGE)
     include(cmake/CodeCoverage.cmake)
     setup_target_for_coverage_lcov(${PROJECT_NAME}-lib)
 endif()
+
+# add_library(PROJECT_OPTIONS INTERFACE)
+# include(cmake/Sanitizers.cmake)
+# enable_sanitizers(PROJECT_OPTIONS)
 
 include(GNUInstallDirs)
 
