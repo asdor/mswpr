@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.28)
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 project(sdl2_minesweeper VERSION 0.3.0 LANGUAGES CXX)
 
+set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
+
 include(CTest)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -9,36 +11,11 @@ set(CMAKE_CXX_STANDARD 20)
 option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
 
 add_subdirectory(src/core)
-
-file(GLOB GAME_GUI_SRC src/gui/*.cpp)
+add_subdirectory(src/gui)
 
 # add_library(PROJECT_OPTIONS INTERFACE)
 # include(cmake/Sanitizers.cmake)
 # enable_sanitizers(PROJECT_OPTIONS)
-
-set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
-configure_file(src/gui/game_version.cpp.in src/gui/game_version.cpp)
-
-add_executable(${PROJECT_NAME}
-    ${GAME_CORE_SRC}
-    ${GAME_GUI_SRC}
-    src/gui/game_version.cpp
-)
-
-target_include_directories(${PROJECT_NAME} PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-find_package(SDL2 CONFIG REQUIRED)
-find_package(SDL2_image CONFIG REQUIRED)
-target_link_libraries(${PROJECT_NAME} PUBLIC SDL2::SDL2 SDL2_image::SDL2_image ${PROJECT_NAME}-lib)
-
-add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_CURRENT_SOURCE_DIR}/assets
-    ${CMAKE_CURRENT_BINARY_DIR}/assets
-)
 
 if(BUILD_TESTING)
      add_subdirectory(tests)
