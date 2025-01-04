@@ -8,7 +8,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
 
-file(GLOB GAME_CORE_SRC src/core/*.cpp src/core/states/*.cpp)
+add_subdirectory(src/core)
+
 file(GLOB GAME_GUI_SRC src/gui/*.cpp)
 
 # add_library(PROJECT_OPTIONS INTERFACE)
@@ -26,16 +27,6 @@ add_executable(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
-)
-
-add_library(${PROJECT_NAME}-lib ${GAME_CORE_SRC})
-target_include_directories(${PROJECT_NAME}-lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-target_compile_options(${PROJECT_NAME}-lib PUBLIC
-    $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:
-    -Wall -Wextra -Wpedantic -Werror>
-    $<$<CXX_COMPILER_ID:MSVC>:
-    /W4 /WX>
 )
 
 find_package(SDL2 CONFIG REQUIRED)
