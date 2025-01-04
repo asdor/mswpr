@@ -21,7 +21,6 @@ configure_file(src/gui/game_version.cpp.in src/gui/game_version.cpp)
 add_executable(${PROJECT_NAME}
     ${GAME_CORE_SRC}
     ${GAME_GUI_SRC}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/game_main.cpp
     src/gui/game_version.cpp
 )
 
