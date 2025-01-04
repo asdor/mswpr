@@ -4,7 +4,6 @@ project(sdl2_minesweeper VERSION 0.3.0 LANGUAGES CXX)
 
 set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
 
-
 set(CMAKE_CXX_STANDARD 20)
 
 option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
@@ -19,7 +18,7 @@ endif()
 
 if(SDL2_MINESWEEPER_ENABLE_COVERAGE)
     include(cmake/CodeCoverage.cmake)
-    setup_target_for_coverage_lcov(${PROJECT_NAME}-lib)
+    setup_target_for_coverage_lcov(${PROJECT_NAME}-core)
 endif()
 
 # add_library(PROJECT_OPTIONS INTERFACE)

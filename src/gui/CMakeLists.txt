@@ -23,7 +23,7 @@ find_package(SDL2_image CONFIG REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        SDL2::SDL2 SDL2_image::SDL2_image ${PROJECT_NAME}-lib
+        SDL2::SDL2 SDL2_image::SDL2_image ${PROJECT_NAME}-core
 )
 
 add_custom_command(
