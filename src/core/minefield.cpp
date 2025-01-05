@@ -21,7 +21,7 @@ namespace mswpr
     height_(height),
     bombs_cnt_(bombs_cnt),
     unopened_cnt_(width_ * height_),
-    field_(width_ * height_, { cell_value::EMPTY, cell_state::CLOSED })
+    field_(width_, height_)
   {
   }
 
