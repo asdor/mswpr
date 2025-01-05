@@ -115,6 +115,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_Demined)
   st_machine_.on_left_field_click(RELEASED, x, y);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
   EXPECT_FALSE(timer_.is_running());
+  EXPECT_EQ(face_, face_type::BOSS);
 }
 
 TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
@@ -128,6 +129,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
   st_machine_.on_left_field_click(RELEASED, x, y);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
   EXPECT_FALSE(timer_.is_running());
+  EXPECT_EQ(face_, face_type::DEAD);
 }
 
 TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick)
