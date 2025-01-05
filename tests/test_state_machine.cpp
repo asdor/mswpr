@@ -140,7 +140,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick)
 
 TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFaceClick)
 {
-  change_state<ending_state>();
+  change_state<ending_state>(ending_state::params{ .is_victory = true });
   EXPECT_FALSE(timer_.is_running());
 
   st_machine_.on_left_face_click(RELEASED);
@@ -150,7 +150,7 @@ TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFaceClick)
 
 TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFieldClick)
 {
-  change_state<ending_state>();
+  change_state<ending_state>(ending_state::params{ .is_victory = true });
 
   st_machine_.on_left_field_click(RELEASED, 0, 0);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
@@ -158,10 +158,22 @@ TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFieldClick)
 
 TEST_F(StateMachineTransitionTest, FromEnding_OnRightFieldClick)
 {
-  change_state<ending_state>();
+  change_state<ending_state>(ending_state::params{ .is_victory = true });
 
   st_machine_.on_right_field_click(RELEASED, 0, 0);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
+}
+
+TEST_F(StateMachineTransitionTest, FromEnding_Victory)
+{
+  change_state<ending_state>(ending_state::params{ .is_victory = true });
+  EXPECT_EQ(face_, face_type::BOSS);
+}
+
+TEST_F(StateMachineTransitionTest, FromEnding_Defeat)
+{
+  change_state<ending_state>(ending_state::params{ .is_victory = false });
+  EXPECT_EQ(face_, face_type::DEAD);
 }
 
 TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick_PlayCounter)

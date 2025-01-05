@@ -14,7 +14,6 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::SMILE_NOT_PRESSED))
       return;
 
-    //    SDL_Log("playing_state");
     st_machine_.set_state<generating_state>();
   }
 
@@ -28,12 +27,12 @@ namespace mswpr
     if (field.reveal_closed(x, y) == open_cell_result::DETONATED)
     {
       field.reveal_bombs();
-      st_machine_.set_state<ending_state>(x, y);
+      st_machine_.set_state<ending_state>(ending_state::params{ .is_victory = true });
     }
     else if (field.is_deminied())
     {
       field.flag_bombs();
-      st_machine_.set_state<ending_state>();
+      st_machine_.set_state<ending_state>(ending_state::params{ .is_victory = false });
     }
   }
 

@@ -4,16 +4,10 @@
 
 namespace mswpr
 {
-  ending_state::ending_state(mswpr::state_machine& st_machine) : state_interface(st_machine)
-  {
-    st_machine_.set_face(face_type::BOSS);
-    st_machine_.get_timer().stop(game_timer::now());
-  }
-
-  ending_state::ending_state(mswpr::state_machine& st_machine, size_t /* x */, size_t /* y */) :
+  ending_state::ending_state(mswpr::state_machine& st_machine, ending_state::params state_params) :
     state_interface(st_machine)
   {
-    st_machine_.set_face(face_type::DEAD);
+    st_machine_.set_face(state_params.is_victory ? face_type::BOSS : face_type::DEAD);
     st_machine_.get_timer().stop(game_timer::now());
   }
 
