@@ -20,7 +20,6 @@ namespace mswpr
   private:
     std::vector<cell> d_cells;
     std::size_t d_width;
-    std::size_t d_height;
   };
 }  // namespace mswpr
 
