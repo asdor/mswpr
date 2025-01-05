@@ -12,23 +12,27 @@ jobs:
   build:
     strategy:
       matrix:
-        preset_name: [gcc_x64_release, gcc_x64_debug]
-        os: [ubuntu-latest]
+        build_type: [release, debug]
+        os: [ubuntu-latest, windows-latest, macos-15]
         include:
-          - preset_name: clang_x64_release
-            os: macos-15
-          - preset_name: clang_x64_debug
-            os: macos-15
-          - preset_name: msvc_x64_release
-            os: windows-latest
-          - preset_name: msvc_x64_debug
-            os: windows-latest
+          - os: ubuntu-latest
+            compiler: gcc
+          - os: windows-latest
+            compiler: msvc
+          - os: macos-15
+            compiler: clang
 
     runs-on: ${{ matrix.os }}
-    name: Build with ${{ matrix.preset_name }}
+    name: 'Build with os: ${{ matrix.os }} compiler: ${{ matrix.compiler }} build_type: ${{ matrix.build_type }}'
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Select CMake preset name
+        shell: bash
+        run: |
+           CMAKE_PRESET_NAME=${{ matrix.compiler }}_${{ matrix.build_type }}
+           echo "CMAKE_PRESET_NAME=$CMAKE_PRESET_NAME" >> "$GITHUB_ENV"
 
       - uses: ilammy/msvc-dev-cmd@v1
         if: matrix.os == 'windows-latest'
@@ -55,23 +59,23 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-${{ matrix.preset_name }}-${{ hashFiles('conanfile.py') }}
+          key: conan-${{ env.CONAN_PIP_VERSION }}-${{ env.CMAKE_PRESET_NAME }}-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
-        run: cmake -UCONAN_COMMAND --preset ${{ matrix.preset_name }}
+        run: cmake -UCONAN_COMMAND --preset ${{ env.CMAKE_PRESET_NAME }}
 
       - name: Compile
-        run: cmake --build --preset ${{ matrix.preset_name }}
+        run: cmake --build --preset ${{ env.CMAKE_PRESET_NAME }}
 
       - name: Run tests
-        run: ctest --preset ${{ matrix.preset_name }}
+        run: ctest --preset ${{ env.CMAKE_PRESET_NAME }}
 
 #------------------------------------------------------------------------------
 # Build with coverage
 #------------------------------------------------------------------------------
   coverage:
     needs: build
-    name: Build coverage with gcc_x64_debug on ubuntu-latest
+    name: Build coverage with gcc_debug on ubuntu-latest
     runs-on: ubuntu-latest
 
     steps:
@@ -95,23 +99,23 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-gcc_x64_debug-${{ hashFiles('conanfile.py') }}
+          key: conan-${{ env.CONAN_PIP_VERSION }}-gcc_debug-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
-        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_COVERAGE=ON --preset gcc_x64_debug
+        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_COVERAGE=ON --preset gcc_debug
 
       - name: Compile
-        run: cmake --build --preset gcc_x64_debug
+        run: cmake --build --preset gcc_debug
 
       - name: Run coverage task
-        run: cmake --build --preset gcc_x64_debug --target merge-coverage
+        run: cmake --build --preset gcc_debug --target merge-coverage
 
       - name: Upload code coverage info
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./build/coverage_report_lcov/total.info
-          flags: gcc_x64_debug
+          flags: gcc_debug
           disable_search: true
           fail_ci_if_error: true
           plugins: noop

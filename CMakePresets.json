@@ -7,7 +7,7 @@
     },
     "configurePresets": [
         {
-            "name": "base_msvc_x64_config",
+            "name": "base_msvc_config",
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
@@ -25,36 +25,28 @@
                 "CMAKE_C_COMPILER": "cl",
                 "CMAKE_CXX_COMPILER": "cl",
                 "BUILD_TESTING": "ON"
-            },
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
-            "toolset": {
-                "value": "host=x64",
-                "strategy": "external"
             }
         },
         {
-            "name": "msvc_x64_release",
-            "inherits": "base_msvc_x64_config",
-            "displayName": "MSVC x64 release configuration",
+            "name": "msvc_release",
+            "inherits": "base_msvc_config",
+            "displayName": "MSVC release configuration",
             "description": "This build is for release builds on Windows with MSVC",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
-            "name": "msvc_x64_debug",
-            "inherits": "base_msvc_x64_config",
-            "displayName": "MSVC x64 debug configuration",
+            "name": "msvc_debug",
+            "inherits": "base_msvc_config",
+            "displayName": "MSVC debug configuration",
             "description": "This build is for debug builds on Windows with MSVC",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "base_unix_x64_config",
+            "name": "base_unix_config",
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build",
@@ -65,10 +57,6 @@
                 "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
                 "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake"
             },
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
             "vendor": {
                 "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
                     "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
@@ -76,8 +64,8 @@
             }
         },
         {
-            "name": "base_gcc_x64_config",
-            "inherits": "base_unix_x64_config",
+            "name": "base_gcc_config",
+            "inherits": "base_unix_config",
             "hidden": true,
             "condition": {
                 "type": "equals",
@@ -98,8 +86,8 @@
             }
         },
         {
-            "name": "base_clang_x64_config",
-            "inherits": "base_unix_x64_config",
+            "name": "base_clang_config",
+            "inherits": "base_unix_config",
             "hidden": true,
             "condition": {
                 "type": "anyOf",
@@ -130,36 +118,36 @@
             }
         },
         {
-            "name": "gcc_x64_release",
-            "inherits": "base_gcc_x64_config",
-            "displayName": "GCC x64 release configuration",
+            "name": "gcc_release",
+            "inherits": "base_gcc_config",
+            "displayName": "GCC release configuration",
             "description": "This build is for release builds on Linux with GCC",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
-            "name": "gcc_x64_debug",
-            "inherits": "base_gcc_x64_config",
-            "displayName": "GCC x64 debug configuration",
+            "name": "gcc_debug",
+            "inherits": "base_gcc_config",
+            "displayName": "GCC debug configuration",
             "description": "This build is for debug builds on Linux with GCC",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "clang_x64_release",
-            "inherits": "base_clang_x64_config",
-            "displayName": "Clang x64 release configuration",
+            "name": "clang_release",
+            "inherits": "base_clang_config",
+            "displayName": "Clang release configuration",
             "description": "This build is for release builds on Linux or macOS with Clang",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         },
         {
-            "name": "clang_x64_debug",
-            "inherits": "base_clang_x64_config",
-            "displayName": "Clang x64 debug configuration",
+            "name": "clang_debug",
+            "inherits": "base_clang_config",
+            "displayName": "Clang debug configuration",
             "description": "This build is for debug builds on Linux or macOS with Clang",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
@@ -168,81 +156,81 @@
     ],
     "buildPresets": [
         {
-            "name": "msvc_x64_release",
-            "displayName": "MSVC x64 release build",
-            "configurePreset": "msvc_x64_release"
+            "name": "msvc_release",
+            "displayName": "MSVC release build",
+            "configurePreset": "msvc_release"
         },
         {
-            "name": "msvc_x64_debug",
-            "displayName": "MSVC x64 debug build",
-            "configurePreset": "msvc_x64_debug"
+            "name": "msvc_debug",
+            "displayName": "MSVC debug build",
+            "configurePreset": "msvc_debug"
         },
         {
-            "name": "gcc_x64_release",
-            "displayName": "GCC x64 release build",
-            "configurePreset": "gcc_x64_release"
+            "name": "gcc_release",
+            "displayName": "GCC release build",
+            "configurePreset": "gcc_release"
         },
         {
-            "name": "gcc_x64_debug",
-            "displayName": "GCC x64 debug build",
-            "configurePreset": "gcc_x64_debug"
+            "name": "gcc_debug",
+            "displayName": "GCC debug build",
+            "configurePreset": "gcc_debug"
         },
         {
-            "name": "clang_x64_release",
-            "displayName": "Clang x64 release build",
-            "configurePreset": "clang_x64_release"
+            "name": "clang_release",
+            "displayName": "Clang release build",
+            "configurePreset": "clang_release"
         },
         {
-            "name": "clang_x64_debug",
-            "displayName": "Clang x64 debug build",
-            "configurePreset": "clang_x64_debug"
+            "name": "clang_debug",
+            "displayName": "Clang debug build",
+            "configurePreset": "clang_debug"
         }
     ],
     "testPresets": [
         {
-            "name": "msvc_x64_release",
-            "displayName": "MSVC x64 release test",
-            "configurePreset": "msvc_x64_release",
+            "name": "msvc_release",
+            "displayName": "MSVC release test",
+            "configurePreset": "msvc_release",
             "output": {
                 "outputOnFailure": true
             }
         },
         {
-            "name": "msvc_x64_debug",
-            "displayName": "MSVC x64 debug test",
-            "configurePreset": "msvc_x64_debug",
+            "name": "msvc_debug",
+            "displayName": "MSVC debug test",
+            "configurePreset": "msvc_debug",
             "output": {
                 "outputOnFailure": true
             }
         },
         {
-            "name": "gcc_x64_release",
-            "displayName": "GCC x64 release test",
-            "configurePreset": "gcc_x64_release",
+            "name": "gcc_release",
+            "displayName": "GCC release test",
+            "configurePreset": "gcc_release",
             "output": {
                 "outputOnFailure": true
             }
         },
         {
-            "name": "gcc_x64_debug",
-            "displayName": "GCC x64 debug test",
-            "configurePreset": "gcc_x64_debug",
+            "name": "gcc_debug",
+            "displayName": "GCC debug test",
+            "configurePreset": "gcc_debug",
             "output": {
                 "outputOnFailure": true
             }
         },
         {
-            "name": "clang_x64_release",
-            "displayName": "Clang x64 release test",
-            "configurePreset": "clang_x64_release",
+            "name": "clang_release",
+            "displayName": "Clang release test",
+            "configurePreset": "clang_release",
             "output": {
                 "outputOnFailure": true
             }
         },
         {
-            "name": "clang_x64_debug",
-            "displayName": "Clang x64 debug test",
-            "configurePreset": "clang_x64_debug",
+            "name": "clang_debug",
+            "displayName": "Clang debug test",
+            "configurePreset": "clang_debug",
             "output": {
                 "outputOnFailure": true
             }
@@ -250,19 +238,19 @@
     ],
     "packagePresets": [
         {
-            "name": "msvc_x64_release",
-            "displayName": "MSVC x64 build package",
-            "configurePreset": "msvc_x64_release"
+            "name": "msvc_release",
+            "displayName": "MSVC build package",
+            "configurePreset": "msvc_release"
         },
         {
-            "name": "gcc_x64_release",
-            "displayName": "GCC x64 build package",
-            "configurePreset": "gcc_x64_release"
+            "name": "gcc_release",
+            "displayName": "GCC build package",
+            "configurePreset": "gcc_release"
         },
         {
-            "name": "clang_x64_release",
-            "displayName": "Clang x64 build package",
-            "configurePreset": "clang_x64_release"
+            "name": "clang_release",
+            "displayName": "Clang build package",
+            "configurePreset": "clang_release"
         }
     ]
 }
