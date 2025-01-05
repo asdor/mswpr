@@ -23,7 +23,7 @@ jobs:
             compiler: clang
 
     runs-on: ${{ matrix.os }}
-    name: 'Build with os: ${{ matrix.os }} compiler: ${{ matrix.compiler }} build_type: ${{ matrix.build_type }}'
+    name: '${{ matrix.os }}: ${{ matrix.compiler }} + ${{ matrix.build_type }}'
 
     steps:
       - uses: actions/checkout@v4
@@ -75,7 +75,7 @@ jobs:
 #------------------------------------------------------------------------------
   coverage:
     needs: build
-    name: Build coverage with gcc_debug on ubuntu-latest
+    name: Collect coverage on ubuntu-latest with gcc_debug
     runs-on: ubuntu-latest
 
     steps:
