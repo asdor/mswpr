@@ -29,7 +29,11 @@ namespace mswpr
     minefield(width, height, bombs_cnt)
   {
     for (size_t mine_ind : mines_ind)
-      field_[mine_ind].value = cell_value::BOMB;
+    {
+      const size_t x_c = mine_ind % width_;
+      const size_t y_c = mine_ind / width_;
+      field_(x_c, y_c).value = cell_value::BOMB;
+    }
 
     place_values_around_mines();
   }
@@ -42,7 +46,7 @@ namespace mswpr
     {
       for (int x = 0; x < width_i; ++x)
       {
-        if (field_[y * width_ + x].value == cell_value::BOMB)
+        if (field_(x, y).value == cell_value::BOMB)
           continue;
 
         size_t cnt = 0;
@@ -50,11 +54,11 @@ namespace mswpr
         {
           int i_x = x - neighbours_x_ind[i];
           int i_y = y - neighbours_y_ind[i];
-          if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i && field_[i_y * width_ + i_x].is_bomb())
+          if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i && field_(i_x, i_y).is_bomb())
             ++cnt;
         }
 
-        field_[y * width_ + x].value = to_enum<cell_value>(cnt);
+        field_(x, y).value = to_enum<cell_value>(cnt);
       }
     }
   }
@@ -128,7 +132,9 @@ namespace mswpr
 
     for (size_t i = 0; i < bombs_cnt_; ++i)
     {
-      field_[coords[i]].value = cell_value::BOMB;
+      const size_t x_c = coords[i] % width_;
+      const size_t y_c = coords[i] / width_;
+      field_(x_c, y_c).value = cell_value::BOMB;
     }
 
     place_values_around_mines();
@@ -149,13 +155,13 @@ namespace mswpr
 
   cell_state minefield::get_cell_state(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.state;
   }
 
   cell_value minefield::get_cell_value(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.value;
   }
 
@@ -166,43 +172,43 @@ namespace mswpr
 
   bool minefield::is_bomb(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.is_bomb();
   }
 
   bool minefield::is_not_flagged_bomb(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.is_not_flagged_bomb();
   }
 
   int minefield::get_value(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return !cell.is_bomb() ? static_cast<int>(cell.value) : -1;
   }
 
   bool minefield::is_opened(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.is_opened();
   }
 
   bool minefield::is_closed(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.is_closed();
   }
 
   bool minefield::is_flagged(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.is_flagged();
   }
 
   bool minefield::is_detonated(size_t x, size_t y) const
   {
-    const auto cell = field_[y * width_ + x];
+    const auto cell = field_(x, y);
     return cell.is_detonated();
   }
 
@@ -214,13 +220,13 @@ namespace mswpr
 
   void minefield::open_cell(size_t x, size_t y)
   {
-    auto& cell = field_[y * width_ + x];
+    auto& cell = field_(x, y);
     open_cell(cell);
   }
 
   void minefield::set_flag(size_t x, size_t y)
   {
-    auto& cell = field_[y * width_ + x];
+    auto& cell = field_(x, y);
     if (cell.is_flagged())
     {
       cell.state = cell_state::CLOSED;
@@ -233,7 +239,7 @@ namespace mswpr
 
   void minefield::detonate_bomb(size_t x, size_t y)
   {
-    auto& cell = field_[y * width_ + x];
+    auto& cell = field_(x, y);
     if (!cell.is_bomb())
       return;
 
@@ -243,7 +249,7 @@ namespace mswpr
 
   open_cell_result minefield::reveal_closed(size_t base_x, size_t base_y)
   {
-    auto& base_cell = field_[base_y * width_ + base_x];
+    auto& base_cell = field_(base_x, base_y);
     if (!base_cell.is_closed())
     {
       return open_cell_result::OPENED;
@@ -269,7 +275,7 @@ namespace mswpr
     {
       auto cell = cells.front();
       cells.pop();
-      auto& cur_cell = field_[cell.y * width_ + cell.x];
+      auto& cur_cell = field_(cell.x, cell.y);
       if (visited[cell.y * width_ + cell.x])
         continue;
 
@@ -278,7 +284,7 @@ namespace mswpr
 
       for (auto [x, y] : get_neighbours(cell))
       {
-        auto& elem = field_[y * width_ + x];
+        auto& elem = field_(x, y);
         if (!visited[y * width_ + x] && (elem.is_empty()) && !elem.is_flagged())
         {
           cells.emplace(x, y);
@@ -326,7 +332,7 @@ namespace mswpr
     {
       for (int x = 0; x < width_i; ++x)
       {
-        if (field_[y * width_ + x].is_bomb())
+        if (field_(x, y).is_bomb())
           flags.emplace_back(x, y);
       }
     }
@@ -348,7 +354,7 @@ namespace mswpr
     {
       for (int x = 0; x < width_i; ++x)
       {
-        auto& cell_el = field_[y * width_ + x];
+        auto& cell_el = field_(x, y);
         if (cell_el.is_bomb() && !cell_el.is_flagged() && !cell_el.is_detonated())
         {
           cell_el.state = cell_state::NOT_FLAGGED_BOMB;

@@ -14,14 +14,14 @@ namespace mswpr
   {
   }
 
-  cell& cell_grid::operator[](std::size_t i_index)
+  cell& cell_grid::operator()(std::size_t i_x, std::size_t i_y)
   {
-    return d_cells[i_index];
+    return d_cells[i_y * d_width + i_x];
   }
 
-  const cell& cell_grid::operator[](std::size_t i_index) const
+  const cell& cell_grid::operator()(std::size_t i_x, std::size_t i_y) const
   {
-    return d_cells[i_index];
+    return d_cells[i_y * d_width + i_x];
   }
 
   void cell_grid::reset()

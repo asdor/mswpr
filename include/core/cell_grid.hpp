@@ -12,8 +12,8 @@ namespace mswpr
   {
   public:
     cell_grid(std::size_t i_width, std::size_t i_height);
-    cell& operator[](std::size_t i_index);
-    const cell& operator[](std::size_t i_index) const;
+    cell& operator()(std::size_t i_x, std::size_t i_y);
+    const cell& operator()(std::size_t i_x, std::size_t i_y) const;
 
     void reset();
 
