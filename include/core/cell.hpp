@@ -1,11 +1,12 @@
 #ifndef MSWPR_CELL_HPP
 #define MSWPR_CELL_HPP
 
+#include <cstddef>
 #include <type_traits>
 
 namespace mswpr
 {
-  enum class cell_value : size_t
+  enum class cell_value : std::size_t
   {
     EMPTY = 0,
     ONE,
