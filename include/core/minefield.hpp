@@ -67,11 +67,11 @@ namespace mswpr
 
     std::vector<size_t> get_mines_candidates(size_t x, size_t y) const;
 
-    size_t width_;
-    size_t height_;
-    size_t bombs_cnt_;
-    size_t unopened_cnt_;
-    cell_grid field_;
+    size_t d_width;
+    size_t d_height;
+    size_t d_bombs_cnt;
+    size_t d_unopened_cnt;
+    cell_grid d_grid;
   };
 
 }  // namespace mswpr
