@@ -2,6 +2,7 @@
 #define MSWPR_MINEFIELD_HPP
 
 #include "core/cell.hpp"
+#include "core/cell_grid.hpp"
 
 #include <array>
 #include <vector>
@@ -70,7 +71,7 @@ namespace mswpr
     size_t height_;
     size_t bombs_cnt_;
     size_t unopened_cnt_;
-    std::vector<cell> field_;
+    cell_grid field_;
   };
 
 }  // namespace mswpr

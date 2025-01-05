@@ -132,13 +132,12 @@ namespace mswpr
     }
 
     place_values_around_mines();
-    print_field_to_cout(field_, width_, height_);
+    // print_field_to_cout(field_, width_, height_);
   }
 
   void minefield::reset()
   {
-    mswpr::cell empty{ cell_value::EMPTY, cell_state::CLOSED };
-    std::fill(field_.begin(), field_.end(), empty);
+    field_.reset();
 
     unopened_cnt_ = width_ * height_;
   }
