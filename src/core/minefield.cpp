@@ -54,19 +54,17 @@ namespace mswpr
     }
   }
 
-  void print_field_to_cout(const std::vector<mswpr::cell>& field, size_t width, size_t height)
+  void print_field_to_cout(const cell_grid& i_grid, size_t i_width, size_t i_height)
   {
     if (!PRINT_FIELD)
       return;
 
-    const int width_i = static_cast<int>(width);
-    const int height_i = static_cast<int>(height);
-    for (int y = 0; y < height_i; ++y)
+    for (size_t y = 0; y < i_height; ++y)
     {
-      for (int x = 0; x < width_i; ++x)
+      for (size_t x = 0; x < i_width; ++x)
       {
-        auto cell = field[y * width + x].value;
-        char cell_name;
+        auto cell = i_grid(x, y).value;
+        char cell_name = ' ';
         if (cell == mswpr::cell_value::EMPTY)
         {
           cell_name = ' ';
@@ -77,7 +75,7 @@ namespace mswpr
         }
         else
         {
-          cell_name = '1' + (static_cast<char>(cell) - static_cast<char>(mswpr::cell_value::ONE));
+          cell_name = '1' + (enum_to<char>(cell) - enum_to<char>(mswpr::cell_value::ONE));
         }
 
         std::cout << cell_name;
@@ -129,7 +127,7 @@ namespace mswpr
     }
 
     place_values_around_mines();
-    // print_field_to_cout(d_grid, width_, height_);
+    print_field_to_cout(d_grid, d_width, d_height);
   }
 
   void minefield::reset()
@@ -176,7 +174,7 @@ namespace mswpr
   int minefield::get_value(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);
-    return !cell.is_bomb() ? static_cast<int>(cell.value) : -1;
+    return !cell.is_bomb() ? enum_to<int>(cell.value) : -1;
   }
 
   bool minefield::is_opened(size_t x, size_t y) const
@@ -317,11 +315,9 @@ namespace mswpr
   {
     std::vector<cell_coord> flags;
 
-    const int width_i = static_cast<int>(d_width);
-    const int height_i = static_cast<int>(d_height);
-    for (int y = 0; y < height_i; ++y)
+    for (size_t y = 0; y < d_height; ++y)
     {
-      for (int x = 0; x < width_i; ++x)
+      for (size_t x = 0; x < d_width; ++x)
       {
         if (d_grid(x, y).is_bomb())
           flags.emplace_back(x, y);
@@ -339,11 +335,9 @@ namespace mswpr
 
   void minefield::reveal_bombs()
   {
-    const int width_i = static_cast<int>(d_width);
-    const int height_i = static_cast<int>(d_height);
-    for (int y = 0; y < height_i; ++y)
+    for (size_t y = 0; y < d_height; ++y)
     {
-      for (int x = 0; x < width_i; ++x)
+      for (size_t x = 0; x < d_width; ++x)
       {
         auto& cell_el = d_grid(x, y);
         if (cell_el.is_bomb() && !cell_el.is_flagged() && !cell_el.is_detonated())
