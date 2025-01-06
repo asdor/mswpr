@@ -4,14 +4,12 @@
 #include <queue>
 #include <random>
 
-#include "core/game_config.hpp"
 #include "core/minefield.hpp"
 #include "core/types.hpp"
 
 namespace
 {
   constexpr bool PRINT_FIELD = false;
-
 }  // namespace
 
 namespace mswpr
@@ -40,24 +38,17 @@ namespace mswpr
 
   void minefield::place_values_around_mines()
   {
-    const int width_i = static_cast<int>(d_width);
-    const int height_i = static_cast<int>(d_height);
-    for (int y = 0; y < height_i; ++y)
+    for (size_t y = 0; y < d_height; ++y)
     {
-      for (int x = 0; x < width_i; ++x)
+      for (size_t x = 0; x < d_width; ++x)
       {
         if (d_grid(x, y).value == cell_value::BOMB)
           continue;
 
-        size_t cnt = 0;
-        for (size_t i = 0; i < neighbours_x_ind.size(); ++i)
-        {
-          int i_x = x - neighbours_x_ind[i];
-          int i_y = y - neighbours_y_ind[i];
-          if (i_x >= 0 && i_x < width_i && i_y >= 0 && i_y < height_i && d_grid(i_x, i_y).is_bomb())
-            ++cnt;
-        }
-
+        const auto neighbours = get_neighbours({ x, y });
+        const size_t cnt = std::count_if(neighbours.begin(), neighbours.end(), [&grid = d_grid](cell_coord i_v) {
+          return grid(i_v.x, i_v.y).is_bomb();
+        });
         d_grid(x, y).value = to_enum<cell_value>(cnt);
       }
     }
