@@ -46,8 +46,8 @@ namespace mswpr
           continue;
 
         const auto neighbours = get_neighbours({ x, y });
-        const size_t cnt = std::count_if(neighbours.begin(), neighbours.end(), [&grid = d_grid](cell_coord i_v) {
-          return grid(i_v.x, i_v.y).is_bomb();
+        const size_t cnt = std::count_if(neighbours.begin(), neighbours.end(), [&grid = d_grid](cell_coord i_cell) {
+          return grid(i_cell.x, i_cell.y).is_bomb();
         });
         d_grid(x, y).value = to_enum<cell_value>(cnt);
       }
@@ -205,12 +205,6 @@ namespace mswpr
   {
     i_cell.state = cell_state::OPENED;
     --d_unopened_cnt;
-  }
-
-  void minefield::open_cell(size_t x, size_t y)
-  {
-    auto& cell = d_grid(x, y);
-    open_cell(cell);
   }
 
   void minefield::set_flag(size_t x, size_t y)
