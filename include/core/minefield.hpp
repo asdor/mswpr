@@ -31,6 +31,8 @@ namespace mswpr
     void generate(size_t x, size_t y);
     void reset();
 
+    const cell_grid& get_grid() const;
+
     size_t get_bomb_cnt() const;
 
     bool is_deminied() const;

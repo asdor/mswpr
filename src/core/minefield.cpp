@@ -4,6 +4,7 @@
 #include <queue>
 #include <random>
 
+#include "core/debug_utils.hpp"
 #include "core/minefield.hpp"
 #include "core/types.hpp"
 
@@ -36,6 +37,11 @@ namespace mswpr
     place_values_around_mines();
   }
 
+  const cell_grid& minefield::get_grid() const
+  {
+    return d_grid;
+  }
+
   void minefield::place_values_around_mines()
   {
     for (size_t y = 0; y < d_height; ++y)
@@ -51,36 +57,6 @@ namespace mswpr
         });
         d_grid(x, y).value = to_enum<cell_value>(cnt);
       }
-    }
-  }
-
-  void print_field_to_cout(const cell_grid& i_grid, size_t i_width, size_t i_height)
-  {
-    if (!PRINT_FIELD)
-      return;
-
-    for (size_t y = 0; y < i_height; ++y)
-    {
-      for (size_t x = 0; x < i_width; ++x)
-      {
-        auto cell = i_grid(x, y).value;
-        char cell_name = ' ';
-        if (cell == mswpr::cell_value::EMPTY)
-        {
-          cell_name = ' ';
-        }
-        else if (cell == mswpr::cell_value::BOMB)
-        {
-          cell_name = '*';
-        }
-        else
-        {
-          cell_name = '1' + (enum_to<char>(cell) - enum_to<char>(mswpr::cell_value::ONE));
-        }
-
-        std::cout << cell_name;
-      }
-      std::cout << '\n';
     }
   }
 
@@ -127,7 +103,9 @@ namespace mswpr
     }
 
     place_values_around_mines();
-    print_field_to_cout(d_grid, d_width, d_height);
+
+    if (PRINT_FIELD)
+      mswpr::debug::display_grid_to_stream(std::cout, d_grid, d_width, d_height);
   }
 
   void minefield::reset()
