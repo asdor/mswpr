@@ -16,7 +16,8 @@ TEST(Minefield, MainConstructor)
   {
     for (size_t y = 0; y < height; ++y)
     {
-      ASSERT_TRUE(field.is_closed(x, y));
+      const auto& cell = field(x, y);
+      ASSERT_TRUE(cell.is_closed());
       ASSERT_EQ(field.get_value(x, y), 0);
     }
   }
@@ -67,7 +68,7 @@ TEST(Minefield, ConstructorWithMines_AllFieldsAreClosed)
   {
     for (size_t y = 0; y < height; ++y)
     {
-      ASSERT_TRUE(field.is_closed(x, y));
+      ASSERT_TRUE(field(x, y).is_closed());
     }
   }
 }

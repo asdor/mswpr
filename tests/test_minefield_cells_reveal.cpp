@@ -24,17 +24,18 @@ TEST(MinefieldRevealCells, RevealCells)
 
   field.reveal_closed(1, 0);
 
-  for (size_t y = 0; y < height; ++y)
+  for (size_t y = 0; y < field.get_height(); ++y)
   {
-    for (size_t x = 0; x < width; ++x)
+    for (size_t x = 0; x < field.get_width(); ++x)
     {
-      if (field.is_bomb(x, y))
+      const auto& cell = field(x, y);
+      if (cell.is_bomb())
       {
-        EXPECT_TRUE(field.is_closed(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_closed()) << "at (" << x << ", " << y << ")\n";
       }
       else
       {
-        EXPECT_TRUE(field.is_opened(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_opened()) << "at (" << x << ", " << y << ")\n";
       }
     }
   }
@@ -50,25 +51,26 @@ TEST(MinefieldRevealCells, AngleComponent)
 
   field.reveal_closed(0, 2);
 
-  for (size_t y = 0; y < height - 1; ++y)
+  for (size_t y = 0; y < field.get_height() - 1; ++y)
   {
-    for (size_t x = 0; x < width; ++x)
+    for (size_t x = 0; x < field.get_width(); ++x)
     {
-      if (field.is_bomb(x, y))
+      const auto& cell = field(x, y);
+      if (cell.is_bomb())
       {
-        EXPECT_TRUE(field.is_closed(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_closed()) << "at (" << x << ", " << y << ")\n";
       }
       else
       {
-        EXPECT_TRUE(field.is_opened(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_opened()) << "at (" << x << ", " << y << ")\n";
       }
     }
   }
 
   // process last line manually
-  EXPECT_TRUE(field.is_closed(0, 4));
-  EXPECT_TRUE(field.is_closed(1, 4));
-  EXPECT_TRUE(field.is_closed(2, 4));
+  EXPECT_TRUE(field(0, 4).is_closed());
+  EXPECT_TRUE(field(1, 4).is_closed());
+  EXPECT_TRUE(field(2, 4).is_closed());
 }
 
 TEST(MinefieldRevealCells, MineInTheMiddleComponent)
@@ -81,17 +83,18 @@ TEST(MinefieldRevealCells, MineInTheMiddleComponent)
 
   field.reveal_closed(0, 0);
 
-  for (size_t y = 0; y < height; ++y)
+  for (size_t y = 0; y < field.get_height(); ++y)
   {
-    for (size_t x = 0; x < width; ++x)
+    for (size_t x = 0; x < field.get_width(); ++x)
     {
-      if (field.is_bomb(x, y))
+      const auto& cell = field(x, y);
+      if (cell.is_bomb())
       {
-        EXPECT_TRUE(field.is_closed(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_closed()) << "at (" << x << ", " << y << ")\n";
       }
       else
       {
-        EXPECT_TRUE(field.is_opened(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_opened()) << "at (" << x << ", " << y << ")\n";
       }
     }
   }
@@ -107,17 +110,18 @@ TEST(MinefieldRevealCells, OneComponentByDiagonal)
 
   field.reveal_closed(3, 0);
 
-  for (size_t y = 0; y < height; ++y)
+  for (size_t y = 0; y < field.get_height(); ++y)
   {
-    for (size_t x = 0; x < width; ++x)
+    for (size_t x = 0; x < field.get_width(); ++x)
     {
-      if (field.is_bomb(x, y))
+      const auto& cell = field(x, y);
+      if (cell.is_bomb())
       {
-        EXPECT_TRUE(field.is_closed(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_closed()) << "at (" << x << ", " << y << ")\n";
       }
       else
       {
-        EXPECT_TRUE(field.is_opened(x, y)) << "at (" << x << ", " << y << ")\n";
+        EXPECT_TRUE(cell.is_opened()) << "at (" << x << ", " << y << ")\n";
       }
     }
   }

@@ -25,7 +25,7 @@ namespace mswpr
     {
       ++st_machine_.get_counter();
     }
-    else if (field.is_closed(x, y))
+    else if (field(x, y).is_closed())
     {
       --st_machine_.get_counter();
     }

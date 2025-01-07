@@ -177,12 +177,6 @@ namespace mswpr
     return cell.is_opened();
   }
 
-  bool minefield::is_closed(size_t x, size_t y) const
-  {
-    const auto cell = d_grid(x, y);
-    return cell.is_closed();
-  }
-
   bool minefield::is_flagged(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);
