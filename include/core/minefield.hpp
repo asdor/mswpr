@@ -35,8 +35,6 @@ namespace mswpr
     cell_state get_cell_state(size_t x, size_t y) const;
     cell_value get_cell_value(size_t x, size_t y) const;
 
-    bool is_not_flagged_bomb(size_t x, size_t y) const;
-
     void detonate_bomb(size_t x, size_t y);
     open_cell_result reveal_closed(size_t x, size_t y);
 
