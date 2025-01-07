@@ -153,12 +153,6 @@ namespace mswpr
     return d_unopened_cnt == d_bombs_cnt;
   }
 
-  bool minefield::is_bomb(size_t x, size_t y) const
-  {
-    const auto cell = d_grid(x, y);
-    return cell.is_bomb();
-  }
-
   bool minefield::is_not_flagged_bomb(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);

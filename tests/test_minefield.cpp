@@ -43,16 +43,16 @@ TEST(Minefield, ConstructorWithMines_BombWasPlaced)
   const size_t bomb_cnt = mines_ind.size();
   mswpr::minefield field(mines_ind, width, height, bomb_cnt);
 
-  ASSERT_FALSE(field.is_bomb(0, 0));
+  ASSERT_FALSE(field(0, 0).is_bomb());
   ASSERT_EQ(field.get_value(0, 0), 1);
 
-  ASSERT_FALSE(field.is_bomb(0, 1));
+  ASSERT_FALSE(field(0, 1).is_bomb());
   ASSERT_EQ(field.get_value(0, 1), 1);
 
-  ASSERT_FALSE(field.is_bomb(1, 0));
+  ASSERT_FALSE(field(1, 0).is_bomb());
   ASSERT_EQ(field.get_value(1, 0), 1);
 
-  ASSERT_TRUE(field.is_bomb(1, 1));
+  ASSERT_TRUE(field(1, 1).is_bomb());
   ASSERT_EQ(field.get_value(1, 1), -1);
 }
 
@@ -143,7 +143,7 @@ namespace
     const int signed_width = static_cast<int>(width);
     const int signed_height = static_cast<int>(height);
 
-    if (field.is_bomb(x, y))
+    if (field(x, y).is_bomb())
       return -1;
 
     int count = 0;
@@ -151,7 +151,7 @@ namespace
     {
       const int i_x = static_cast<int>(x) + mswpr::neighbours_x_ind[i];
       const int i_y = static_cast<int>(y) + mswpr::neighbours_y_ind[i];
-      if (i_x >= 0 && i_x < signed_width && i_y >= 0 && i_y < signed_height && field.is_bomb(i_x, i_y))
+      if (i_x >= 0 && i_x < signed_width && i_y >= 0 && i_y < signed_height && field(i_x, i_y).is_bomb())
         ++count;
     }
 
@@ -194,7 +194,7 @@ TEST(Minefield, NotBombCellAfterGeneration)
   {
     field.reset();
     field.generate(0, 0);
-    EXPECT_FALSE(field.is_bomb(0, 0));
+    EXPECT_FALSE(field(0, 0).is_bomb());
   }
 }
 

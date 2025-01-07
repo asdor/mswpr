@@ -124,7 +124,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
   const size_t y = 0;
   change_state<playing_state>();
   EXPECT_TRUE(timer_.is_running());
-  ASSERT_TRUE(field_.is_bomb(x, y));
+  ASSERT_TRUE(field_(x, y).is_bomb());
 
   st_machine_.on_left_field_click(RELEASED, x, y);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
