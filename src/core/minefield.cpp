@@ -58,6 +58,11 @@ namespace mswpr
     return d_grid;
   }
 
+  const cell& minefield::operator()(size_t i_x, size_t i_y) const
+  {
+    return d_grid(i_x, i_y);
+  }
+
   void minefield::place_values_around_mines()
   {
     for (size_t y = 0; y < d_height; ++y)
@@ -182,12 +187,6 @@ namespace mswpr
   {
     const auto cell = d_grid(x, y);
     return cell.is_flagged();
-  }
-
-  bool minefield::is_detonated(size_t x, size_t y) const
-  {
-    const auto cell = d_grid(x, y);
-    return cell.is_detonated();
   }
 
   void minefield::open_cell(cell& i_cell)

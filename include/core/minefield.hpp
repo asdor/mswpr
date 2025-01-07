@@ -23,6 +23,7 @@ namespace mswpr
     void reset();
 
     const cell_grid& get_grid() const;
+    const cell& operator()(size_t i_x, size_t i_y) const;
 
     size_t get_width() const;
     size_t get_height() const;
@@ -38,7 +39,6 @@ namespace mswpr
     bool is_opened(size_t x, size_t y) const;
     bool is_closed(size_t x, size_t y) const;
     bool is_flagged(size_t x, size_t y) const;
-    bool is_detonated(size_t x, size_t y) const;
     bool is_not_flagged_bomb(size_t x, size_t y) const;
 
     void detonate_bomb(size_t x, size_t y);

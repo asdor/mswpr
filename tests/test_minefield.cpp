@@ -79,10 +79,12 @@ TEST(Minefield, IsClosed)
   const size_t bomb_cnt = 1;
   mswpr::minefield field(width, height, bomb_cnt);
 
-  ASSERT_TRUE(field.is_closed(0, 0));
-  ASSERT_FALSE(field.is_opened(0, 0));
-  ASSERT_FALSE(field.is_flagged(0, 0));
-  ASSERT_FALSE(field.is_detonated(0, 0));
+  const auto cell = field(0, 0);
+
+  ASSERT_TRUE(cell.is_closed());
+  ASSERT_FALSE(cell.is_opened());
+  ASSERT_FALSE(cell.is_flagged());
+  ASSERT_FALSE(cell.is_detonated());
 }
 
 // TEST(Minefield, IsOpened)
@@ -108,11 +110,12 @@ TEST(Minefield, IsFlagged)
   mswpr::minefield field(width, height, bomb_cnt);
 
   field.set_flag(0, 0);
+  const auto cell = field(0, 0);
 
-  ASSERT_FALSE(field.is_closed(0, 0));
-  ASSERT_FALSE(field.is_opened(0, 0));
-  ASSERT_TRUE(field.is_flagged(0, 0));
-  ASSERT_FALSE(field.is_detonated(0, 0));
+  ASSERT_FALSE(cell.is_closed());
+  ASSERT_FALSE(cell.is_opened());
+  ASSERT_TRUE(cell.is_flagged());
+  ASSERT_FALSE(cell.is_detonated());
 }
 
 TEST(Minefield, IsDetonated)
@@ -124,11 +127,12 @@ TEST(Minefield, IsDetonated)
   mswpr::minefield field(mines_ind, width, height, bomb_cnt);
 
   field.detonate_bomb(0, 0);
+  const auto cell = field(0, 0);
 
-  ASSERT_FALSE(field.is_closed(0, 0));
-  ASSERT_FALSE(field.is_opened(0, 0));
-  ASSERT_FALSE(field.is_flagged(0, 0));
-  ASSERT_TRUE(field.is_detonated(0, 0));
+  ASSERT_FALSE(cell.is_closed());
+  ASSERT_FALSE(cell.is_opened());
+  ASSERT_FALSE(cell.is_flagged());
+  ASSERT_TRUE(cell.is_detonated());
 }
 
 namespace
