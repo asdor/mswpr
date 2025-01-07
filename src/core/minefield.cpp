@@ -38,6 +38,21 @@ namespace mswpr
     place_values_around_mines();
   }
 
+  size_t minefield::get_width() const
+  {
+    return d_width;
+  }
+
+  size_t minefield::get_height() const
+  {
+    return d_height;
+  }
+
+  size_t minefield::get_bomb_cnt() const
+  {
+    return d_bombs_cnt;
+  }
+
   const cell_grid& minefield::get_grid() const
   {
     return d_grid;
@@ -114,11 +129,6 @@ namespace mswpr
     d_grid.reset();
 
     d_unopened_cnt = d_width * d_height;
-  }
-
-  size_t minefield::get_bomb_cnt() const
-  {
-    return d_bombs_cnt;
   }
 
   cell_state minefield::get_cell_state(size_t x, size_t y) const

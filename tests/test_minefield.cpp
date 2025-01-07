@@ -22,6 +22,18 @@ TEST(Minefield, MainConstructor)
   }
 }
 
+TEST(Minefield, Getters)
+{
+  const size_t width = 3;
+  const size_t height = 5;
+  const size_t bomb_cnt = 4;
+  mswpr::minefield field(width, height, bomb_cnt);
+
+  EXPECT_EQ(field.get_width(), width);
+  EXPECT_EQ(field.get_height(), height);
+  EXPECT_EQ(field.get_bomb_cnt(), bomb_cnt);
+}
+
 TEST(Minefield, ConstructorWithMines_BombWasPlaced)
 {
   const std::vector<size_t> mines_ind = { 3 };

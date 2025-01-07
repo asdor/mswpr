@@ -24,6 +24,8 @@ namespace mswpr
 
     const cell_grid& get_grid() const;
 
+    size_t get_width() const;
+    size_t get_height() const;
     size_t get_bomb_cnt() const;
 
     bool is_deminied() const;
