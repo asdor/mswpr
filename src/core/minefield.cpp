@@ -4,6 +4,7 @@
 #include <queue>
 #include <random>
 
+#include "core/adjacent_cells_iterator.hpp"
 #include "core/debug_utils.hpp"
 #include "core/minefield.hpp"
 #include "core/types.hpp"
@@ -51,7 +52,7 @@ namespace mswpr
         if (d_grid(x, y).value == cell_value::BOMB)
           continue;
 
-        const auto neighbours = get_neighbours({ x, y });
+        const auto neighbours = fetch_adjacent_cells({ x, y }, d_width, d_height);
         const size_t cnt = std::count_if(neighbours.begin(), neighbours.end(), [&grid = d_grid](cell_coord i_cell) {
           return grid(i_cell.x, i_cell.y).is_bomb();
         });
@@ -68,7 +69,7 @@ namespace mswpr
     std::vector<size_t> glade = { cur_index };
     if (is_generate_glade)
     {
-      const auto neighbours_vec = get_neighbours({ x, y });
+      const auto neighbours_vec = fetch_adjacent_cells({ x, y }, d_width, d_height);
       for (const auto cell : neighbours_vec)
       {
         glade.push_back(cell.y * d_width + cell.x);
@@ -243,7 +244,7 @@ namespace mswpr
       open_cell(cur_cell);
       visited[cell.y * d_width + cell.x] = true;
 
-      for (auto [x, y] : get_neighbours(cell))
+      for (auto [x, y] : fetch_adjacent_cells(cell, d_width, d_height))
       {
         auto& elem = d_grid(x, y);
         if (!visited[y * d_width + x] && (elem.is_empty()) && !elem.is_flagged())
@@ -259,28 +260,6 @@ namespace mswpr
     }
 
     return open_cell_result::OPENED;
-  }
-
-  std::vector<cell_coord> minefield::get_neighbours(cell_coord coord) const
-  {
-    std::vector<cell_coord> neighbours;
-    const int x_i = static_cast<int>(coord.x);
-    const int y_i = static_cast<int>(coord.y);
-
-    for (size_t i = 0; i < neighbours_x_ind.size(); ++i)
-    {
-      const int x_ind = neighbours_x_ind[i];
-      const int y_ind = neighbours_y_ind[i];
-      if (x_i < -x_ind || y_i < -y_ind)
-        continue;
-
-      const size_t x = static_cast<size_t>(x_i + x_ind);
-      const size_t y = static_cast<size_t>(y_i + y_ind);
-      if (x < d_width && y < d_height)
-        neighbours.emplace_back(x, y);
-    }
-
-    return neighbours;
   }
 
   void minefield::flag_bombs()

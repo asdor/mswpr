@@ -4,7 +4,6 @@
 #include "core/cell.hpp"
 #include "core/cell_grid.hpp"
 
-#include <array>
 #include <vector>
 
 namespace mswpr
@@ -45,13 +44,8 @@ namespace mswpr
 
     void set_flag(size_t x, size_t y);
 
-    std::vector<cell_coord> get_neighbours(cell_coord coord) const;
-
     void flag_bombs();
     void reveal_bombs();
-
-    static constexpr std::array<int, 8> neighbours_x_ind = { -1, 0, 1, -1, 1, -1, 0, 1 };
-    static constexpr std::array<int, 8> neighbours_y_ind = { -1, -1, -1, 0, 0, 1, 1, 1 };
 
   private:
     void place_values_around_mines();

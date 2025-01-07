@@ -1,3 +1,4 @@
+#include "core/adjacent_cells_iterator.hpp"
 #include "core/minefield.hpp"
 
 #include <gtest/gtest.h>
@@ -129,10 +130,10 @@ namespace
       return -1;
 
     int count = 0;
-    for (size_t i = 0; i < minefield::neighbours_x_ind.size(); ++i)
+    for (size_t i = 0; i < mswpr::neighbours_x_ind.size(); ++i)
     {
-      const int i_x = static_cast<int>(x) + minefield::neighbours_x_ind[i];
-      const int i_y = static_cast<int>(y) + minefield::neighbours_y_ind[i];
+      const int i_x = static_cast<int>(x) + mswpr::neighbours_x_ind[i];
+      const int i_y = static_cast<int>(y) + mswpr::neighbours_y_ind[i];
       if (i_x >= 0 && i_x < signed_width && i_y >= 0 && i_y < signed_height && field.is_bomb(i_x, i_y))
         ++count;
     }
