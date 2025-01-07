@@ -171,12 +171,6 @@ namespace mswpr
     return !cell.is_bomb() ? enum_to<int>(cell.value) : -1;
   }
 
-  bool minefield::is_opened(size_t x, size_t y) const
-  {
-    const auto cell = d_grid(x, y);
-    return cell.is_opened();
-  }
-
   bool minefield::is_flagged(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);

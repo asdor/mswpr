@@ -36,7 +36,6 @@ namespace mswpr
     cell_value get_cell_value(size_t x, size_t y) const;
 
     bool is_bomb(size_t x, size_t y) const;
-    bool is_opened(size_t x, size_t y) const;
     bool is_flagged(size_t x, size_t y) const;
     bool is_not_flagged_bomb(size_t x, size_t y) const;
 
