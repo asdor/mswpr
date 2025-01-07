@@ -40,8 +40,7 @@ TEST(Minefield, ConstructorWithMines_BombWasPlaced)
   const std::vector<size_t> mines_ind = { 3 };
   const size_t width = 2;
   const size_t height = 2;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   ASSERT_FALSE(field(0, 0).is_bomb());
   ASSERT_EQ(field.get_value(0, 0), 1);
@@ -61,8 +60,7 @@ TEST(Minefield, ConstructorWithMines_AllFieldsAreClosed)
   const std::vector<size_t> mines_ind = { 6, 32, 50 };
   const size_t width = 8;
   const size_t height = 8;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   for (size_t x = 0; x < width; ++x)
   {
@@ -124,8 +122,7 @@ TEST(Minefield, IsDetonated)
   const std::vector<size_t> mines_ind = { 0 };
   const size_t width = 1;
   const size_t height = 1;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   field.detonate_bomb(0, 0);
   const auto cell = field(0, 0);
@@ -164,8 +161,7 @@ TEST(Minefield, MinesCountAroundCell)
   const std::vector<size_t> mines_ind = { 3, 4, 5, 6, 20, 29, 36, 37, 46, 57 };
   const size_t width = 8;
   const size_t height = 8;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   for (size_t x = 0; x < width; ++x)
   {
@@ -221,8 +217,7 @@ TEST(Minefield, IsDeminied)
   const std::vector<size_t> mines_ind = { 0 };
   const size_t width = 5;
   const size_t height = 5;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   const size_t x = 2;
   const size_t y = 2;

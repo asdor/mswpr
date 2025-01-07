@@ -10,7 +10,7 @@ TEST(DebugUtils, PrintGrid)
   static constexpr size_t width = 4;
   static constexpr size_t height = 3;
   const std::vector<size_t> mine_indices = { 6, 8 };
-  mswpr::minefield field(mine_indices, width, height, mine_indices.size());
+  mswpr::minefield field(mine_indices, width, height);
 
   std::ostringstream oss;
   mswpr::debug::display_grid_to_stream(oss, field.get_grid(), width, height);

@@ -19,8 +19,7 @@ TEST(MinefieldRevealCells, RevealCells)
   const std::vector<size_t> mines_ind = { 6 };
   const size_t width = 3;
   const size_t height = 3;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   field.reveal_closed(1, 0);
 
@@ -46,8 +45,7 @@ TEST(MinefieldRevealCells, AngleComponent)
   const std::vector<size_t> mines_ind = { 2, 13 };
   const size_t width = 3;
   const size_t height = 5;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   field.reveal_closed(0, 2);
 
@@ -78,8 +76,7 @@ TEST(MinefieldRevealCells, MineInTheMiddleComponent)
   const std::vector<size_t> mines_ind = { 12 };
   const size_t width = 5;
   const size_t height = 5;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   field.reveal_closed(0, 0);
 
@@ -105,8 +102,7 @@ TEST(MinefieldRevealCells, OneComponentByDiagonal)
   const std::vector<size_t> mines_ind = { 0, 15 };
   const size_t width = 4;
   const size_t height = 4;
-  const size_t bomb_cnt = mines_ind.size();
-  mswpr::minefield field(mines_ind, width, height, bomb_cnt);
+  mswpr::minefield field(mines_ind, width, height);
 
   field.reveal_closed(3, 0);
 

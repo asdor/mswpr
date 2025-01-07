@@ -25,7 +25,7 @@ class StateMachineTransitionTest : public ::testing::Test
 {
 protected:
   StateMachineTransitionTest() :
-    field_(MINES, FIELD_WIDTH, FIELD_HEIGHT, MINES.size()),
+    field_(MINES, FIELD_WIDTH, FIELD_HEIGHT),
     face_(face_type::SMILE_NOT_PRESSED),
     counter_(MINES.size()),
     st_machine_(field_, face_, counter_, timer_)
@@ -36,7 +36,7 @@ protected:
   void change_state(Args&&... args)
   {
     st_machine_.set_state<NewState>(std::forward<Args>(args)...);
-    field_ = minefield(MINES, FIELD_WIDTH, FIELD_HEIGHT, MINES.size());
+    field_ = minefield(MINES, FIELD_WIDTH, FIELD_HEIGHT);
     ASSERT_TRUE(st_machine_.is_in_state<NewState>());
   }
 

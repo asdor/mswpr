@@ -25,8 +25,8 @@ namespace mswpr
   {
   }
 
-  minefield::minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height, size_t bombs_cnt) :
-    minefield(width, height, bombs_cnt)
+  minefield::minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height) :
+    minefield(width, height, mines_ind.size())
   {
     for (size_t mine_ind : mines_ind)
     {

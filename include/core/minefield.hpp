@@ -18,7 +18,7 @@ namespace mswpr
   {
   public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
-    minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height, size_t bombs_cnt);
+    minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height);
     void generate(size_t x, size_t y);
     void reset();
 
