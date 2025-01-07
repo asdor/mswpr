@@ -223,7 +223,7 @@ namespace mswpr
       open_cell(cur_cell);
       visited[cell.y * d_width + cell.x] = true;
 
-      for (auto [x, y] : fetch_adjacent_cells(cell, d_width, d_height))
+      for (const auto [x, y] : fetch_adjacent_cells(cell, d_width, d_height))
       {
         auto& elem = d_grid(x, y);
         if (!visited[y * d_width + x] && (elem.is_empty()) && !elem.is_flagged())

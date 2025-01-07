@@ -62,12 +62,9 @@ TEST(Minefield, ConstructorWithMines_AllFieldsAreClosed)
   const size_t height = 8;
   mswpr::minefield field(mines_ind, width, height);
 
-  for (size_t x = 0; x < width; ++x)
+  for (const auto& cell : field.get_grid())
   {
-    for (size_t y = 0; y < height; ++y)
-    {
-      ASSERT_TRUE(field(x, y).is_closed());
-    }
+    ASSERT_TRUE(cell.is_closed());
   }
 }
 

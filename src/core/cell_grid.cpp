@@ -23,6 +23,16 @@ namespace mswpr
     return d_cells[i_y * d_width + i_x];
   }
 
+  const std::vector<cell>::const_iterator cell_grid::begin() const
+  {
+    return d_cells.cbegin();
+  }
+
+  const std::vector<cell>::const_iterator cell_grid::end() const
+  {
+    return d_cells.cend();
+  }
+
   void cell_grid::reset()
   {
     std::fill(d_cells.begin(), d_cells.end(), EMPTY_CELL);

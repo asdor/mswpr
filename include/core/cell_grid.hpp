@@ -15,6 +15,9 @@ namespace mswpr
     cell& operator()(std::size_t i_x, std::size_t i_y);
     const cell& operator()(std::size_t i_x, std::size_t i_y) const;
 
+    const std::vector<cell>::const_iterator begin() const;
+    const std::vector<cell>::const_iterator end() const;
+
     void reset();
 
   private:
