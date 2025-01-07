@@ -165,12 +165,6 @@ namespace mswpr
     return !cell.is_bomb() ? enum_to<int>(cell.value) : -1;
   }
 
-  bool minefield::is_flagged(size_t x, size_t y) const
-  {
-    const auto cell = d_grid(x, y);
-    return cell.is_flagged();
-  }
-
   void minefield::open_cell(cell& i_cell)
   {
     i_cell.state = cell_state::OPENED;
@@ -268,7 +262,7 @@ namespace mswpr
 
     for (auto [x, y] : flags)
     {
-      if (!is_flagged(x, y))
+      if (!d_grid(x, y).is_flagged())
       {
         set_flag(x, y);
       }

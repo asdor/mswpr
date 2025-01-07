@@ -21,7 +21,7 @@ namespace mswpr
       return;
 
     auto& field = st_machine_.get_field();
-    if (field.is_flagged(x, y))
+    if (field(x, y).is_flagged())
     {
       ++st_machine_.get_counter();
     }

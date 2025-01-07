@@ -208,11 +208,12 @@ TEST(Minefield, Reset)
   const size_t x = 0;
   const size_t y = 0;
 
+  const auto& cell = field(x, y);
   field.set_flag(x, y);
-  EXPECT_TRUE(field.is_flagged(x, y));
+  EXPECT_TRUE(cell.is_flagged());
 
   field.reset();
-  EXPECT_FALSE(field.is_flagged(x, y));
+  EXPECT_FALSE(cell.is_flagged());
 }
 
 TEST(Minefield, IsDeminied)
