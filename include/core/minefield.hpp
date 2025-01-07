@@ -9,14 +9,6 @@
 
 namespace mswpr
 {
-  struct cell_coord
-  {
-    size_t x;
-    size_t y;
-
-    bool operator==(const cell_coord& other) const noexcept = default;
-  };
-
   enum class open_cell_result
   {
     OPENED,

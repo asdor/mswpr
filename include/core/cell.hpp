@@ -1,6 +1,7 @@
 #ifndef MSWPR_CELL_HPP
 #define MSWPR_CELL_HPP
 
+#include <compare>
 #include <cstddef>
 #include <type_traits>
 
@@ -44,6 +45,14 @@ namespace mswpr
     bool is_not_flagged_bomb() const;
   };
   static_assert(std::is_trivial_v<cell>);
+
+  struct cell_coord
+  {
+    size_t x;
+    size_t y;
+
+    auto operator<=>(const cell_coord&) const = default;
+  };
 
 }  // namespace mswpr
 
