@@ -11,12 +11,20 @@ namespace mswpr
   class cell_grid
   {
   public:
-    cell_grid(std::size_t i_width, std::size_t i_height);
-    cell& operator()(std::size_t i_x, std::size_t i_y);
-    const cell& operator()(std::size_t i_x, std::size_t i_y) const;
+    using iterator = std::vector<cell>::iterator;
+    using const_iterator = std::vector<cell>::const_iterator;
+    using reference = std::vector<cell>::reference;
+    using const_reference = std::vector<cell>::const_reference;
 
-    const std::vector<cell>::const_iterator begin() const;
-    const std::vector<cell>::const_iterator end() const;
+    cell_grid(std::size_t i_width, std::size_t i_height);
+    reference operator()(std::size_t i_x, std::size_t i_y);
+    const const_reference operator()(std::size_t i_x, std::size_t i_y) const;
+
+    iterator begin();
+    iterator end();
+
+    const_iterator begin() const;
+    const_iterator end() const;
 
     void reset();
 

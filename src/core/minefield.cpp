@@ -243,37 +243,26 @@ namespace mswpr
 
   void minefield::flag_bombs()
   {
-    std::vector<cell_coord> flags;
-
     for (size_t y = 0; y < d_height; ++y)
     {
       for (size_t x = 0; x < d_width; ++x)
       {
-        if (d_grid(x, y).is_bomb())
-          flags.emplace_back(x, y);
-      }
-    }
-
-    for (auto [x, y] : flags)
-    {
-      if (!d_grid(x, y).is_flagged())
-      {
-        set_flag(x, y);
+        auto& cell = d_grid(x, y);
+        if (cell.is_bomb() && !cell.is_flagged())
+        {
+          set_flag(x, y);
+        }
       }
     }
   }
 
   void minefield::reveal_bombs()
   {
-    for (size_t y = 0; y < d_height; ++y)
+    for (auto& cell : d_grid)
     {
-      for (size_t x = 0; x < d_width; ++x)
+      if (cell.is_bomb() && !cell.is_flagged() && !cell.is_detonated())
       {
-        auto& cell_el = d_grid(x, y);
-        if (cell_el.is_bomb() && !cell_el.is_flagged() && !cell_el.is_detonated())
-        {
-          cell_el.state = cell_state::NOT_FLAGGED_BOMB;
-        }
+        cell.state = cell_state::NOT_FLAGGED_BOMB;
       }
     }
   }
