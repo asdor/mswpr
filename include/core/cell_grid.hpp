@@ -18,7 +18,7 @@ namespace mswpr
 
     cell_grid(std::size_t i_width, std::size_t i_height);
     reference operator()(std::size_t i_x, std::size_t i_y);
-    const const_reference operator()(std::size_t i_x, std::size_t i_y) const;
+    const_reference operator()(std::size_t i_x, std::size_t i_y) const;
 
     iterator begin();
     iterator end();
