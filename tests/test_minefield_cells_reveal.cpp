@@ -6,14 +6,6 @@
 
 using namespace mswpr;
 
-namespace mswpr
-{
-  std::ostream& operator<<(std::ostream& os, const mswpr::cell_coord& coord)
-  {
-    return os << '(' << coord.x << ", " << coord.y << ')';
-  }
-}
-
 TEST(MinefieldRevealCells, RevealCells)
 {
   const std::vector<size_t> mines_ind = { 6 };
