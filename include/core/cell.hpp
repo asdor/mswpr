@@ -32,8 +32,15 @@ namespace mswpr
 
   struct cell
   {
-    cell_value value;
-    cell_state state;
+  public:
+    constexpr cell() noexcept : d_value(cell_value::EMPTY), d_state(cell_state::CLOSED)
+    {
+    }
+
+    cell_value get_value() const;
+    void set_value(cell_value i_value);
+    cell_state get_state() const;
+    void set_state(cell_state i_state);
 
     bool is_empty() const;
     bool is_bomb() const;
@@ -43,8 +50,13 @@ namespace mswpr
     bool is_flagged() const;
     bool is_detonated() const;
     bool is_not_flagged_bomb() const;
+
+  private:
+    cell_value d_value;
+    cell_state d_state;
   };
-  static_assert(std::is_trivial_v<cell>);
+  static_assert(std::is_trivially_copyable_v<cell>);
+  static_assert(std::is_trivially_move_constructible_v<cell>);
 
   struct cell_coord
   {

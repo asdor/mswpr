@@ -11,7 +11,7 @@ void mswpr::debug::display_grid_to_stream(std::ostream& io_os,
   {
     for (size_t x = 0; x < i_width; ++x)
     {
-      auto cell = i_grid(x, y).value;
+      auto cell = i_grid(x, y).get_value();
       char cell_name = ' ';
       if (cell == mswpr::cell_value::EMPTY)
       {

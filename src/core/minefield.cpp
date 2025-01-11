@@ -32,7 +32,7 @@ namespace mswpr
     {
       const size_t x_c = mine_ind % d_width;
       const size_t y_c = mine_ind / d_width;
-      d_grid(x_c, y_c).value = cell_value::BOMB;
+      d_grid(x_c, y_c).set_value(cell_value::BOMB);
     }
 
     place_values_around_mines();
@@ -69,14 +69,14 @@ namespace mswpr
     {
       for (size_t x = 0; x < d_width; ++x)
       {
-        if (d_grid(x, y).value == cell_value::BOMB)
+        if (d_grid(x, y).is_bomb())
           continue;
 
         const auto neighbours = fetch_adjacent_cells({ x, y }, d_width, d_height);
         const size_t cnt = std::count_if(neighbours.begin(), neighbours.end(), [&grid = d_grid](cell_coord i_cell) {
           return grid(i_cell.x, i_cell.y).is_bomb();
         });
-        d_grid(x, y).value = to_enum<cell_value>(cnt);
+        d_grid(x, y).set_value(to_enum<cell_value>(cnt));
       }
     }
   }
@@ -120,7 +120,7 @@ namespace mswpr
     {
       const size_t x_c = coords[i] % d_width;
       const size_t y_c = coords[i] / d_width;
-      d_grid(x_c, y_c).value = cell_value::BOMB;
+      d_grid(x_c, y_c).set_value(cell_value::BOMB);
     }
 
     place_values_around_mines();
@@ -139,13 +139,13 @@ namespace mswpr
   cell_state minefield::get_cell_state(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);
-    return cell.state;
+    return cell.get_state();
   }
 
   cell_value minefield::get_cell_value(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);
-    return cell.value;
+    return cell.get_value();
   }
 
   bool minefield::is_deminied() const
@@ -156,12 +156,12 @@ namespace mswpr
   int minefield::get_value(size_t x, size_t y) const
   {
     const auto cell = d_grid(x, y);
-    return !cell.is_bomb() ? enum_to<int>(cell.value) : -1;
+    return !cell.is_bomb() ? enum_to<int>(cell.get_value()) : -1;
   }
 
   void minefield::open_cell(cell& i_cell)
   {
-    i_cell.state = cell_state::OPENED;
+    i_cell.set_state(cell_state::OPENED);
     --d_unopened_cnt;
   }
 
@@ -170,11 +170,11 @@ namespace mswpr
     auto& cell = d_grid(x, y);
     if (cell.is_flagged())
     {
-      cell.state = cell_state::CLOSED;
+      cell.set_state(cell_state::CLOSED);
     }
     else if (cell.is_closed())
     {
-      cell.state = cell_state::FLAGGED;
+      cell.set_state(cell_state::FLAGGED);
     }
   }
 
@@ -185,7 +185,7 @@ namespace mswpr
       return;
 
     // is_detonated?
-    cell.state = cell_state::DETONATED;
+    cell.set_state(cell_state::DETONATED);
   }
 
   open_cell_result minefield::reveal_closed(size_t base_x, size_t base_y)
@@ -262,7 +262,7 @@ namespace mswpr
     {
       if (cell.is_bomb() && !cell.is_flagged() && !cell.is_detonated())
       {
-        cell.state = cell_state::NOT_FLAGGED_BOMB;
+        cell.set_state(cell_state::NOT_FLAGGED_BOMB);
       }
     }
   }

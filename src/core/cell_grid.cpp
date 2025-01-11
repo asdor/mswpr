@@ -1,15 +1,8 @@
 #include "core/cell_grid.hpp"
 
-namespace
-{
-  constexpr mswpr::cell EMPTY_CELL{ mswpr::cell_value::EMPTY, mswpr::cell_state::CLOSED };
-}  // namespace
-
 namespace mswpr
 {
-  cell_grid::cell_grid(std::size_t i_width, std::size_t i_height) :
-    d_cells(i_width * i_height, EMPTY_CELL),
-    d_width(i_width)
+  cell_grid::cell_grid(std::size_t i_width, std::size_t i_height) : d_cells(i_width * i_height), d_width(i_width)
   {
   }
 
@@ -45,6 +38,7 @@ namespace mswpr
 
   void cell_grid::reset()
   {
-    std::fill(d_cells.begin(), d_cells.end(), EMPTY_CELL);
+    static constexpr cell empty_cell{};
+    std::fill(d_cells.begin(), d_cells.end(), empty_cell);
   }
 }  // namespace mswpr
