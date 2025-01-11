@@ -159,9 +159,10 @@ namespace mswpr
     return !cell.is_bomb() ? enum_to<int>(cell.get_value()) : -1;
   }
 
-  void minefield::open_cell(cell& i_cell)
+  void minefield::open_cell(size_t i_x, size_t i_y)
   {
-    i_cell.set_state(cell_state::OPENED);
+    auto& cell = d_grid(i_x, i_y);
+    cell.set_state(cell_state::OPENED);
     --d_unopened_cnt;
   }
 
@@ -204,7 +205,7 @@ namespace mswpr
 
     if (!base_cell.is_bomb() && !base_cell.is_empty())
     {
-      open_cell(base_cell);
+      open_cell(base_x, base_y);
       return open_cell_result::OPENED;
     }
 
@@ -216,11 +217,10 @@ namespace mswpr
     {
       auto cell = cells.front();
       cells.pop();
-      auto& cur_cell = d_grid(cell.x, cell.y);
       if (visited[cell.y * d_width + cell.x])
         continue;
 
-      open_cell(cur_cell);
+      open_cell(cell.x, cell.y);
       visited[cell.y * d_width + cell.x] = true;
 
       for (const auto [x, y] : fetch_adjacent_cells(cell, d_width, d_height))
@@ -232,7 +232,7 @@ namespace mswpr
         }
         else if (elem.is_closed() && !elem.is_flagged() && !elem.is_bomb())
         {
-          open_cell(elem);
+          open_cell(x, y);
           visited[y * d_width + x] = true;
         }
       }

@@ -46,7 +46,7 @@ namespace mswpr
   private:
     void place_values_around_mines();
 
-    void open_cell(cell& i_cell);
+    void open_cell(size_t i_x, size_t i_y);
 
     std::vector<size_t> get_mines_candidates(size_t x, size_t y) const;
 
