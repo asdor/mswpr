@@ -7,10 +7,10 @@
 #include "core/mines_generator.hpp"
 #include "core/types.hpp"
 
-namespace
-{
-  constexpr bool PRINT_FIELD = false;
-}  // namespace
+// namespace
+// {
+//   constexpr bool PRINT_FIELD = false;
+// }  // namespace
 
 namespace mswpr
 {
