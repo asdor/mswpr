@@ -1,16 +1,20 @@
 #include "core/debug_utils.hpp"
 #include "core/minefield.hpp"
+#include "test_utils/mocked_mines_generator.hpp"
 
 #include <sstream>
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 TEST(DebugUtils, PrintGrid)
 {
   static constexpr size_t width = 4;
   static constexpr size_t height = 3;
-  const std::vector<size_t> mine_indices = { 6, 8 };
-  mswpr::minefield field(mine_indices, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 2, 1 }, { 0, 2 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   std::ostringstream oss;
   mswpr::debug::display_grid_to_stream(oss, field.get_grid(), width, height);

@@ -20,9 +20,9 @@ namespace mswpr
     cell_grid(std::size_t i_width, std::size_t i_height);
 
     template<class Generator>
-    void generate(Generator i_generator, size_t i_x, size_t i_y)
+    void generate(const Generator& i_generator)
     {
-      for (const auto [x, y] : i_generator.gen(i_x, i_y))
+      for (const auto [x, y] : i_generator.gen())
       {
         (*this)(x, y) = cell(cell_value::BOMB);
       }

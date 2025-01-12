@@ -26,10 +26,16 @@ void mswpr::place_values_around_mines(mswpr::cell_grid& io_grid, std::size_t i_w
   }
 }
 
-mswpr::GladeGenerator::GladeGenerator(std::size_t i_width, std::size_t i_height, std::size_t i_mines_cnt) :
+mswpr::GladeGenerator::GladeGenerator(std::size_t i_width,
+                                      std::size_t i_height,
+                                      std::size_t i_mines_cnt,
+                                      std::size_t i_glade_center_x,
+                                      std::size_t i_glade_center_y) :
   d_width(i_width),
   d_height(i_height),
-  d_mines_cnt(i_mines_cnt)
+  d_mines_cnt(i_mines_cnt),
+  d_glade_center_x(i_glade_center_x),
+  d_glade_center_y(i_glade_center_y)
 {
 }
 
@@ -60,23 +66,22 @@ std::vector<size_t> mswpr::GladeGenerator::get_mines_candidates(size_t i_x, size
   return coords;
 }
 
-std::vector<mswpr::cell_coord> mswpr::GladeGenerator::gen(std::size_t i_x, std::size_t i_y) const
+std::vector<mswpr::cell_coord> mswpr::GladeGenerator::gen() const
 {
-  auto coords = get_mines_candidates(i_x, i_y);
+  auto coords = get_mines_candidates(d_glade_center_x, d_glade_center_y);
 
-  std::vector<cell_coord> mines;
   std::random_device rd;
   std::mt19937 g(rd());
   std::shuffle(coords.begin(), coords.end(), g);
 
-  std::vector<mswpr::cell_coord> result;
-  result.reserve(d_mines_cnt);
+  std::vector<mswpr::cell_coord> mines;
+  mines.reserve(d_mines_cnt);
 
   for (size_t i = 0; i < d_mines_cnt; ++i)
   {
     const size_t x = coords[i] % d_width;
     const size_t y = coords[i] / d_width;
-    result.emplace_back(x, y);
+    mines.emplace_back(x, y);
   }
-  return result;
+  return mines;
 }

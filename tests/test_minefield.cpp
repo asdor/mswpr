@@ -187,7 +187,8 @@ TEST(Minefield, NotBombCellAfterGeneration)
   for (size_t i = 0; i < attempts; ++i)
   {
     field.reset();
-    field.generate<mswpr::GladeGenerator>(0, 0);
+    const mswpr::GladeGenerator glade_generator(width, height, bomb_cnt, 0, 0);
+    field.generate(glade_generator);
     EXPECT_FALSE(field(0, 0).is_bomb());
   }
 }
@@ -245,7 +246,8 @@ TEST(Minefield, EmptyGladeAroundFirstCell)
   for (size_t i = 0; i < attempts; ++i)
   {
     field.reset();
-    field.generate<mswpr::GladeGenerator>(2, 2);
+    const mswpr::GladeGenerator glade_generator(width, height, bomb_cnt, 2, 2);
+    field.generate(glade_generator);
     EXPECT_EQ(field.get_value(2, 2), 0);
   }
 }

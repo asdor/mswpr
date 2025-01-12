@@ -21,10 +21,9 @@ namespace mswpr
     minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height);
 
     template<class Generator>
-    void generate(size_t i_x, size_t i_y)
+    void generate(const Generator& i_generator)
     {
-      Generator generator(d_width, d_height, d_bombs_cnt);
-      d_grid.generate(generator, i_x, i_y);
+      d_grid.generate(i_generator);
     }
 
     void reset();

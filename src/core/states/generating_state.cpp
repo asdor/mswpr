@@ -30,7 +30,8 @@ namespace mswpr
     }
 
     auto& field = st_machine_.get_field();
-    field.generate<mswpr::GladeGenerator>(x, y);
+    const mswpr::GladeGenerator glade_generator(field.get_width(), field.get_height(), field.get_bomb_cnt(), x, y);
+    field.generate(glade_generator);
     field.reveal_closed(x, y);
 
     st_machine_.set_state<playing_state>();
