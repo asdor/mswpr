@@ -19,7 +19,14 @@ namespace mswpr
   public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
     minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height);
-    void generate(size_t x, size_t y);
+
+    template<class Generator>
+    void generate(size_t i_x, size_t i_y)
+    {
+      Generator generator(d_width, d_height, d_bombs_cnt);
+      d_grid.generate(generator, i_x, i_y);
+    }
+
     void reset();
 
     const cell_grid& get_grid() const;
@@ -45,8 +52,6 @@ namespace mswpr
 
   private:
     void open_cell(size_t i_x, size_t i_y);
-
-    std::vector<size_t> get_mines_candidates(size_t x, size_t y) const;
 
     size_t d_width;
     size_t d_height;

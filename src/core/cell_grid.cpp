@@ -2,7 +2,10 @@
 
 namespace mswpr
 {
-  cell_grid::cell_grid(std::size_t i_width, std::size_t i_height) : d_cells(i_width * i_height), d_width(i_width)
+  cell_grid::cell_grid(std::size_t i_width, std::size_t i_height) :
+    d_cells(i_width * i_height),
+    d_width(i_width),
+    d_height(i_height)
   {
   }
 

@@ -1,5 +1,6 @@
 #include "core/adjacent_cells_iterator.hpp"
 #include "core/minefield.hpp"
+#include "core/mines_generator.hpp"
 
 #include <gtest/gtest.h>
 
@@ -186,7 +187,7 @@ TEST(Minefield, NotBombCellAfterGeneration)
   for (size_t i = 0; i < attempts; ++i)
   {
     field.reset();
-    field.generate(0, 0);
+    field.generate<mswpr::GladeGenerator>(0, 0);
     EXPECT_FALSE(field(0, 0).is_bomb());
   }
 }
@@ -244,7 +245,7 @@ TEST(Minefield, EmptyGladeAroundFirstCell)
   for (size_t i = 0; i < attempts; ++i)
   {
     field.reset();
-    field.generate(2, 2);
+    field.generate<mswpr::GladeGenerator>(2, 2);
     EXPECT_EQ(field.get_value(2, 2), 0);
   }
 }

@@ -1,8 +1,5 @@
-#include <algorithm>
-#include <iostream>
 #include <numeric>
 #include <queue>
-#include <random>
 
 #include "core/adjacent_cells_iterator.hpp"
 #include "core/debug_utils.hpp"
@@ -62,54 +59,6 @@ namespace mswpr
   const cell& minefield::operator()(size_t i_x, size_t i_y) const
   {
     return d_grid(i_x, i_y);
-  }
-
-  std::vector<size_t> minefield::get_mines_candidates(size_t x, size_t y) const
-  {
-    const bool is_generate_glade = (d_width > 3) && (d_height > 3) && (d_width * d_height - 9 >= d_bombs_cnt);
-    const auto cur_index = y * d_width + x;
-
-    std::vector<size_t> glade = { cur_index };
-    if (is_generate_glade)
-    {
-      const auto neighbours_vec = fetch_adjacent_cells({ x, y }, d_width, d_height);
-      for (const auto cell : neighbours_vec)
-      {
-        glade.push_back(cell.y * d_width + cell.x);
-      }
-    }
-
-    std::vector<size_t> coords;
-    for (size_t i = 0; i < d_width * d_height; ++i)
-    {
-      if (auto it = std::find(glade.begin(), glade.end(), i); it == glade.end())
-      {
-        coords.push_back(i);
-      }
-    }
-
-    return coords;
-  }
-
-  void minefield::generate(size_t i_x, size_t i_y)
-  {
-    auto coords = get_mines_candidates(i_x, i_y);
-
-    std::random_device rd;
-    std::mt19937 g(rd());
-    std::shuffle(coords.begin(), coords.end(), g);
-
-    for (size_t i = 0; i < d_bombs_cnt; ++i)
-    {
-      const size_t x_c = coords[i] % d_width;
-      const size_t y_c = coords[i] / d_width;
-      d_grid(x_c, y_c).set_value(cell_value::BOMB);
-    }
-
-    mswpr::place_values_around_mines(d_grid, d_width, d_height);
-
-    if (PRINT_FIELD)
-      mswpr::debug::display_grid_to_stream(std::cout, d_grid, d_width, d_height);
   }
 
   void minefield::reset()

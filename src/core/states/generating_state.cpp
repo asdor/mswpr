@@ -1,4 +1,5 @@
 #include "core/states/generating_state.hpp"
+#include "core/mines_generator.hpp"
 #include "core/states/playing_state.hpp"
 #include "core/states/state_machine.hpp"
 
@@ -29,7 +30,7 @@ namespace mswpr
     }
 
     auto& field = st_machine_.get_field();
-    field.generate(x, y);
+    field.generate<mswpr::GladeGenerator>(x, y);
     field.reveal_closed(x, y);
 
     st_machine_.set_state<playing_state>();
