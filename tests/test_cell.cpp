@@ -9,6 +9,13 @@ TEST(Cell, DefaultConstructor)
   EXPECT_EQ(cell.get_state(), mswpr::cell_state::CLOSED);
 }
 
+TEST(Cell, CellValueConstructor)
+{
+  mswpr::cell cell(mswpr::cell_value::THREE);
+  EXPECT_EQ(cell.get_value(), mswpr::cell_value::THREE);
+  EXPECT_EQ(cell.get_state(), mswpr::cell_state::CLOSED);
+}
+
 TEST(Cell, CopyConstructor)
 {
   mswpr::cell cell;

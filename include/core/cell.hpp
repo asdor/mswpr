@@ -37,6 +37,10 @@ namespace mswpr
     {
     }
 
+    constexpr cell(cell_value i_value) noexcept : d_value(i_value), d_state(cell_state::CLOSED)
+    {
+    }
+
     cell_value get_value() const;
     void set_value(cell_value i_value);
     cell_state get_state() const;

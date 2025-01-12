@@ -91,9 +91,9 @@ namespace mswpr
     return coords;
   }
 
-  void minefield::generate(size_t x, size_t y)
+  void minefield::generate(size_t i_x, size_t i_y)
   {
-    auto coords = get_mines_candidates(x, y);
+    auto coords = get_mines_candidates(i_x, i_y);
 
     std::random_device rd;
     std::mt19937 g(rd());
