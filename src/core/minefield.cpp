@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <iostream>
 #include <numeric>
 #include <queue>
@@ -7,6 +6,7 @@
 #include "core/adjacent_cells_iterator.hpp"
 #include "core/debug_utils.hpp"
 #include "core/minefield.hpp"
+#include "core/mines_generator.hpp"
 #include "core/types.hpp"
 
 namespace
@@ -35,7 +35,7 @@ namespace mswpr
       d_grid(x_c, y_c).set_value(cell_value::BOMB);
     }
 
-    place_values_around_mines();
+    mswpr::place_values_around_mines(d_grid, d_width, d_height);
   }
 
   size_t minefield::get_width() const
@@ -61,24 +61,6 @@ namespace mswpr
   const cell& minefield::operator()(size_t i_x, size_t i_y) const
   {
     return d_grid(i_x, i_y);
-  }
-
-  void minefield::place_values_around_mines()
-  {
-    for (size_t y = 0; y < d_height; ++y)
-    {
-      for (size_t x = 0; x < d_width; ++x)
-      {
-        if (d_grid(x, y).is_bomb())
-          continue;
-
-        const auto neighbours = fetch_adjacent_cells({ x, y }, d_width, d_height);
-        const size_t cnt = std::count_if(neighbours.begin(), neighbours.end(), [&grid = d_grid](cell_coord i_cell) {
-          return grid(i_cell.x, i_cell.y).is_bomb();
-        });
-        d_grid(x, y).set_value(to_enum<cell_value>(cnt));
-      }
-    }
   }
 
   std::vector<size_t> minefield::get_mines_candidates(size_t x, size_t y) const
@@ -123,7 +105,7 @@ namespace mswpr
       d_grid(x_c, y_c).set_value(cell_value::BOMB);
     }
 
-    place_values_around_mines();
+    mswpr::place_values_around_mines(d_grid, d_width, d_height);
 
     if (PRINT_FIELD)
       mswpr::debug::display_grid_to_stream(std::cout, d_grid, d_width, d_height);
