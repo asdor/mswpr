@@ -1,4 +1,5 @@
 #include "core/minefield.hpp"
+#include "test_utils/mocked_mines_generator.hpp"
 
 #include <vector>
 
@@ -8,10 +9,12 @@ using namespace mswpr;
 
 TEST(MinefieldRevealCells, RevealCells)
 {
-  const std::vector<size_t> mines_ind = { 6 };
   const size_t width = 3;
   const size_t height = 3;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 2 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   field.reveal_closed(1, 0);
 
@@ -34,10 +37,12 @@ TEST(MinefieldRevealCells, RevealCells)
 
 TEST(MinefieldRevealCells, AngleComponent)
 {
-  const std::vector<size_t> mines_ind = { 2, 13 };
   const size_t width = 3;
   const size_t height = 5;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 2, 0 }, { 1, 4 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   field.reveal_closed(0, 2);
 
@@ -65,10 +70,12 @@ TEST(MinefieldRevealCells, AngleComponent)
 
 TEST(MinefieldRevealCells, MineInTheMiddleComponent)
 {
-  const std::vector<size_t> mines_ind = { 12 };
   const size_t width = 5;
   const size_t height = 5;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 2, 2 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   field.reveal_closed(0, 0);
 
@@ -91,10 +98,12 @@ TEST(MinefieldRevealCells, MineInTheMiddleComponent)
 
 TEST(MinefieldRevealCells, OneComponentByDiagonal)
 {
-  const std::vector<size_t> mines_ind = { 0, 15 };
   const size_t width = 4;
   const size_t height = 4;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 3 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   field.reveal_closed(3, 0);
 

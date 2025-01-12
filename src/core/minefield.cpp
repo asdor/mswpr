@@ -1,10 +1,8 @@
-#include <numeric>
 #include <queue>
 
 #include "core/adjacent_cells_iterator.hpp"
 #include "core/debug_utils.hpp"
 #include "core/minefield.hpp"
-#include "core/mines_generator.hpp"
 #include "core/types.hpp"
 
 // namespace
@@ -21,19 +19,6 @@ namespace mswpr
     d_unopened_cnt(d_width * d_height),
     d_grid(d_width, d_height)
   {
-  }
-
-  minefield::minefield(const std::vector<size_t>& mines_ind, size_t width, size_t height) :
-    minefield(width, height, mines_ind.size())
-  {
-    for (size_t mine_ind : mines_ind)
-    {
-      const size_t x_c = mine_ind % d_width;
-      const size_t y_c = mine_ind / d_width;
-      d_grid(x_c, y_c).set_value(cell_value::BOMB);
-    }
-
-    mswpr::place_values_around_mines(d_grid, d_width, d_height);
   }
 
   size_t minefield::get_width() const

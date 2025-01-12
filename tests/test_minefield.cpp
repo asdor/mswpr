@@ -1,6 +1,7 @@
 #include "core/adjacent_cells_iterator.hpp"
 #include "core/minefield.hpp"
 #include "core/mines_generator.hpp"
+#include "test_utils/mocked_mines_generator.hpp"
 
 #include <gtest/gtest.h>
 
@@ -38,10 +39,12 @@ TEST(Minefield, Getters)
 
 TEST(Minefield, ConstructorWithMines_BombWasPlaced)
 {
-  const std::vector<size_t> mines_ind = { 3 };
   const size_t width = 2;
   const size_t height = 2;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 1, 1 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   ASSERT_FALSE(field(0, 0).is_bomb());
   ASSERT_EQ(field.get_value(0, 0), 1);
@@ -58,10 +61,12 @@ TEST(Minefield, ConstructorWithMines_BombWasPlaced)
 
 TEST(Minefield, ConstructorWithMines_AllFieldsAreClosed)
 {
-  const std::vector<size_t> mines_ind = { 6, 32, 50 };
   const size_t width = 8;
   const size_t height = 8;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 6, 0 }, { 0, 4 }, { 2, 6 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   for (const auto& cell : field.get_grid())
   {
@@ -117,10 +122,12 @@ TEST(Minefield, IsFlagged)
 
 TEST(Minefield, IsDetonated)
 {
-  const std::vector<size_t> mines_ind = { 0 };
   const size_t width = 1;
   const size_t height = 1;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   field.detonate_bomb(0, 0);
   const auto cell = field(0, 0);
@@ -156,10 +163,13 @@ namespace
 
 TEST(Minefield, MinesCountAroundCell)
 {
-  const std::vector<size_t> mines_ind = { 3, 4, 5, 6, 20, 29, 36, 37, 46, 57 };
   const size_t width = 8;
   const size_t height = 8;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator(
+    { { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 4, 2 }, { 5, 3 }, { 4, 4 }, { 5, 4 }, { 6, 5 }, { 1, 7 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   for (size_t x = 0; x < width; ++x)
   {
@@ -213,10 +223,12 @@ TEST(Minefield, Reset)
 
 TEST(Minefield, IsDeminied)
 {
-  const std::vector<size_t> mines_ind = { 0 };
   const size_t width = 5;
   const size_t height = 5;
-  mswpr::minefield field(mines_ind, width, height);
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
 
   const size_t x = 2;
   const size_t y = 2;

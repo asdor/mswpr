@@ -4,6 +4,7 @@
 #include "core/states/generating_state.hpp"
 #include "core/states/state_machine.hpp"
 #include "core/types.hpp"
+#include "test_utils/mocked_mines_generator.hpp"
 
 #include <variant>
 #include <vector>
@@ -14,9 +15,10 @@ namespace
 {
   constexpr size_t FIELD_WIDTH = 5;
   constexpr size_t FIELD_HEIGHT = 5;
-  const std::vector<size_t> MINES = { 0 };
   constexpr bool RELEASED = true;
   constexpr bool PRESSED = false;
+
+  const mswpr::unit_tests::MockedGenerator MOCKED_MINES_GENERATOR({ { 0, 0 } });
 }
 
 using namespace mswpr;
@@ -25,18 +27,18 @@ class StateMachineTransitionTest : public ::testing::Test
 {
 protected:
   StateMachineTransitionTest() :
-    field_(MINES, FIELD_WIDTH, FIELD_HEIGHT),
+    field_(FIELD_WIDTH, FIELD_HEIGHT, MOCKED_MINES_GENERATOR.get_mines_cnt()),
     face_(face_type::SMILE_NOT_PRESSED),
-    counter_(MINES.size()),
+    counter_(field_.get_bomb_cnt()),
     st_machine_(field_, face_, counter_, timer_)
   {
+    field_.generate(MOCKED_MINES_GENERATOR);
   }
 
   template<class NewState, class... Args>
   void change_state(Args&&... args)
   {
     st_machine_.set_state<NewState>(std::forward<Args>(args)...);
-    field_ = minefield(MINES, FIELD_WIDTH, FIELD_HEIGHT);
     ASSERT_TRUE(st_machine_.is_in_state<NewState>());
   }
 

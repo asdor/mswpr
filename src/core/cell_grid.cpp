@@ -1,5 +1,7 @@
 #include "core/cell_grid.hpp"
 
+#include <algorithm>
+
 namespace mswpr
 {
   cell_grid::cell_grid(std::size_t i_width, std::size_t i_height) :
