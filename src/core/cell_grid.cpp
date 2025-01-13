@@ -60,10 +60,10 @@ namespace mswpr
           continue;
 
         const auto neighbours = fetch_adjacent_cells({ x, y }, d_width, d_height);
-        const size_t cnt =
-          std::count_if(neighbours.begin(), neighbours.end(), [width = d_width, &cells = d_cells](cell_coord i_cell) {
-            return cells[i_cell.y * width + i_cell.x].is_bomb();
-          });
+        const auto is_bomb = [width = d_width, &cells = d_cells](cell_coord i_cell) {
+          return cells[i_cell.y * width + i_cell.x].is_bomb();
+        };
+        const size_t cnt = std::ranges::count_if(neighbours, is_bomb);
         cell = mswpr::cell(to_enum<cell_value>(cnt));
       }
     }
