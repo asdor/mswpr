@@ -1,4 +1,6 @@
 #include "core/cell_grid.hpp"
+#include "core/adjacent_cells_iterator.hpp"
+#include "core/types.hpp"
 
 #include <algorithm>
 
@@ -46,4 +48,26 @@ namespace mswpr
     static constexpr cell empty_cell{};
     std::fill(d_cells.begin(), d_cells.end(), empty_cell);
   }
-}  // namespace mswpr
+
+  void mswpr::cell_grid::place_values_around_mines()
+  {
+    for (size_t y = 0; y < d_height; ++y)
+    {
+      for (size_t x = 0; x < d_width; ++x)
+      {
+        auto& cell = (*this)(x, y);
+        if (cell.is_bomb())
+          continue;
+
+        const auto neighbours = fetch_adjacent_cells({ x, y }, d_width, d_height);
+        const size_t cnt =
+          std::count_if(neighbours.begin(), neighbours.end(), [width = d_width, &cells = d_cells](cell_coord i_cell) {
+            return cells[i_cell.y * width + i_cell.x].is_bomb();
+          });
+        cell = mswpr::cell(to_enum<cell_value>(cnt));
+      }
+    }
+  }
+}
+
+// namespace mswpr

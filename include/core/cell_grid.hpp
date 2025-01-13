@@ -27,7 +27,7 @@ namespace mswpr
         (*this)(x, y) = cell(cell_value::BOMB);
       }
 
-      mswpr::place_values_around_mines(*this, d_width, d_height);
+      place_values_around_mines();
       // if (PRINT_FIELD)
       //   mswpr::debug::display_grid_to_stream(std::cout, d_grid, d_width, d_height);
     }
@@ -44,6 +44,8 @@ namespace mswpr
     void reset();
 
   private:
+    void place_values_around_mines();
+
     std::vector<cell> d_cells;
     std::size_t d_width;
     std::size_t d_height;

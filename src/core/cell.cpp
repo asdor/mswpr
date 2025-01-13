@@ -7,11 +7,6 @@ namespace mswpr
     return d_value;
   }
 
-  void cell::set_value(cell_value i_value)
-  {
-    d_value = i_value;
-  }
-
   cell_state cell::get_state() const
   {
     return d_state;

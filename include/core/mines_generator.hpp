@@ -8,9 +8,6 @@
 
 namespace mswpr
 {
-  class cell_grid;
-
-  void place_values_around_mines(mswpr::cell_grid& io_grid, std::size_t i_width, std::size_t i_height);
 
   class GladeGenerator
   {

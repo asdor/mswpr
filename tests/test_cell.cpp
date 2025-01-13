@@ -18,8 +18,7 @@ TEST(Cell, CellValueConstructor)
 
 TEST(Cell, CopyConstructor)
 {
-  mswpr::cell cell;
-  cell.set_value(mswpr::cell_value::TWO);
+  mswpr::cell cell(mswpr::cell_value::TWO);
   cell.set_state(mswpr::cell_state::OPENED);
 
   const mswpr::cell another_cell = cell;
@@ -29,8 +28,7 @@ TEST(Cell, CopyConstructor)
 
 TEST(Cell, MoveConstructor)
 {
-  mswpr::cell cell;
-  cell.set_value(mswpr::cell_value::TWO);
+  mswpr::cell cell(mswpr::cell_value::TWO);
   cell.set_state(mswpr::cell_state::OPENED);
 
   const mswpr::cell another_cell = std::move(cell);
@@ -40,8 +38,7 @@ TEST(Cell, MoveConstructor)
 
 TEST(Cell, SetValue)
 {
-  mswpr::cell cell;
-  cell.set_value(mswpr::cell_value::TWO);
+  mswpr::cell cell(mswpr::cell_value::TWO);
   EXPECT_EQ(cell.get_value(), mswpr::cell_value::TWO);
 }
 
@@ -54,15 +51,13 @@ TEST(Cell, SetState)
 
 TEST(Cell, IsEmpty)
 {
-  mswpr::cell cell;
-  cell.set_value(mswpr::cell_value::EMPTY);
+  mswpr::cell cell(mswpr::cell_value::EMPTY);
   EXPECT_TRUE(cell.is_empty());
 }
 
 TEST(Cell, IsBomb)
 {
-  mswpr::cell cell;
-  cell.set_value(mswpr::cell_value::BOMB);
+  mswpr::cell cell(mswpr::cell_value::BOMB);
   EXPECT_TRUE(cell.is_bomb());
 }
 

@@ -42,7 +42,6 @@ namespace mswpr
     }
 
     cell_value get_value() const;
-    void set_value(cell_value i_value);
     cell_state get_state() const;
     void set_state(cell_state i_state);
 
