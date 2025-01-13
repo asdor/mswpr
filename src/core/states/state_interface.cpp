@@ -30,7 +30,7 @@ namespace mswpr
       --st_machine_.get_counter();
     }
 
-    field.set_flag(x, y);
+    field.toggle_flag(x, y);
   }
 
   bool state_interface::change_face_on_click(bool is_released, face_type pressed, face_type released)

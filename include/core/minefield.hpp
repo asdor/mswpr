@@ -43,7 +43,7 @@ namespace mswpr
     void detonate_bomb(size_t x, size_t y);
     open_cell_result reveal_closed(size_t x, size_t y);
 
-    void set_flag(size_t x, size_t y);
+    void toggle_flag(size_t x, size_t y);
 
     void flag_bombs();
     void reveal_bombs();

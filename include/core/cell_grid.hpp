@@ -18,6 +18,16 @@ namespace mswpr
     using const_reference = std::vector<cell>::const_reference;
 
     cell_grid(std::size_t i_width, std::size_t i_height);
+    reference operator()(std::size_t i_x, std::size_t i_y);
+    const_reference operator()(std::size_t i_x, std::size_t i_y) const;
+
+    void reset();
+
+    iterator begin();
+    iterator end();
+
+    const_iterator begin() const;
+    const_iterator end() const;
 
     template<class Generator>
     void generate(const Generator& i_generator)
@@ -28,20 +38,7 @@ namespace mswpr
       }
 
       place_values_around_mines();
-      // if (PRINT_FIELD)
-      //   mswpr::debug::display_grid_to_stream(std::cout, d_grid, d_width, d_height);
     }
-
-    reference operator()(std::size_t i_x, std::size_t i_y);
-    const_reference operator()(std::size_t i_x, std::size_t i_y) const;
-
-    iterator begin();
-    iterator end();
-
-    const_iterator begin() const;
-    const_iterator end() const;
-
-    void reset();
 
   private:
     void place_values_around_mines();

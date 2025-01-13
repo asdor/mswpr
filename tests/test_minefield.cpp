@@ -111,7 +111,7 @@ TEST(Minefield, IsFlagged)
   const size_t bomb_cnt = 1;
   mswpr::minefield field(width, height, bomb_cnt);
 
-  field.set_flag(0, 0);
+  field.toggle_flag(0, 0);
   const auto cell = field(0, 0);
 
   ASSERT_FALSE(cell.is_closed());
@@ -191,7 +191,7 @@ TEST(Minefield, Reset)
   const size_t y = 0;
 
   const auto& cell = field(x, y);
-  field.set_flag(x, y);
+  field.toggle_flag(x, y);
   EXPECT_TRUE(cell.is_flagged());
 
   field.reset();

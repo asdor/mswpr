@@ -83,7 +83,7 @@ namespace mswpr
     --d_unopened_cnt;
   }
 
-  void minefield::set_flag(size_t x, size_t y)
+  void minefield::toggle_flag(size_t x, size_t y)
   {
     auto& cell = d_grid(x, y);
     if (cell.is_flagged())
@@ -167,7 +167,7 @@ namespace mswpr
         auto& cell = d_grid(x, y);
         if (cell.is_bomb() && !cell.is_flagged())
         {
-          set_flag(x, y);
+          toggle_flag(x, y);
         }
       }
     }
