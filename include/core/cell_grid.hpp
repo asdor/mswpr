@@ -29,10 +29,10 @@ namespace mswpr
     const_iterator begin() const;
     const_iterator end() const;
 
-    template<class Generator>
+    template<MinesGenerator Generator>
     void generate(const Generator& i_generator)
     {
-      for (const auto [x, y] : i_generator.gen())
+      for (const auto [x, y] : i_generator())
       {
         (*this)(x, y) = cell(cell_value::BOMB);
       }

@@ -3,11 +3,16 @@
 
 #include "core/cell.hpp"
 
+#include <concepts>
 #include <cstddef>
 #include <vector>
 
 namespace mswpr
 {
+  template<class T>
+  concept MinesGenerator = requires(const T g) {
+    { g() } -> std::same_as<std::vector<cell_coord>>;
+  };
 
   class GladeGenerator
   {
@@ -18,7 +23,7 @@ namespace mswpr
                    std::size_t i_glade_center_x,
                    std::size_t i_glade_center_y);
 
-    std::vector<cell_coord> gen() const;
+    std::vector<cell_coord> operator()() const;
 
   private:
     std::vector<size_t> get_mines_candidates(std::size_t i_x, std::size_t i_y) const;

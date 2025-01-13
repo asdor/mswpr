@@ -5,7 +5,7 @@ mswpr::unit_tests::MockedGenerator::MockedGenerator(const std::vector<mswpr::cel
 {
 }
 
-std::vector<mswpr::cell_coord> mswpr::unit_tests::MockedGenerator::gen() const
+std::vector<mswpr::cell_coord> mswpr::unit_tests::MockedGenerator::operator()() const
 {
   return d_mines;
 }

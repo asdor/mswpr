@@ -19,7 +19,7 @@ namespace mswpr
   public:
     minefield(size_t width, size_t height, size_t bombs_cnt);
 
-    template<class Generator>
+    template<MinesGenerator Generator>
     void generate(const Generator& i_generator)
     {
       d_grid.generate(i_generator);

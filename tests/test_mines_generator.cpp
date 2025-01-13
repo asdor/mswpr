@@ -66,7 +66,7 @@ TEST_P(GladeGeneratorTest, DifferentFieldCombinations)
   const mswpr::GladeGenerator glade_generator(
     params.width, params.height, params.mines_cnt, params.clicked_cell.x, params.clicked_cell.y);
 
-  EXPECT_THAT(glade_generator.gen(), ::testing::SizeIs(params.expected_mines_cnt));
+  EXPECT_THAT(glade_generator(), ::testing::SizeIs(params.expected_mines_cnt));
 }
 
 INSTANTIATE_TEST_SUITE_P(MinesGenerator,
@@ -109,7 +109,7 @@ TEST(MinesGenerator, NotBombCellAfterGeneration)
 
   for (size_t i = 0; i < attempts; ++i)
   {
-    const auto mines = glade_generator.gen();
+    const auto mines = glade_generator();
     EXPECT_THAT(mines, Not(Contains(clicked_cell)));
   }
 }
@@ -150,7 +150,7 @@ TEST(MinesGenerator, EmptyGladeAroundFirstCell)
 
   for (size_t i = 0; i < attempts; ++i)
   {
-    const auto mines = glade_generator.gen();
+    const auto mines = glade_generator();
     for (auto cell : adjacent_cordinates)
       EXPECT_THAT(mines, Not(Contains(cell)));
   }

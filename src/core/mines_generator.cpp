@@ -45,7 +45,7 @@ std::vector<size_t> mswpr::GladeGenerator::get_mines_candidates(size_t i_x, size
   return coords;
 }
 
-std::vector<mswpr::cell_coord> mswpr::GladeGenerator::gen() const
+std::vector<mswpr::cell_coord> mswpr::GladeGenerator::operator()() const
 {
   auto coords = get_mines_candidates(d_glade_center_x, d_glade_center_y);
 
