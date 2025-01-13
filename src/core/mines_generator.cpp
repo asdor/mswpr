@@ -33,7 +33,7 @@ mswpr::GladeGenerator::GladeGenerator(std::size_t i_width,
                                       std::size_t i_glade_center_y) :
   d_width(i_width),
   d_height(i_height),
-  d_mines_cnt(i_mines_cnt),
+  d_mines_cnt(std::min(i_mines_cnt, d_width * d_height - 1)),
   d_glade_center_x(i_glade_center_x),
   d_glade_center_y(i_glade_center_y)
 {

@@ -3,6 +3,83 @@
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
+namespace
+{
+  struct TestData
+  {
+    size_t width;
+    size_t height;
+    size_t mines_cnt;
+    mswpr::cell_coord clicked_cell;
+    size_t expected_mines_cnt;
+  };
+
+  class GladeGeneratorTest : public testing::TestWithParam<TestData>
+  {
+  };
+
+  const TestData SimpleScenario{ .width = 5,
+                                 .height = 5,
+                                 .mines_cnt = 8,
+                                 .clicked_cell = { 2, 2 },
+                                 .expected_mines_cnt = 8 };
+  const TestData ZeroMines{ .width = 5,
+                            .height = 5,
+                            .mines_cnt = 0,
+                            .clicked_cell = { 0, 0 },
+                            .expected_mines_cnt = 0 };
+  const TestData AllCellsAreMines{ .width = 5,
+                                   .height = 5,
+                                   .mines_cnt = 25,
+                                   .clicked_cell = { 2, 2 },
+                                   .expected_mines_cnt = 24 };
+  const TestData GreaterThanFieldSizeMines{ .width = 5,
+                                            .height = 5,
+                                            .mines_cnt = 28,
+                                            .clicked_cell = { 2, 2 },
+                                            .expected_mines_cnt = 24 };
+  const TestData FirstClickInAngle{ .width = 5,
+                                    .height = 5,
+                                    .mines_cnt = 21,
+                                    .clicked_cell = { 0, 0 },
+                                    .expected_mines_cnt = 21 };
+  const TestData SmallField{ .width = 2,
+                             .height = 2,
+                             .mines_cnt = 2,
+                             .clicked_cell = { 0, 1 },
+                             .expected_mines_cnt = 2 };
+  const TestData HorizontalField{ .width = 5,
+                                  .height = 3,
+                                  .mines_cnt = 4,
+                                  .clicked_cell = { 0, 1 },
+                                  .expected_mines_cnt = 4 };
+  const TestData VerticalField{ .width = 3,
+                                .height = 5,
+                                .mines_cnt = 4,
+                                .clicked_cell = { 1, 2 },
+                                .expected_mines_cnt = 4 };
+}
+
+TEST_P(GladeGeneratorTest, DifferentFieldCombinations)
+{
+  const auto& params = GetParam();
+  const mswpr::GladeGenerator glade_generator(
+    params.width, params.height, params.mines_cnt, params.clicked_cell.x, params.clicked_cell.y);
+
+  EXPECT_THAT(glade_generator.gen(), ::testing::SizeIs(params.expected_mines_cnt));
+}
+
+INSTANTIATE_TEST_SUITE_P(MinesGenerator,
+                         GladeGeneratorTest,
+                         testing::ValuesIn({ SimpleScenario,
+                                             ZeroMines,
+                                             AllCellsAreMines,
+                                             GreaterThanFieldSizeMines,
+                                             FirstClickInAngle,
+                                             SmallField,
+                                             HorizontalField,
+                                             VerticalField }));
+
 TEST(MinesGenerator, NotBombCellAfterGeneration)
 {
   // This test verifies that the generator ensures that there are no mines in input cell {x, y}.
