@@ -32,6 +32,7 @@ namespace mswpr
     else if (field.is_deminied())
     {
       field.flag_bombs();
+      st_machine_.get_counter().reset(0);
       st_machine_.set_state<ending_state>(ending_state::params{ .is_victory = true });
     }
   }

@@ -95,6 +95,19 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick)
   EXPECT_FALSE(timer_.is_running());
 }
 
+TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick_ResetCounter)
+{
+  change_state<playing_state>();
+
+  counter_.reset(0);
+  EXPECT_EQ(counter_.get_value(), 0);
+  st_machine_.on_left_face_click(PRESSED);
+
+  st_machine_.on_left_face_click(RELEASED);
+  ASSERT_TRUE(st_machine_.is_in_state<generating_state>());
+  EXPECT_EQ(counter_.get_value(), 1);
+}
+
 TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnEmpty)
 {
   const size_t x = 1;
@@ -113,11 +126,13 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_Demined)
   change_state<playing_state>();
   EXPECT_TRUE(timer_.is_running());
   ASSERT_EQ(field_.get_value(x, y), 0);
+  EXPECT_EQ(counter_.get_value(), 1);
 
   st_machine_.on_left_field_click(RELEASED, x, y);
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
   EXPECT_FALSE(timer_.is_running());
   EXPECT_EQ(face_, face_type::BOSS);
+  EXPECT_EQ(counter_.get_value(), 0);
 }
 
 TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
