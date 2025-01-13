@@ -217,3 +217,36 @@ TEST(Minefield, IsDeminied)
   field.reset();
   EXPECT_FALSE(field.is_deminied());
 }
+
+TEST(Minefield, FlagBombs)
+{
+  const size_t width = 5;
+  const size_t height = 5;
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
+
+  EXPECT_FALSE(field(0, 0).is_flagged());
+  EXPECT_FALSE(field(3, 1).is_flagged());
+  field.flag_bombs();
+  EXPECT_TRUE(field(0, 0).is_flagged());
+  EXPECT_TRUE(field(3, 1).is_flagged());
+}
+
+TEST(Minefield, FlagBombs_DoNotTouchAlreadyFlagged)
+{
+  const size_t width = 5;
+  const size_t height = 5;
+  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 } });
+
+  mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
+  field.generate(mocked_generator);
+
+  field.toggle_flag(0, 0);
+  EXPECT_TRUE(field(0, 0).is_flagged());
+  EXPECT_FALSE(field(3, 1).is_flagged());
+  field.flag_bombs();
+  EXPECT_TRUE(field(0, 0).is_flagged());
+  EXPECT_TRUE(field(3, 1).is_flagged());
+}
