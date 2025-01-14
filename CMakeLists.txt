@@ -7,6 +7,12 @@ set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
 set(CMAKE_CXX_STANDARD 20)
 
 option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
+option(SDL2_MINESWEEPER_ENABLE_CLANG_TIDY "Enable clang-tidy checks" OFF)
+
+if (SDL2_MINESWEEPER_ENABLE_CLANG_TIDY)
+    include(cmake/static_analyzers.cmake)
+    enable_clang_tidy()
+endif()
 
 add_subdirectory(src/core)
 add_subdirectory(src/gui)

@@ -1,0 +1,9 @@
+---
+Checks: "
+        readability-identifier-naming,
+"
+WarningsAsErrors: ''
+HeaderFilterRegex: '/(core|gui|test_utils)/'
+CheckOptions:
+- key: readability-identifier-naming.PrivateMemberPrefix
+  value: 'd_'
