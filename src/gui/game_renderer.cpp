@@ -30,7 +30,7 @@ namespace
 
 }  // namespace
 
-mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : face_rect_(), field_rect_()
+mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : d_face_rect(), d_field_rect()
 {
   SDL_Log("sdl2_minesweeper version: %s\n", mswpr::get_game_version());
 
@@ -38,9 +38,9 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   const size_t window_width = 2 * cfg::board_offset_x + cfg::cell_width * cfg::field_width;
   const size_t window_height = cfg::board_offset_y + cfg::board_offset_x + cfg::cell_height * cfg::field_height;
 
-  window_.reset(SDL_CreateWindow(
+  d_window.reset(SDL_CreateWindow(
     title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
-  if (!window_)
+  if (!d_window)
   {
     SDL_Log("Unable to create SDL_window: %s", SDL_GetError());
     return;
@@ -48,34 +48,34 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 
   SDL_Log("Window created!\n");
 
-  renderer_.reset(SDL_CreateRenderer(window_.get(), -1, 0), mswpr::sdl_deleter{});
-  if (!renderer_)
+  d_renderer.reset(SDL_CreateRenderer(d_window.get(), -1, 0), mswpr::sdl_deleter{});
+  if (!d_renderer)
   {
     SDL_Log("Unable to create SDL_Renderer: %s", SDL_GetError());
     return;
   }
 
-  SDL_SetRenderDrawColor(renderer_.get(), 190, 190, 190, 0);
+  SDL_SetRenderDrawColor(d_renderer.get(), 190, 190, 190, 0);
   SDL_Log("Renderer created!\n");
 
-  texture_manager_.init(renderer_, "assets/winxpskin.bmp");
+  d_texture_manager.init(d_renderer, "assets/winxpskin.bmp");
 
   const int face_x = cfg::field_width * cfg::cell_width / 2 - cfg::face_width / 2 + cfg::board_offset_x;
-  face_rect_ = { face_x, cfg::hud_offset_y, cfg::face_width, cfg::face_height };
+  d_face_rect = { face_x, cfg::hud_offset_y, cfg::face_width, cfg::face_height };
 
-  field_rect_ = {
+  d_field_rect = {
     cfg::board_offset_x, cfg::board_offset_y, cfg::cell_width * cfg::field_width, cfg::cell_height * cfg::field_height
   };
 }
 
 bool mswpr::game_renderer::is_inside_face(int mouse_x, int mouse_y)
 {
-  return is_inside(face_rect_, mouse_x, mouse_y);
+  return is_inside(d_face_rect, mouse_x, mouse_y);
 }
 
 bool mswpr::game_renderer::is_inside_field(int mouse_x, int mouse_y)
 {
-  return is_inside(field_rect_, mouse_x, mouse_y);
+  return is_inside(d_field_rect, mouse_x, mouse_y);
 }
 
 void mswpr::game_renderer::render(const mswpr::minefield& field,
@@ -83,14 +83,14 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
                                   const mswpr::mines_counter& counter,
                                   const mswpr::game_timer& i_timer)
 {
-  SDL_RenderClear(renderer_.get());
+  SDL_RenderClear(d_renderer.get());
 
   draw_mines_counter(counter);
   draw_timer(i_timer);
-  texture_manager_.draw(face, face_rect_);
+  d_texture_manager.draw(face, d_face_rect);
   draw_field(field);
 
-  SDL_RenderPresent(renderer_.get());
+  SDL_RenderPresent(d_renderer.get());
 }
 
 void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
@@ -128,7 +128,7 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
         break;
       }
 
-      texture_manager_.draw(sprite, dst_rect);
+      d_texture_manager.draw(sprite, dst_rect);
     }
   }
 }
@@ -138,7 +138,7 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
   const SDL_Rect empty_display_rect = {
     .x = cfg::counter_offset_x, .y = cfg::hud_offset_y, .w = cfg::counter_width, .h = cfg::counter_height
   };
-  texture_manager_.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
+  d_texture_manager.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
   const auto digits = counter.value_to_str();
 
@@ -153,7 +153,7 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
     display_digits_type sprite = digits[i] == '-'
                                    ? display_digits_type::MINUS
                                    : to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i] - '0');
-    texture_manager_.draw(sprite, first_digit_rect);
+    d_texture_manager.draw(sprite, first_digit_rect);
   }
 }
 
@@ -164,7 +164,7 @@ void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
   const SDL_Rect empty_display_rect = {
     .x = static_cast<int>(x_timer), .y = cfg::hud_offset_y, .w = cfg::counter_width, .h = cfg::counter_height
   };
-  texture_manager_.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
+  d_texture_manager.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
   const auto digits = i_timer.extract_digits_from_seconds();
 
@@ -177,6 +177,6 @@ void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
                                         .h = cfg::digit_height };
 
     const display_digits_type sprite = to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i]);
-    texture_manager_.draw(sprite, first_digit_rect);
+    d_texture_manager.draw(sprite, first_digit_rect);
   }
 }

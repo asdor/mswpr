@@ -28,18 +28,18 @@ namespace mswpr
   private:
     void process_click(bool is_released, int key);
 
-    bool is_running_;
+    bool d_is_running;
 
-    mswpr::game_renderer renderer_;
+    mswpr::game_renderer d_renderer;
 
-    mswpr::minefield minefield_;
-    mswpr::face_type face_type_;
-    mswpr::mines_counter counter_;
-    mswpr::game_timer timer_;
+    mswpr::minefield d_minefield;
+    mswpr::face_type d_face_type;
+    mswpr::mines_counter d_counter;
+    mswpr::game_timer d_timer;
 
-    mswpr::state_machine state_;
+    mswpr::state_machine d_state;
 
-    Uint32 frame_start_ticks_;
+    Uint32 d_frame_start_ticks;
   };
 
 }  // mswpr

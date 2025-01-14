@@ -29,16 +29,16 @@ namespace mswpr
     void render_sprite(Enum i_index_val, SDL_Rect i_dst_rect, const std::array<SDL_Rect, N>& i_sprites_config)
     {
       const auto index = enum_to<size_t>(i_index_val);
-      SDL_RenderCopy(renderer_.get(), sprite_texture_.get(), &i_sprites_config[index], &i_dst_rect);
+      SDL_RenderCopy(d_renderer.get(), d_sprite_texture.get(), &i_sprites_config[index], &i_dst_rect);
     }
 
-    std::array<SDL_Rect, mswpr::FACES_COUNT> faces_config_;
-    std::array<SDL_Rect, mswpr::SPRITES_COUNT> sprites_config_;
+    std::array<SDL_Rect, mswpr::FACES_COUNT> d_faces_config;
+    std::array<SDL_Rect, mswpr::SPRITES_COUNT> d_sprites_config;
 
-    std::array<SDL_Rect, mswpr::DIPLAY_DIGITS_COUNT> display_digits_config_;
+    std::array<SDL_Rect, mswpr::DIPLAY_DIGITS_COUNT> d_display_digits_config;
 
-    mswpr::sdl_texture_t sprite_texture_;
-    mswpr::sdl_renderer_t renderer_;
+    mswpr::sdl_texture_t d_sprite_texture;
+    mswpr::sdl_renderer_t d_renderer;
   };
 }  // namespace mswpr
 

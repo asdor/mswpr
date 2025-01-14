@@ -24,29 +24,29 @@ namespace
   }
 }
 
-mswpr::mines_counter::mines_counter(size_t counter) : counter_(static_cast<int>(counter))
+mswpr::mines_counter::mines_counter(size_t counter) : d_counter(static_cast<int>(counter))
 {
 }
 
 int mswpr::mines_counter::get_value() const
 {
-  return counter_;
+  return d_counter;
 }
 
 void mswpr::mines_counter::reset(size_t counter)
 {
-  counter_ = static_cast<int>(counter);
+  d_counter = static_cast<int>(counter);
 }
 
 mswpr::mines_counter& mswpr::mines_counter::operator++()
 {
-  ++counter_;
+  ++d_counter;
   return *this;
 }
 
 mswpr::mines_counter& mswpr::mines_counter::operator--()
 {
-  --counter_;
+  --d_counter;
   return *this;
 }
 
@@ -54,8 +54,8 @@ std::array<char, 3> mswpr::mines_counter::value_to_str() const
 {
   std::array<char, 3> str = { '0', '0', '0' };
 
-  int counter = counter_;
-  if (counter_ < 0)
+  int counter = d_counter;
+  if (d_counter < 0)
   {
     str[0] = '-';
     counter = -counter;

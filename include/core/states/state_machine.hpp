@@ -25,13 +25,13 @@ namespace mswpr
     template<class NewState, class... Args>
     void set_state(Args&&... args)
     {
-      state_.emplace<NewState>(*this, std::forward<Args>(args)...);
+      d_state.emplace<NewState>(*this, std::forward<Args>(args)...);
     }
 
     template<class St>
     constexpr bool is_in_state() const
     {
-      return std::holds_alternative<St>(state_);
+      return std::holds_alternative<St>(d_state);
     }
 
     void on_left_face_click(bool is_released);
@@ -44,13 +44,13 @@ namespace mswpr
     mswpr::game_timer& get_timer();
 
   private:
-    mswpr::minefield& minefield_;
-    mswpr::face_type& face_type_;
-    mswpr::mines_counter& counter_;
-    mswpr::game_timer& timer_;
+    mswpr::minefield& d_minefield;
+    mswpr::face_type& d_face_type;
+    mswpr::mines_counter& d_counter;
+    mswpr::game_timer& d_timer;
 
     using State = std::variant<generating_state, playing_state, ending_state>;
-    State state_;
+    State d_state;
   };
 }
 

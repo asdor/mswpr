@@ -18,7 +18,7 @@ namespace mswpr
     mines_counter& operator--();
 
   private:
-    int counter_;
+    int d_counter;
   };
 }
 

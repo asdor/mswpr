@@ -8,25 +8,25 @@ namespace mswpr
 {
   game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos) :
 
-    is_running_(false),
-    renderer_(title, xpos, ypos),
-    minefield_(cfg::field_width, cfg::field_height, cfg::mines_cnt),
-    face_type_(face_type::SMILE_NOT_PRESSED),
-    counter_(cfg::mines_cnt),
-    state_(minefield_, face_type_, counter_, timer_),
-    frame_start_ticks_(0)
+    d_is_running(false),
+    d_renderer(title, xpos, ypos),
+    d_minefield(cfg::field_width, cfg::field_height, cfg::mines_cnt),
+    d_face_type(face_type::SMILE_NOT_PRESSED),
+    d_counter(cfg::mines_cnt),
+    d_state(d_minefield, d_face_type, d_counter, d_timer),
+    d_frame_start_ticks(0)
   {
-    is_running_ = true;
+    d_is_running = true;
   }
 
   bool game_engine::running() const
   {
-    return is_running_;
+    return d_is_running;
   }
 
   void game_engine::handle_input()
   {
-    frame_start_ticks_ = SDL_GetTicks();
+    d_frame_start_ticks = SDL_GetTicks();
 
     bool is_released = false;
     int key = -1;
@@ -43,7 +43,7 @@ namespace mswpr
         switch (event.key.keysym.sym)
         {
         case SDLK_ESCAPE:
-          is_running_ = false;
+          d_is_running = false;
           return;
         default:
           break;
@@ -59,7 +59,7 @@ namespace mswpr
         switch (event.window.event)
         {
         case SDL_WINDOWEVENT_CLOSE:
-          is_running_ = false;
+          d_is_running = false;
           return;
         default:
           break;
@@ -85,38 +85,38 @@ namespace mswpr
     if (!(is_left_btn || is_right_btn))
       return;
 
-    if (is_left_btn && renderer_.is_inside_face(mouse_x, mouse_y))
+    if (is_left_btn && d_renderer.is_inside_face(mouse_x, mouse_y))
     {
-      state_.on_left_face_click(is_released);
+      d_state.on_left_face_click(is_released);
     }
-    else if (renderer_.is_inside_field(mouse_x, mouse_y))
+    else if (d_renderer.is_inside_field(mouse_x, mouse_y))
     {
       const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
       const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
       if (is_left_btn)
       {
-        state_.on_left_field_click(is_released, x, y);
+        d_state.on_left_field_click(is_released, x, y);
       }
       else if (is_right_btn)
       {
-        state_.on_right_field_click(is_released, x, y);
+        d_state.on_right_field_click(is_released, x, y);
       }
     }
   }
 
   void game_engine::render()
   {
-    renderer_.render(minefield_, face_type_, counter_, timer_);
+    d_renderer.render(d_minefield, d_face_type, d_counter, d_timer);
   }
 
   void game_engine::update()
   {
-    timer_.update(game_timer::now());
+    d_timer.update(game_timer::now());
   }
 
   void game_engine::limit_fps()
   {
-    const auto frame_ticks = SDL_GetTicks() - frame_start_ticks_;
+    const auto frame_ticks = SDL_GetTicks() - d_frame_start_ticks;
 
     if (cfg::frame_delay > frame_ticks)
     {

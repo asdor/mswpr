@@ -29,14 +29,14 @@ namespace mswpr
     void draw_mines_counter(const mswpr::mines_counter& counter);
     void draw_timer(const mswpr::game_timer& i_timer);
 
-    mswpr::sdl_init_t sdl_init_;
-    mswpr::sdl_window_t window_;
-    mswpr::sdl_renderer_t renderer_;
+    mswpr::sdl_init_t d_sdl_init;
+    mswpr::sdl_window_t d_window;
+    mswpr::sdl_renderer_t d_renderer;
 
-    mswpr::texture_manager texture_manager_;
+    mswpr::texture_manager d_texture_manager;
 
-    SDL_Rect face_rect_;
-    SDL_Rect field_rect_;
+    SDL_Rect d_face_rect;
+    SDL_Rect d_field_rect;
   };
 }
 
