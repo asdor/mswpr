@@ -9,10 +9,6 @@
 
 namespace mswpr
 {
-  texture_manager::texture_manager()
-  {
-  }
-
   void texture_manager::init(mswpr::sdl_renderer_t renderer, std::string_view sprite_path)
   {
     d_renderer = renderer;
@@ -46,7 +42,7 @@ namespace mswpr
     static constexpr int DIGIT_HEIGHT = 21;
     d_display_digits_config[enum_to<size_t>(display_digits_type::EMPTY_DISPLAY)] = { 28, 82, 41, 25 };
 
-    for (size_t i = enum_to<size_t>(display_digits_type::ZERO); i <= enum_to<size_t>(display_digits_type::MINUS); ++i)
+    for (auto i = enum_to<size_t>(display_digits_type::ZERO); i <= enum_to<size_t>(display_digits_type::MINUS); ++i)
     {
       const size_t rect_x = (DIGIT_WIDTH + 1) * (i - enum_to<size_t>(display_digits_type::ZERO));
       d_display_digits_config[i] = { static_cast<int>(rect_x), 33, DIGIT_WIDTH, DIGIT_HEIGHT };

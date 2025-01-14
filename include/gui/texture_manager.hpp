@@ -14,7 +14,7 @@ namespace mswpr
   class texture_manager
   {
   public:
-    texture_manager();
+    texture_manager() = default;
 
     void init(mswpr::sdl_renderer_t renderer, std::string_view sprite_path);
 

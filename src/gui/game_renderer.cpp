@@ -16,15 +16,15 @@ namespace
   template<mswpr::Enumeration To, To base, std::integral Index>
   constexpr To to_sprite(Index index_integral)
   {
-    const size_t index = static_cast<size_t>(index_integral);
-    constexpr size_t empty_index = mswpr::enum_to<size_t>(base);
+    const auto index = static_cast<size_t>(index_integral);
+    constexpr auto empty_index = mswpr::enum_to<size_t>(base);
     return mswpr::to_enum<To>(empty_index + index);
   }
 
   template<mswpr::Enumeration To, To base, mswpr::Enumeration From>
   constexpr To to_sprite(From value)
   {
-    const size_t index = mswpr::enum_to<size_t>(value);
+    const auto index = mswpr::enum_to<size_t>(value);
     return to_sprite<To, base>(index);
   }
 
@@ -176,7 +176,7 @@ void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
                                         .w = cfg::digit_width,
                                         .h = cfg::digit_height };
 
-    const display_digits_type sprite = to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i]);
+    const auto sprite = to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i]);
     d_texture_manager.draw(sprite, first_digit_rect);
   }
 }

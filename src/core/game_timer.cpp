@@ -1,5 +1,7 @@
 #include "core/game_timer.hpp"
 
+#include <ranges>
+
 mswpr::game_timer::game_timer() : d_is_running(false)
 {
 }
@@ -58,9 +60,9 @@ std::array<uint8_t, 3> mswpr::game_timer::extract_digits_from_seconds() const
   std::array<uint8_t, 3> arr = { 0, 0, 0 };
   auto seconds = std::min(get_elapsed_time().count(), max_digits);
 
-  for (auto it = arr.rbegin(); it != arr.rend(); ++it)
+  for (auto& x : std::ranges::reverse_view(arr))
   {
-    *it = seconds % 10;
+    x = seconds % 10;
     seconds /= 10;
   }
 
