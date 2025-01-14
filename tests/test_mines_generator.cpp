@@ -5,7 +5,7 @@
 
 namespace
 {
-  struct TestData
+  struct test_data
   {
     size_t width;
     size_t height;
@@ -14,63 +14,63 @@ namespace
     size_t expected_mines_cnt;
   };
 
-  class GladeGeneratorTest : public testing::TestWithParam<TestData>
+  class glade_generator_test : public testing::TestWithParam<test_data>
   {
   };
 
-  const TestData SimpleScenario{ .width = 5,
-                                 .height = 5,
-                                 .mines_cnt = 8,
-                                 .clicked_cell = { 2, 2 },
-                                 .expected_mines_cnt = 8 };
-  const TestData ZeroMines{ .width = 5,
-                            .height = 5,
-                            .mines_cnt = 0,
-                            .clicked_cell = { 0, 0 },
-                            .expected_mines_cnt = 0 };
-  const TestData AllCellsAreMines{ .width = 5,
-                                   .height = 5,
-                                   .mines_cnt = 25,
-                                   .clicked_cell = { 2, 2 },
-                                   .expected_mines_cnt = 24 };
-  const TestData GreaterThanFieldSizeMines{ .width = 5,
-                                            .height = 5,
-                                            .mines_cnt = 28,
-                                            .clicked_cell = { 2, 2 },
-                                            .expected_mines_cnt = 24 };
-  const TestData FirstClickInAngle{ .width = 5,
+  const test_data SimpleScenario{ .width = 5,
+                                  .height = 5,
+                                  .mines_cnt = 8,
+                                  .clicked_cell = { 2, 2 },
+                                  .expected_mines_cnt = 8 };
+  const test_data ZeroMines{ .width = 5,
+                             .height = 5,
+                             .mines_cnt = 0,
+                             .clicked_cell = { 0, 0 },
+                             .expected_mines_cnt = 0 };
+  const test_data AllCellsAreMines{ .width = 5,
                                     .height = 5,
-                                    .mines_cnt = 21,
-                                    .clicked_cell = { 0, 0 },
-                                    .expected_mines_cnt = 21 };
-  const TestData SmallField{ .width = 2,
-                             .height = 2,
-                             .mines_cnt = 2,
-                             .clicked_cell = { 0, 1 },
-                             .expected_mines_cnt = 2 };
-  const TestData HorizontalField{ .width = 5,
-                                  .height = 3,
-                                  .mines_cnt = 4,
-                                  .clicked_cell = { 0, 1 },
-                                  .expected_mines_cnt = 4 };
-  const TestData VerticalField{ .width = 3,
-                                .height = 5,
-                                .mines_cnt = 4,
-                                .clicked_cell = { 1, 2 },
-                                .expected_mines_cnt = 4 };
+                                    .mines_cnt = 25,
+                                    .clicked_cell = { 2, 2 },
+                                    .expected_mines_cnt = 24 };
+  const test_data GreaterThanFieldSizeMines{ .width = 5,
+                                             .height = 5,
+                                             .mines_cnt = 28,
+                                             .clicked_cell = { 2, 2 },
+                                             .expected_mines_cnt = 24 };
+  const test_data FirstClickInAngle{ .width = 5,
+                                     .height = 5,
+                                     .mines_cnt = 21,
+                                     .clicked_cell = { 0, 0 },
+                                     .expected_mines_cnt = 21 };
+  const test_data SmallField{ .width = 2,
+                              .height = 2,
+                              .mines_cnt = 2,
+                              .clicked_cell = { 0, 1 },
+                              .expected_mines_cnt = 2 };
+  const test_data HorizontalField{ .width = 5,
+                                   .height = 3,
+                                   .mines_cnt = 4,
+                                   .clicked_cell = { 0, 1 },
+                                   .expected_mines_cnt = 4 };
+  const test_data VerticalField{ .width = 3,
+                                 .height = 5,
+                                 .mines_cnt = 4,
+                                 .clicked_cell = { 1, 2 },
+                                 .expected_mines_cnt = 4 };
 }
 
-TEST_P(GladeGeneratorTest, DifferentFieldCombinations)
+TEST_P(glade_generator_test, DifferentFieldCombinations)
 {
   const auto& params = GetParam();
-  const mswpr::GladeGenerator glade_generator(
+  const mswpr::glade_generator glade_generator(
     params.width, params.height, params.mines_cnt, params.clicked_cell.x, params.clicked_cell.y);
 
   EXPECT_THAT(glade_generator(), ::testing::SizeIs(params.expected_mines_cnt));
 }
 
 INSTANTIATE_TEST_SUITE_P(MinesGenerator,
-                         GladeGeneratorTest,
+                         glade_generator_test,
                          testing::ValuesIn({ SimpleScenario,
                                              ZeroMines,
                                              AllCellsAreMines,
@@ -105,7 +105,7 @@ TEST(MinesGenerator, NotBombCellAfterGeneration)
   const size_t mines_cnt = 24;
   static constexpr size_t attempts = 100;
   static constexpr mswpr::cell_coord clicked_cell{ 0, 0 };
-  const mswpr::GladeGenerator glade_generator(width, height, mines_cnt, clicked_cell.x, clicked_cell.y);
+  const mswpr::glade_generator glade_generator(width, height, mines_cnt, clicked_cell.x, clicked_cell.y);
 
   for (size_t i = 0; i < attempts; ++i)
   {
@@ -146,7 +146,7 @@ TEST(MinesGenerator, EmptyGladeAroundFirstCell)
      { 1, 3 }, { 2, 3 }, { 3, 3 }
   };
   // clang-format on
-  const mswpr::GladeGenerator glade_generator(width, height, mines_cnt, clicked_cell.x, clicked_cell.y);
+  const mswpr::glade_generator glade_generator(width, height, mines_cnt, clicked_cell.x, clicked_cell.y);
 
   for (size_t i = 0; i < attempts; ++i)
   {

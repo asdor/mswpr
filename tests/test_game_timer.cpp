@@ -132,7 +132,7 @@ namespace
     std::array<uint8_t, 3> expected_digits;
   };
 
-  class AsDigitArrayTest : public testing::TestWithParam<extract_digits_from_seconds_test_data>
+  class as_digit_array_test : public testing::TestWithParam<extract_digits_from_seconds_test_data>
   {
   };
 
@@ -147,7 +147,7 @@ namespace
   };
 }
 
-TEST_P(AsDigitArrayTest, CorrectConvertation)
+TEST_P(as_digit_array_test, CorrectConvertation)
 {
   const auto& [elapsed_time, expected_digits] = GetParam();
   mswpr::game_timer timer;
@@ -161,9 +161,9 @@ TEST_P(AsDigitArrayTest, CorrectConvertation)
 }
 
 INSTANTIATE_TEST_SUITE_P(GameTimer,
-                         AsDigitArrayTest,
+                         as_digit_array_test,
                          testing::ValuesIn(extract_digits_from_seconds_test_suite),
-                         [](const testing::TestParamInfo<AsDigitArrayTest::ParamType>& i_info) {
+                         [](const testing::TestParamInfo<as_digit_array_test::ParamType>& i_info) {
                            const auto& t = i_info.param.elapsed_time;
                            const std::string name = "Elapsed_" + std::to_string(t.count()) + "ms";
                            return name;

@@ -11,7 +11,7 @@ TEST(DebugUtils, PrintGrid)
 {
   static constexpr size_t width = 4;
   static constexpr size_t height = 3;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 2, 1 }, { 0, 2 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 2, 1 }, { 0, 2 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);

@@ -1,13 +1,15 @@
 ---
 Checks: "
-        readability-identifier-naming,
-        modernize-*,
-        -modernize-use-default-member-init,
-        -modernize-use-nodiscard,
-        -modernize-use-trailing-return-type,
+  readability-identifier-naming,
+  modernize-*,
+  -modernize-use-default-member-init,
+  -modernize-use-nodiscard,
+  -modernize-use-trailing-return-type,
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: '/(core|gui|test_utils)/'
 CheckOptions:
-- key: readability-identifier-naming.PrivateMemberPrefix
-  value: 'd_'
+  - key: readability-identifier-naming.ClassCase
+    value: 'lower_case'
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: 'd_'

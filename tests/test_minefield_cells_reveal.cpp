@@ -11,7 +11,7 @@ TEST(MinefieldRevealCells, RevealCells)
 {
   const size_t width = 3;
   const size_t height = 3;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 2 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 2 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -39,7 +39,7 @@ TEST(MinefieldRevealCells, AngleComponent)
 {
   const size_t width = 3;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 2, 0 }, { 1, 4 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 2, 0 }, { 1, 4 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -72,7 +72,7 @@ TEST(MinefieldRevealCells, MineInTheMiddleComponent)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 2, 2 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 2, 2 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -100,7 +100,7 @@ TEST(MinefieldRevealCells, OneComponentByDiagonal)
 {
   const size_t width = 4;
   const size_t height = 4;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 3 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 }, { 3, 3 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);

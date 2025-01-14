@@ -9,7 +9,7 @@
 
 namespace
 {
-  struct TestData
+  struct test_data
   {
     size_t width;
     size_t height;
@@ -17,60 +17,60 @@ namespace
     std::vector<mswpr::cell_coord> expected_coords;
   };
 
-  class FetchAdjacentCellsTest : public testing::TestWithParam<TestData>
+  class fetch_djacent_cells_test : public testing::TestWithParam<test_data>
   {
   };
 
-  const TestData LeftTop = { .width = 5,
-                             .height = 5,
-                             .coord = { 0, 0 },
-                             .expected_coords = { { 1, 0 }, { 0, 1 }, { 1, 1 } } };
-  const TestData RightTop = { .width = 5,
+  const test_data LeftTop = { .width = 5,
                               .height = 5,
-                              .coord = { 4, 0 },
-                              .expected_coords = { { 3, 0 }, { 3, 1 }, { 4, 1 } } };
-  const TestData LeftBottom = { .width = 5,
-                                .height = 5,
-                                .coord = { 0, 4 },
-                                .expected_coords = { { 0, 3 }, { 1, 3 }, { 1, 4 } } };
-  const TestData RightBottom = { .width = 5,
+                              .coord = { 0, 0 },
+                              .expected_coords = { { 1, 0 }, { 0, 1 }, { 1, 1 } } };
+  const test_data RightTop = { .width = 5,
+                               .height = 5,
+                               .coord = { 4, 0 },
+                               .expected_coords = { { 3, 0 }, { 3, 1 }, { 4, 1 } } };
+  const test_data LeftBottom = { .width = 5,
                                  .height = 5,
-                                 .coord = { 4, 4 },
-                                 .expected_coords = { { 3, 3 }, { 4, 3 }, { 3, 4 } } };
-  const TestData Top = { .width = 5,
-                         .height = 5,
-                         .coord = { 2, 0 },
-                         .expected_coords = { { 1, 0 }, { 3, 0 }, { 1, 1 }, { 2, 1 }, { 3, 1 } } };
-  const TestData Right = { .width = 5,
-                           .height = 5,
-                           .coord = { 4, 2 },
-                           .expected_coords = { { 3, 1 }, { 4, 1 }, { 3, 2 }, { 3, 3 }, { 4, 3 } } };
-  const TestData Bottom = { .width = 5,
-                            .height = 5,
-                            .coord = { 2, 4 },
-                            .expected_coords = { { 1, 3 }, { 2, 3 }, { 3, 3 }, { 1, 4 }, { 3, 4 } } };
-  const TestData Left = { .width = 5,
+                                 .coord = { 0, 4 },
+                                 .expected_coords = { { 0, 3 }, { 1, 3 }, { 1, 4 } } };
+  const test_data RightBottom = { .width = 5,
+                                  .height = 5,
+                                  .coord = { 4, 4 },
+                                  .expected_coords = { { 3, 3 }, { 4, 3 }, { 3, 4 } } };
+  const test_data Top = { .width = 5,
                           .height = 5,
-                          .coord = { 0, 2 },
-                          .expected_coords = { { 0, 1 }, { 1, 1 }, { 1, 2 }, { 0, 3 }, { 1, 3 } } };
-  const TestData Central = {
+                          .coord = { 2, 0 },
+                          .expected_coords = { { 1, 0 }, { 3, 0 }, { 1, 1 }, { 2, 1 }, { 3, 1 } } };
+  const test_data Right = { .width = 5,
+                            .height = 5,
+                            .coord = { 4, 2 },
+                            .expected_coords = { { 3, 1 }, { 4, 1 }, { 3, 2 }, { 3, 3 }, { 4, 3 } } };
+  const test_data Bottom = { .width = 5,
+                             .height = 5,
+                             .coord = { 2, 4 },
+                             .expected_coords = { { 1, 3 }, { 2, 3 }, { 3, 3 }, { 1, 4 }, { 3, 4 } } };
+  const test_data Left = { .width = 5,
+                           .height = 5,
+                           .coord = { 0, 2 },
+                           .expected_coords = { { 0, 1 }, { 1, 1 }, { 1, 2 }, { 0, 3 }, { 1, 3 } } };
+  const test_data Central = {
     .width = 5,
     .height = 5,
     .coord = { 2, 2 },
     .expected_coords = { { 1, 1 }, { 2, 1 }, { 3, 1 }, { 1, 2 }, { 3, 2 }, { 1, 3 }, { 2, 3 }, { 3, 3 } }
   };
-  const TestData SlimHorizontalField = { .width = 3,
-                                         .height = 1,
-                                         .coord = { 1, 0 },
-                                         .expected_coords = { { 0, 0 }, { 2, 0 } } };
-  const TestData SlimVerticalField = { .width = 1,
-                                       .height = 3,
-                                       .coord = { 0, 1 },
-                                       .expected_coords = { { 0, 0 }, { 0, 2 } } };
-  const TestData PointLikeField = { .width = 1, .height = 1, .coord = { 0, 0 }, .expected_coords = {} };
+  const test_data SlimHorizontalField = { .width = 3,
+                                          .height = 1,
+                                          .coord = { 1, 0 },
+                                          .expected_coords = { { 0, 0 }, { 2, 0 } } };
+  const test_data SlimVerticalField = { .width = 1,
+                                        .height = 3,
+                                        .coord = { 0, 1 },
+                                        .expected_coords = { { 0, 0 }, { 0, 2 } } };
+  const test_data PointLikeField = { .width = 1, .height = 1, .coord = { 0, 0 }, .expected_coords = {} };
 }
 
-TEST_P(FetchAdjacentCellsTest, AdjacentCells)
+TEST_P(fetch_djacent_cells_test, AdjacentCells)
 {
   static constexpr size_t mines_cnt = 0;
 
@@ -82,7 +82,7 @@ TEST_P(FetchAdjacentCellsTest, AdjacentCells)
 }
 
 INSTANTIATE_TEST_SUITE_P(AdjacentCellsIterator,
-                         FetchAdjacentCellsTest,
+                         fetch_djacent_cells_test,
                          testing::ValuesIn({ LeftTop,
                                              RightTop,
                                              LeftBottom,

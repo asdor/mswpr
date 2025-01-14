@@ -14,14 +14,14 @@ namespace mswpr
     { g() } -> std::same_as<std::vector<cell_coord>>;
   };
 
-  class GladeGenerator
+  class glade_generator
   {
   public:
-    GladeGenerator(std::size_t i_width,
-                   std::size_t i_height,
-                   std::size_t i_mines_cnt,
-                   std::size_t i_glade_center_x,
-                   std::size_t i_glade_center_y);
+    glade_generator(std::size_t i_width,
+                    std::size_t i_height,
+                    std::size_t i_mines_cnt,
+                    std::size_t i_glade_center_x,
+                    std::size_t i_glade_center_y);
 
     std::vector<cell_coord> operator()() const;
 

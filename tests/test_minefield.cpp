@@ -41,7 +41,7 @@ TEST(Minefield, ConstructorWithMines_BombWasPlaced)
 {
   const size_t width = 2;
   const size_t height = 2;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 1, 1 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 1, 1 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -63,7 +63,7 @@ TEST(Minefield, ConstructorWithMines_AllFieldsAreClosed)
 {
   const size_t width = 8;
   const size_t height = 8;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 6, 0 }, { 0, 4 }, { 2, 6 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 6, 0 }, { 0, 4 }, { 2, 6 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -124,7 +124,7 @@ TEST(Minefield, IsDetonated)
 {
   const size_t width = 1;
   const size_t height = 1;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -165,7 +165,7 @@ TEST(Minefield, MinesCountAroundCell)
 {
   const size_t width = 8;
   const size_t height = 8;
-  const mswpr::unit_tests::MockedGenerator mocked_generator(
+  const mswpr::unit_tests::mocked_generator mocked_generator(
     { { 3, 0 }, { 4, 0 }, { 5, 0 }, { 6, 0 }, { 4, 2 }, { 5, 3 }, { 4, 4 }, { 5, 4 }, { 6, 5 }, { 1, 7 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
@@ -202,7 +202,7 @@ TEST(Minefield, IsDeminied)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -222,7 +222,7 @@ TEST(Minefield, FlagBombs)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 }, { 3, 1 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -238,7 +238,7 @@ TEST(Minefield, FlagBombs_DoNotTouchAlreadyFlagged)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 }, { 3, 1 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -255,7 +255,7 @@ TEST(Minefield, RevealBombs)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 }, { 3, 1 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -271,7 +271,7 @@ TEST(Minefield, RevealBombs_SomeBombsAreFlagged)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 }, { 4, 2 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 }, { 3, 1 }, { 4, 2 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);
@@ -290,7 +290,7 @@ TEST(Minefield, RevealBombs_DoNotTouchDetonatedBomb)
 {
   const size_t width = 5;
   const size_t height = 5;
-  const mswpr::unit_tests::MockedGenerator mocked_generator({ { 0, 0 }, { 3, 1 } });
+  const mswpr::unit_tests::mocked_generator mocked_generator({ { 0, 0 }, { 3, 1 } });
 
   mswpr::minefield field(width, height, mocked_generator.get_mines_cnt());
   field.generate(mocked_generator);

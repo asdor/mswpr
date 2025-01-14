@@ -5,11 +5,11 @@
 #include <algorithm>
 #include <random>
 
-mswpr::GladeGenerator::GladeGenerator(std::size_t i_width,
-                                      std::size_t i_height,
-                                      std::size_t i_mines_cnt,
-                                      std::size_t i_glade_center_x,
-                                      std::size_t i_glade_center_y) :
+mswpr::glade_generator::glade_generator(std::size_t i_width,
+                                        std::size_t i_height,
+                                        std::size_t i_mines_cnt,
+                                        std::size_t i_glade_center_x,
+                                        std::size_t i_glade_center_y) :
   d_width(i_width),
   d_height(i_height),
   d_mines_cnt(std::min(i_mines_cnt, d_width * d_height - 1)),
@@ -18,7 +18,7 @@ mswpr::GladeGenerator::GladeGenerator(std::size_t i_width,
 {
 }
 
-std::vector<size_t> mswpr::GladeGenerator::get_mines_candidates(size_t i_x, size_t i_y) const
+std::vector<size_t> mswpr::glade_generator::get_mines_candidates(size_t i_x, size_t i_y) const
 {
   const bool is_generate_glade = (d_width > 3) && (d_height > 3) && (d_width * d_height - 9 >= d_mines_cnt);
   const auto cur_index = i_y * d_width + i_x;
@@ -45,7 +45,7 @@ std::vector<size_t> mswpr::GladeGenerator::get_mines_candidates(size_t i_x, size
   return coords;
 }
 
-std::vector<mswpr::cell_coord> mswpr::GladeGenerator::operator()() const
+std::vector<mswpr::cell_coord> mswpr::glade_generator::operator()() const
 {
   auto coords = get_mines_candidates(d_glade_center_x, d_glade_center_y);
 

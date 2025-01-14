@@ -18,15 +18,15 @@ namespace
   constexpr bool RELEASED = true;
   constexpr bool PRESSED = false;
 
-  const mswpr::unit_tests::MockedGenerator MOCKED_MINES_GENERATOR({ { 0, 0 } });
+  const mswpr::unit_tests::mocked_generator MOCKED_MINES_GENERATOR({ { 0, 0 } });
 }
 
 using namespace mswpr;
 
-class StateMachineTransitionTest : public ::testing::Test
+class state_machine_transition_test : public ::testing::Test
 {
 protected:
-  StateMachineTransitionTest() :
+  state_machine_transition_test() :
     field_(FIELD_WIDTH, FIELD_HEIGHT, MOCKED_MINES_GENERATOR.get_mines_cnt()),
     face_(face_type::SMILE_NOT_PRESSED),
     counter_(field_.get_bomb_cnt()),
@@ -49,12 +49,12 @@ protected:
   state_machine st_machine_;
 };
 
-TEST_F(StateMachineTransitionTest, DefaultState)
+TEST_F(state_machine_transition_test, DefaultState)
 {
   ASSERT_TRUE(st_machine_.is_in_state<generating_state>());
 }
 
-TEST_F(StateMachineTransitionTest, FromGenerating_OnLeftFaceClick)
+TEST_F(state_machine_transition_test, FromGenerating_OnLeftFaceClick)
 {
   st_machine_.on_left_face_click(PRESSED);
   ASSERT_TRUE(st_machine_.is_in_state<generating_state>());
@@ -65,7 +65,7 @@ TEST_F(StateMachineTransitionTest, FromGenerating_OnLeftFaceClick)
   ASSERT_EQ(face_, face_type::SMILE_NOT_PRESSED);
 }
 
-TEST_F(StateMachineTransitionTest, FromGenerating_OnLeftFieldClick)
+TEST_F(state_machine_transition_test, FromGenerating_OnLeftFieldClick)
 {
   EXPECT_FALSE(timer_.is_running());
   st_machine_.on_left_field_click(PRESSED, 0, 0);
@@ -76,13 +76,13 @@ TEST_F(StateMachineTransitionTest, FromGenerating_OnLeftFieldClick)
   EXPECT_TRUE(timer_.is_running());
 }
 
-TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick)
+TEST_F(state_machine_transition_test, FromGenerating_OnRightFieldClick)
 {
   st_machine_.on_right_field_click(RELEASED, 0, 0);
   ASSERT_TRUE(st_machine_.is_in_state<generating_state>());
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick)
+TEST_F(state_machine_transition_test, FromPlaying_OnLeftFaceClick)
 {
   change_state<playing_state>();
   EXPECT_TRUE(timer_.is_running());
@@ -95,7 +95,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick)
   EXPECT_FALSE(timer_.is_running());
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick_ResetCounter)
+TEST_F(state_machine_transition_test, FromPlaying_OnLeftFaceClick_ResetCounter)
 {
   change_state<playing_state>();
 
@@ -108,7 +108,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFaceClick_ResetCounter)
   EXPECT_EQ(counter_.get_value(), 1);
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnEmpty)
+TEST_F(state_machine_transition_test, FromPlaying_OnLeftFieldClick_OnEmpty)
 {
   const size_t x = 1;
   const size_t y = 1;
@@ -119,7 +119,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnEmpty)
   ASSERT_TRUE(st_machine_.is_in_state<playing_state>());
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_Demined)
+TEST_F(state_machine_transition_test, FromPlaying_OnLeftFieldClick_Demined)
 {
   const size_t x = 4;
   const size_t y = 4;
@@ -135,7 +135,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_Demined)
   EXPECT_EQ(counter_.get_value(), 0);
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
+TEST_F(state_machine_transition_test, FromPlaying_OnLeftFieldClick_OnBomb)
 {
   const size_t x = 0;
   const size_t y = 0;
@@ -149,7 +149,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnLeftFieldClick_OnBomb)
   EXPECT_EQ(face_, face_type::DEAD);
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick)
+TEST_F(state_machine_transition_test, FromPlaying_OnRightFieldClick)
 {
   change_state<playing_state>();
 
@@ -157,7 +157,7 @@ TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick)
   ASSERT_TRUE(st_machine_.is_in_state<playing_state>());
 }
 
-TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFaceClick)
+TEST_F(state_machine_transition_test, FromEnding_OnLeftFaceClick)
 {
   change_state<ending_state>(ending_state::params{ .is_victory = true });
   EXPECT_FALSE(timer_.is_running());
@@ -167,7 +167,7 @@ TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFaceClick)
   EXPECT_FALSE(timer_.is_running());
 }
 
-TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFieldClick)
+TEST_F(state_machine_transition_test, FromEnding_OnLeftFieldClick)
 {
   change_state<ending_state>(ending_state::params{ .is_victory = true });
 
@@ -175,7 +175,7 @@ TEST_F(StateMachineTransitionTest, FromEnding_OnLeftFieldClick)
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
 }
 
-TEST_F(StateMachineTransitionTest, FromEnding_OnRightFieldClick)
+TEST_F(state_machine_transition_test, FromEnding_OnRightFieldClick)
 {
   change_state<ending_state>(ending_state::params{ .is_victory = true });
 
@@ -183,19 +183,19 @@ TEST_F(StateMachineTransitionTest, FromEnding_OnRightFieldClick)
   ASSERT_TRUE(st_machine_.is_in_state<ending_state>());
 }
 
-TEST_F(StateMachineTransitionTest, FromEnding_Victory)
+TEST_F(state_machine_transition_test, FromEnding_Victory)
 {
   change_state<ending_state>(ending_state::params{ .is_victory = true });
   EXPECT_EQ(face_, face_type::BOSS);
 }
 
-TEST_F(StateMachineTransitionTest, FromEnding_Defeat)
+TEST_F(state_machine_transition_test, FromEnding_Defeat)
 {
   change_state<ending_state>(ending_state::params{ .is_victory = false });
   EXPECT_EQ(face_, face_type::DEAD);
 }
 
-TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick_PlayCounter)
+TEST_F(state_machine_transition_test, FromGenerating_OnRightFieldClick_PlayCounter)
 {
   ASSERT_EQ(counter_.get_value(), 1);
 
@@ -206,7 +206,7 @@ TEST_F(StateMachineTransitionTest, FromGenerating_OnRightFieldClick_PlayCounter)
   ASSERT_EQ(counter_.get_value(), 1);
 }
 
-TEST_F(StateMachineTransitionTest, FromPlaying_OnRightFieldClick_PlayCounter)
+TEST_F(state_machine_transition_test, FromPlaying_OnRightFieldClick_PlayCounter)
 {
   change_state<playing_state>();
 

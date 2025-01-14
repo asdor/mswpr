@@ -7,10 +7,10 @@
 
 namespace mswpr::unit_tests
 {
-  class MockedGenerator
+  class mocked_generator
   {
   public:
-    MockedGenerator(const std::vector<mswpr::cell_coord>& i_mines);
+    mocked_generator(const std::vector<mswpr::cell_coord>& i_mines);
     std::vector<mswpr::cell_coord> operator()() const;
 
     size_t get_mines_cnt() const;
