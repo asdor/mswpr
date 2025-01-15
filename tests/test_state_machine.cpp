@@ -17,8 +17,6 @@ namespace
   constexpr size_t FIELD_HEIGHT = 5;
   constexpr bool RELEASED = true;
   constexpr bool PRESSED = false;
-
-  const mswpr::unit_tests::mocked_generator MOCKED_MINES_GENERATOR({ { 0, 0 } });
 }
 
 using namespace mswpr;
@@ -27,12 +25,13 @@ class state_machine_transition_test : public ::testing::Test
 {
 protected:
   state_machine_transition_test() :
-    field_(FIELD_WIDTH, FIELD_HEIGHT, MOCKED_MINES_GENERATOR.get_mines_cnt()),
+    d_mocked_mines_generator({ { 0, 0 } }),
+    field_(FIELD_WIDTH, FIELD_HEIGHT, d_mocked_mines_generator.get_mines_cnt()),
     face_(face_type::SMILE_NOT_PRESSED),
     counter_(field_.get_bomb_cnt()),
     st_machine_(field_, face_, counter_, timer_)
   {
-    field_.generate(MOCKED_MINES_GENERATOR);
+    field_.generate(d_mocked_mines_generator);
   }
 
   template<class NewState, class... Args>
@@ -42,6 +41,7 @@ protected:
     ASSERT_TRUE(st_machine_.is_in_state<NewState>());
   }
 
+  mswpr::unit_tests::mocked_generator d_mocked_mines_generator;
   minefield field_;
   face_type face_;
   mines_counter counter_;
