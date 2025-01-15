@@ -18,46 +18,46 @@ namespace
   {
   };
 
-  const test_data SimpleScenario{ .width = 5,
+  const test_data SIMPLE_SCENARIO{ .width = 5,
+                                   .height = 5,
+                                   .mines_cnt = 8,
+                                   .clicked_cell = { 2, 2 },
+                                   .expected_mines_cnt = 8 };
+  const test_data ZERO_MINES{ .width = 5,
+                              .height = 5,
+                              .mines_cnt = 0,
+                              .clicked_cell = { 0, 0 },
+                              .expected_mines_cnt = 0 };
+  const test_data ALL_CELLS_ARE_MINES{ .width = 5,
+                                       .height = 5,
+                                       .mines_cnt = 25,
+                                       .clicked_cell = { 2, 2 },
+                                       .expected_mines_cnt = 24 };
+  const test_data GREATER_THAN_FIELD_SIZE_MINES{ .width = 5,
+                                                 .height = 5,
+                                                 .mines_cnt = 28,
+                                                 .clicked_cell = { 2, 2 },
+                                                 .expected_mines_cnt = 24 };
+  const test_data FIRST_CLICK_IN_ANGLE{ .width = 5,
+                                        .height = 5,
+                                        .mines_cnt = 21,
+                                        .clicked_cell = { 0, 0 },
+                                        .expected_mines_cnt = 21 };
+  const test_data SMALL_FIELD{ .width = 2,
+                               .height = 2,
+                               .mines_cnt = 2,
+                               .clicked_cell = { 0, 1 },
+                               .expected_mines_cnt = 2 };
+  const test_data HORIZONTAL_FIELD{ .width = 5,
+                                    .height = 3,
+                                    .mines_cnt = 4,
+                                    .clicked_cell = { 0, 1 },
+                                    .expected_mines_cnt = 4 };
+  const test_data VERTICAL_FIELD{ .width = 3,
                                   .height = 5,
-                                  .mines_cnt = 8,
-                                  .clicked_cell = { 2, 2 },
-                                  .expected_mines_cnt = 8 };
-  const test_data ZeroMines{ .width = 5,
-                             .height = 5,
-                             .mines_cnt = 0,
-                             .clicked_cell = { 0, 0 },
-                             .expected_mines_cnt = 0 };
-  const test_data AllCellsAreMines{ .width = 5,
-                                    .height = 5,
-                                    .mines_cnt = 25,
-                                    .clicked_cell = { 2, 2 },
-                                    .expected_mines_cnt = 24 };
-  const test_data GreaterThanFieldSizeMines{ .width = 5,
-                                             .height = 5,
-                                             .mines_cnt = 28,
-                                             .clicked_cell = { 2, 2 },
-                                             .expected_mines_cnt = 24 };
-  const test_data FirstClickInAngle{ .width = 5,
-                                     .height = 5,
-                                     .mines_cnt = 21,
-                                     .clicked_cell = { 0, 0 },
-                                     .expected_mines_cnt = 21 };
-  const test_data SmallField{ .width = 2,
-                              .height = 2,
-                              .mines_cnt = 2,
-                              .clicked_cell = { 0, 1 },
-                              .expected_mines_cnt = 2 };
-  const test_data HorizontalField{ .width = 5,
-                                   .height = 3,
-                                   .mines_cnt = 4,
-                                   .clicked_cell = { 0, 1 },
-                                   .expected_mines_cnt = 4 };
-  const test_data VerticalField{ .width = 3,
-                                 .height = 5,
-                                 .mines_cnt = 4,
-                                 .clicked_cell = { 1, 2 },
-                                 .expected_mines_cnt = 4 };
+                                  .mines_cnt = 4,
+                                  .clicked_cell = { 1, 2 },
+                                  .expected_mines_cnt = 4 };
 }
 
 TEST_P(glade_generator_test, DifferentFieldCombinations)
@@ -71,14 +71,14 @@ TEST_P(glade_generator_test, DifferentFieldCombinations)
 
 INSTANTIATE_TEST_SUITE_P(MinesGenerator,
                          glade_generator_test,
-                         testing::ValuesIn({ SimpleScenario,
-                                             ZeroMines,
-                                             AllCellsAreMines,
-                                             GreaterThanFieldSizeMines,
-                                             FirstClickInAngle,
-                                             SmallField,
-                                             HorizontalField,
-                                             VerticalField }));
+                         testing::ValuesIn({ SIMPLE_SCENARIO,
+                                             ZERO_MINES,
+                                             ALL_CELLS_ARE_MINES,
+                                             GREATER_THAN_FIELD_SIZE_MINES,
+                                             FIRST_CLICK_IN_ANGLE,
+                                             SMALL_FIELD,
+                                             HORIZONTAL_FIELD,
+                                             VERTICAL_FIELD }));
 
 TEST(MinesGenerator, NotBombCellAfterGeneration)
 {

@@ -21,53 +21,53 @@ namespace
   {
   };
 
-  const test_data LeftTop = { .width = 5,
-                              .height = 5,
-                              .coord = { 0, 0 },
-                              .expected_coords = { { 1, 0 }, { 0, 1 }, { 1, 1 } } };
-  const test_data RightTop = { .width = 5,
+  const test_data LEFT_TOP = { .width = 5,
                                .height = 5,
-                               .coord = { 4, 0 },
-                               .expected_coords = { { 3, 0 }, { 3, 1 }, { 4, 1 } } };
-  const test_data LeftBottom = { .width = 5,
-                                 .height = 5,
-                                 .coord = { 0, 4 },
-                                 .expected_coords = { { 0, 3 }, { 1, 3 }, { 1, 4 } } };
-  const test_data RightBottom = { .width = 5,
+                               .coord = { 0, 0 },
+                               .expected_coords = { { 1, 0 }, { 0, 1 }, { 1, 1 } } };
+  const test_data RIGHT_TOP = { .width = 5,
+                                .height = 5,
+                                .coord = { 4, 0 },
+                                .expected_coords = { { 3, 0 }, { 3, 1 }, { 4, 1 } } };
+  const test_data LEFT_BOTTOM = { .width = 5,
                                   .height = 5,
-                                  .coord = { 4, 4 },
-                                  .expected_coords = { { 3, 3 }, { 4, 3 }, { 3, 4 } } };
-  const test_data Top = { .width = 5,
+                                  .coord = { 0, 4 },
+                                  .expected_coords = { { 0, 3 }, { 1, 3 }, { 1, 4 } } };
+  const test_data RIGHT_BOTTOM = { .width = 5,
+                                   .height = 5,
+                                   .coord = { 4, 4 },
+                                   .expected_coords = { { 3, 3 }, { 4, 3 }, { 3, 4 } } };
+  const test_data TOP = { .width = 5,
                           .height = 5,
                           .coord = { 2, 0 },
                           .expected_coords = { { 1, 0 }, { 3, 0 }, { 1, 1 }, { 2, 1 }, { 3, 1 } } };
-  const test_data Right = { .width = 5,
+  const test_data RIGHT = { .width = 5,
                             .height = 5,
                             .coord = { 4, 2 },
                             .expected_coords = { { 3, 1 }, { 4, 1 }, { 3, 2 }, { 3, 3 }, { 4, 3 } } };
-  const test_data Bottom = { .width = 5,
+  const test_data BOTTOM = { .width = 5,
                              .height = 5,
                              .coord = { 2, 4 },
                              .expected_coords = { { 1, 3 }, { 2, 3 }, { 3, 3 }, { 1, 4 }, { 3, 4 } } };
-  const test_data Left = { .width = 5,
+  const test_data LEFT = { .width = 5,
                            .height = 5,
                            .coord = { 0, 2 },
                            .expected_coords = { { 0, 1 }, { 1, 1 }, { 1, 2 }, { 0, 3 }, { 1, 3 } } };
-  const test_data Central = {
+  const test_data CENTRAL = {
     .width = 5,
     .height = 5,
     .coord = { 2, 2 },
     .expected_coords = { { 1, 1 }, { 2, 1 }, { 3, 1 }, { 1, 2 }, { 3, 2 }, { 1, 3 }, { 2, 3 }, { 3, 3 } }
   };
-  const test_data SlimHorizontalField = { .width = 3,
-                                          .height = 1,
-                                          .coord = { 1, 0 },
-                                          .expected_coords = { { 0, 0 }, { 2, 0 } } };
-  const test_data SlimVerticalField = { .width = 1,
-                                        .height = 3,
-                                        .coord = { 0, 1 },
-                                        .expected_coords = { { 0, 0 }, { 0, 2 } } };
-  const test_data PointLikeField = { .width = 1, .height = 1, .coord = { 0, 0 }, .expected_coords = {} };
+  const test_data SLIM_HORIZONTAL_FIELD = { .width = 3,
+                                            .height = 1,
+                                            .coord = { 1, 0 },
+                                            .expected_coords = { { 0, 0 }, { 2, 0 } } };
+  const test_data SLIM_VERTICAL_FIELD = { .width = 1,
+                                          .height = 3,
+                                          .coord = { 0, 1 },
+                                          .expected_coords = { { 0, 0 }, { 0, 2 } } };
+  const test_data POINT_LIKE_FIELD = { .width = 1, .height = 1, .coord = { 0, 0 }, .expected_coords = {} };
 }
 
 TEST_P(fetch_djacent_cells_test, AdjacentCells)
@@ -83,15 +83,15 @@ TEST_P(fetch_djacent_cells_test, AdjacentCells)
 
 INSTANTIATE_TEST_SUITE_P(AdjacentCellsIterator,
                          fetch_djacent_cells_test,
-                         testing::ValuesIn({ LeftTop,
-                                             RightTop,
-                                             LeftBottom,
-                                             RightBottom,
-                                             Top,
-                                             Right,
-                                             Bottom,
-                                             Left,
-                                             Central,
-                                             SlimHorizontalField,
-                                             SlimVerticalField,
-                                             PointLikeField }));
+                         testing::ValuesIn({ LEFT_TOP,
+                                             RIGHT_TOP,
+                                             LEFT_BOTTOM,
+                                             RIGHT_BOTTOM,
+                                             TOP,
+                                             RIGHT,
+                                             BOTTOM,
+                                             LEFT,
+                                             CENTRAL,
+                                             SLIM_HORIZONTAL_FIELD,
+                                             SLIM_VERTICAL_FIELD,
+                                             POINT_LIKE_FIELD }));
