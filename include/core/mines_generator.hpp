@@ -10,8 +10,8 @@
 namespace mswpr
 {
   template<class T>
-  concept MinesGenerator = requires(const T g) {
-    { g() } -> std::same_as<std::vector<cell_coord>>;
+  concept MinesGenerator = requires(const T i_g) {
+    { i_g() } -> std::same_as<std::vector<cell_coord>>;
   };
 
   class glade_generator
