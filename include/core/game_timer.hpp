@@ -10,26 +10,26 @@ namespace mswpr
   class game_timer
   {
   public:
-    using Clock = std::chrono::steady_clock;
-    using TimePoint = Clock::time_point;
+    using clock_t = std::chrono::steady_clock;
+    using time_point_t = clock_t::time_point;
 
     game_timer();
 
     bool is_running() const;
 
-    void start(const TimePoint& i_start_time);
-    void update(const TimePoint& i_current_time);
-    void stop(const TimePoint& i_stop_time);
+    void start(const time_point_t& i_start_time);
+    void update(const time_point_t& i_current_time);
+    void stop(const time_point_t& i_stop_time);
     void reset();
 
     std::chrono::seconds get_elapsed_time() const;
     std::array<uint8_t, 3> extract_digits_from_seconds() const;
 
-    static TimePoint now();
+    static time_point_t now();
 
   private:
-    TimePoint d_start_time;
-    TimePoint d_current_time;
+    time_point_t d_start_time;
+    time_point_t d_current_time;
     bool d_is_running;
   };
 }

@@ -11,7 +11,7 @@ bool mswpr::game_timer::is_running() const
   return d_is_running;
 }
 
-void mswpr::game_timer::start(const TimePoint& i_start_time)
+void mswpr::game_timer::start(const time_point_t& i_start_time)
 {
   if (d_is_running)
     return;
@@ -21,13 +21,13 @@ void mswpr::game_timer::start(const TimePoint& i_start_time)
   d_is_running = true;
 }
 
-void mswpr::game_timer::update(const TimePoint& i_current_time)
+void mswpr::game_timer::update(const time_point_t& i_current_time)
 {
   if (d_is_running)
     d_current_time = i_current_time;
 }
 
-void mswpr::game_timer::stop(const TimePoint& i_stop_time)
+void mswpr::game_timer::stop(const time_point_t& i_stop_time)
 {
   if (!d_is_running)
     return;
@@ -49,14 +49,14 @@ std::chrono::seconds mswpr::game_timer::get_elapsed_time() const
   return std::chrono::duration_cast<std::chrono::seconds>(diff);
 }
 
-mswpr::game_timer::TimePoint mswpr::game_timer::now()
+mswpr::game_timer::time_point_t mswpr::game_timer::now()
 {
-  return Clock::now();
+  return clock_t::now();
 }
 
 std::array<uint8_t, 3> mswpr::game_timer::extract_digits_from_seconds() const
 {
-  static constexpr auto MAX_DIGITS = static_cast<TimePoint::rep>(999);
+  static constexpr auto MAX_DIGITS = static_cast<time_point_t::rep>(999);
   std::array<uint8_t, 3> arr = { 0, 0, 0 };
   auto seconds = std::min(get_elapsed_time().count(), MAX_DIGITS);
 

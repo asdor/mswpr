@@ -9,7 +9,7 @@ using namespace std::chrono_literals;
 
 namespace
 {
-  constexpr mswpr::game_timer::TimePoint INITIAL_TIME{};
+  constexpr mswpr::game_timer::time_point_t INITIAL_TIME{};
 }
 
 TEST(GameTimer, Constructor)

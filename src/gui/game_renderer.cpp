@@ -13,19 +13,19 @@ namespace
     return x >= rect.x && x < rect.x + rect.w && y >= rect.y && y < rect.y + rect.h;
   }
 
-  template<mswpr::Enumeration To, To base, std::integral Index>
+  template<mswpr::Enumeration To, To Base, std::integral Index>
   constexpr To to_sprite(Index index_integral)
   {
     const auto index = static_cast<size_t>(index_integral);
-    constexpr auto BASE_INDEX = mswpr::enum_to<size_t>(base);
+    constexpr auto BASE_INDEX = mswpr::enum_to<size_t>(Base);
     return mswpr::to_enum<To>(BASE_INDEX + index);
   }
 
-  template<mswpr::Enumeration To, To base, mswpr::Enumeration From>
+  template<mswpr::Enumeration To, To Base, mswpr::Enumeration From>
   constexpr To to_sprite(From value)
   {
     const auto index = mswpr::enum_to<size_t>(value);
-    return to_sprite<To, base>(index);
+    return to_sprite<To, Base>(index);
   }
 
 }  // namespace

@@ -49,8 +49,8 @@ namespace mswpr
     mswpr::mines_counter& d_counter;
     mswpr::game_timer& d_timer;
 
-    using State = std::variant<generating_state, playing_state, ending_state>;
-    State d_state;
+    using state_t = std::variant<generating_state, playing_state, ending_state>;
+    state_t d_state;
   };
 }
 
