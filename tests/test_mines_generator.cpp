@@ -103,14 +103,14 @@ TEST(MinesGenerator, NotBombCellAfterGeneration)
   const size_t width = 5;
   const size_t height = 5;
   const size_t mines_cnt = 24;
-  static constexpr size_t attempts = 100;
-  static constexpr mswpr::cell_coord clicked_cell{ 0, 0 };
-  const mswpr::glade_generator glade_generator(width, height, mines_cnt, clicked_cell.x, clicked_cell.y);
+  static constexpr size_t ATTEMPTS = 100;
+  static constexpr mswpr::cell_coord CLICKED_CELL{ 0, 0 };
+  const mswpr::glade_generator glade_generator(width, height, mines_cnt, CLICKED_CELL.x, CLICKED_CELL.y);
 
-  for (size_t i = 0; i < attempts; ++i)
+  for (size_t i = 0; i < ATTEMPTS; ++i)
   {
     const auto mines = glade_generator();
-    EXPECT_THAT(mines, Not(Contains(clicked_cell)));
+    EXPECT_THAT(mines, Not(Contains(CLICKED_CELL)));
   }
 }
 
@@ -136,19 +136,19 @@ TEST(MinesGenerator, EmptyGladeAroundFirstCell)
   const size_t width = 5;
   const size_t height = 5;
   const size_t mines_cnt = 16;
-  static constexpr size_t attempts = 100;
-  static constexpr mswpr::cell_coord clicked_cell{ 2, 2 };
+  static constexpr size_t ATTEMPTS = 100;
+  static constexpr mswpr::cell_coord CLICKED_CELL{ 2, 2 };
 
   // clang-format off
   const std::vector<mswpr::cell_coord> adjacent_cordinates = {
      { 1, 1 }, { 2, 1 }, { 3, 1 },
-     { 1, 2 }, clicked_cell, { 3, 2 },
+     { 1, 2 }, CLICKED_CELL, { 3, 2 },
      { 1, 3 }, { 2, 3 }, { 3, 3 }
   };
   // clang-format on
-  const mswpr::glade_generator glade_generator(width, height, mines_cnt, clicked_cell.x, clicked_cell.y);
+  const mswpr::glade_generator glade_generator(width, height, mines_cnt, CLICKED_CELL.x, CLICKED_CELL.y);
 
-  for (size_t i = 0; i < attempts; ++i)
+  for (size_t i = 0; i < ATTEMPTS; ++i)
   {
     const auto mines = glade_generator();
     for (auto cell : adjacent_cordinates)

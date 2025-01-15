@@ -10,9 +10,9 @@ namespace mswpr
 
     d_is_running(false),
     d_renderer(title, xpos, ypos),
-    d_minefield(cfg::field_width, cfg::field_height, cfg::mines_cnt),
+    d_minefield(cfg::FIELD_WIDTH, cfg::FIELD_HEIGHT, cfg::MINES_CNT),
     d_face_type(face_type::SMILE_NOT_PRESSED),
-    d_counter(cfg::mines_cnt),
+    d_counter(cfg::MINES_CNT),
     d_state(d_minefield, d_face_type, d_counter, d_timer),
     d_frame_start_ticks(0)
   {
@@ -91,8 +91,8 @@ namespace mswpr
     }
     else if (d_renderer.is_inside_field(mouse_x, mouse_y))
     {
-      const int x = (mouse_x - cfg::board_offset_x) / cfg::cell_width;
-      const int y = (mouse_y - cfg::board_offset_y) / cfg::cell_height;
+      const int x = (mouse_x - cfg::BOARD_OFFSET_X) / cfg::CELL_WIDTH;
+      const int y = (mouse_y - cfg::BOARD_OFFSET_Y) / cfg::CELL_HEIGHT;
       if (is_left_btn)
       {
         d_state.on_left_field_click(is_released, x, y);
@@ -118,9 +118,9 @@ namespace mswpr
   {
     const auto frame_ticks = SDL_GetTicks() - d_frame_start_ticks;
 
-    if (cfg::frame_delay > frame_ticks)
+    if (cfg::FRAME_DELAY > frame_ticks)
     {
-      SDL_Delay(cfg::frame_delay - frame_ticks);
+      SDL_Delay(cfg::FRAME_DELAY - frame_ticks);
     }
   }
 

@@ -8,11 +8,11 @@ namespace
 {
   size_t get_number_ranks(int counter)
   {
-    static constexpr std::array<int, 3> size_table = { 9, 99, 999 };
+    static constexpr std::array<int, 3> RANK_TABLE = { 9, 99, 999 };
 
     size_t rank = 0;
 
-    for (int x : size_table)
+    for (int x : RANK_TABLE)
     {
       if (counter <= x)
         return rank + 1;

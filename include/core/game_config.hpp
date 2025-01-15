@@ -5,29 +5,29 @@
 
 namespace cfg
 {
-  inline constexpr size_t field_width = 8;
-  inline constexpr size_t field_height = 8;
-  inline constexpr size_t mines_cnt = 10;
+  inline constexpr size_t FIELD_WIDTH = 8;
+  inline constexpr size_t FIELD_HEIGHT = 8;
+  inline constexpr size_t MINES_CNT = 10;
 
-  inline constexpr size_t face_width = 26;
-  inline constexpr size_t face_height = 26;
+  inline constexpr size_t FACE_WIDTH = 26;
+  inline constexpr size_t FACE_HEIGHT = 26;
 
-  inline constexpr int board_offset_x = 12;
-  inline constexpr int board_offset_y = 55;
-  inline constexpr size_t counter_offset_x = 16;
-  inline constexpr size_t hud_offset_y = 15;
+  inline constexpr int BOARD_OFFSET_X = 12;
+  inline constexpr int BOARD_OFFSET_Y = 55;
+  inline constexpr size_t COUNTER_OFFSET_X = 16;
+  inline constexpr size_t HUD_OFFSET_Y = 15;
 
-  inline constexpr size_t cell_width = 16;
-  inline constexpr size_t cell_height = 16;
+  inline constexpr size_t CELL_WIDTH = 16;
+  inline constexpr size_t CELL_HEIGHT = 16;
 
-  inline constexpr size_t counter_width = 41;
-  inline constexpr size_t counter_height = 25;
-  inline constexpr size_t digit_width = 11;
-  inline constexpr size_t digit_height = 21;
-  inline constexpr size_t digit_offset = 2;
+  inline constexpr size_t COUNTER_WIDTH = 41;
+  inline constexpr size_t COUNTER_HEIGHT = 25;
+  inline constexpr size_t DIGIT_WIDTH = 11;
+  inline constexpr size_t DIGIT_HEIGHT = 21;
+  inline constexpr size_t DIGIT_OFFSET = 2;
 
-  inline constexpr size_t fps = 60;
-  inline constexpr size_t frame_delay = 1000 / fps;
+  inline constexpr size_t FPS_LIMIT = 60;
+  inline constexpr size_t FRAME_DELAY = 1000 / FPS_LIMIT;
 
 }  // namespace cfg
 

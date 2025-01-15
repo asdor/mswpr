@@ -149,10 +149,10 @@ namespace
       return -1;
 
     int count = 0;
-    for (size_t i = 0; i < mswpr::neighbours_x_ind.size(); ++i)
+    for (size_t i = 0; i < mswpr::NEIGHBOURS_X_IND.size(); ++i)
     {
-      const int i_x = static_cast<int>(x) + mswpr::neighbours_x_ind[i];
-      const int i_y = static_cast<int>(y) + mswpr::neighbours_y_ind[i];
+      const int i_x = static_cast<int>(x) + mswpr::NEIGHBOURS_X_IND[i];
+      const int i_y = static_cast<int>(y) + mswpr::NEIGHBOURS_Y_IND[i];
       if (i_x >= 0 && i_x < signed_width && i_y >= 0 && i_y < signed_height && field(i_x, i_y).is_bomb())
         ++count;
     }

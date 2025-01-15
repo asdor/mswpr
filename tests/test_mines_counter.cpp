@@ -44,24 +44,24 @@ TEST(MinesCounter, ValueToString_ThreeDigits)
 {
   mines_counter counter(119);
 
-  static constexpr std::array str = { '1', '1', '9' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '1', '1', '9' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }
 
 TEST(MinesCounter, ValueToString_TwoDigits)
 {
   mines_counter counter(42);
 
-  static constexpr std::array str = { '0', '4', '2' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '0', '4', '2' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }
 
 TEST(MinesCounter, ValueToString_OneDigit)
 {
   mines_counter counter(7);
 
-  static constexpr std::array str = { '0', '0', '7' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '0', '0', '7' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }
 
 TEST(MinesCounter, ValueToString_TwoDigitsNegative)
@@ -71,8 +71,8 @@ TEST(MinesCounter, ValueToString_TwoDigitsNegative)
   for (size_t i = 0; i < 42; ++i)
     --counter;
 
-  static constexpr std::array str = { '-', '4', '2' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '-', '4', '2' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }
 
 TEST(MinesCounter, ValueToString_OneDigitNegative)
@@ -82,22 +82,22 @@ TEST(MinesCounter, ValueToString_OneDigitNegative)
   for (size_t i = 0; i < 7; ++i)
     --counter;
 
-  static constexpr std::array str = { '-', '0', '7' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '-', '0', '7' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }
 
 TEST(MinesCounter, ValueToString_Zero)
 {
   mines_counter counter(0);
 
-  static constexpr std::array str = { '0', '0', '0' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '0', '0', '0' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }
 
 TEST(MinesCounter, ValueToString_BigNumber)
 {
   mines_counter counter(12345);
 
-  static constexpr std::array str = { '0', '0', '0' };
-  EXPECT_EQ(counter.value_to_str(), str);
+  static constexpr std::array DIGITS = { '0', '0', '0' };
+  EXPECT_EQ(counter.value_to_str(), DIGITS);
 }

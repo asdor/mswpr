@@ -9,7 +9,7 @@ using namespace std::chrono_literals;
 
 namespace
 {
-  constexpr mswpr::game_timer::TimePoint initial_time{};
+  constexpr mswpr::game_timer::TimePoint INITIAL_TIME{};
 }
 
 TEST(GameTimer, Constructor)
@@ -24,9 +24,9 @@ TEST(GameTimer, Start)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
+  timer.start(INITIAL_TIME);
   EXPECT_TRUE(timer.is_running());
-  timer.update(initial_time + 2s);
+  timer.update(INITIAL_TIME + 2s);
 
   EXPECT_TRUE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 2s);
@@ -36,9 +36,9 @@ TEST(GameTimer, Stop)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
-  timer.update(initial_time + 2s);
-  timer.stop(initial_time + 3s);
+  timer.start(INITIAL_TIME);
+  timer.update(INITIAL_TIME + 2s);
+  timer.stop(INITIAL_TIME + 3s);
 
   EXPECT_FALSE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
@@ -48,8 +48,8 @@ TEST(GameTimer, Reset)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
-  timer.stop(initial_time + 3s);
+  timer.start(INITIAL_TIME);
+  timer.stop(INITIAL_TIME + 3s);
 
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
   timer.reset();
@@ -61,7 +61,7 @@ TEST(GameTimer, UpdateOnNotStarted)
 {
   mswpr::game_timer timer;
 
-  timer.update(initial_time + 2s);
+  timer.update(INITIAL_TIME + 2s);
 
   EXPECT_EQ(timer.get_elapsed_time(), 0s);
 }
@@ -70,12 +70,12 @@ TEST(GameTimer, UpdateOnStopped)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
-  timer.stop(initial_time + 3s);
+  timer.start(INITIAL_TIME);
+  timer.stop(INITIAL_TIME + 3s);
 
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
 
-  timer.update(initial_time + 10s);
+  timer.update(INITIAL_TIME + 10s);
 
   EXPECT_EQ(timer.get_elapsed_time(), 3s);
 }
@@ -84,10 +84,10 @@ TEST(GameTimer, StartAlreadyStarted)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
+  timer.start(INITIAL_TIME);
   EXPECT_EQ(timer.get_elapsed_time(), 0s);
 
-  timer.start(initial_time + 2s);
+  timer.start(INITIAL_TIME + 2s);
   EXPECT_EQ(timer.get_elapsed_time(), 0s);
 }
 
@@ -95,13 +95,13 @@ TEST(GameTimer, StopAlreadyStopped)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
-  timer.update(initial_time + 3s);
+  timer.start(INITIAL_TIME);
+  timer.update(INITIAL_TIME + 3s);
 
-  timer.stop(initial_time + 5s);
+  timer.stop(INITIAL_TIME + 5s);
   EXPECT_EQ(timer.get_elapsed_time(), 5s);
 
-  timer.stop(initial_time + 10s);
+  timer.stop(INITIAL_TIME + 10s);
   EXPECT_EQ(timer.get_elapsed_time(), 5s);
 }
 
@@ -109,9 +109,9 @@ TEST(GameTimer, SeveralUpdates)
 {
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
+  timer.start(INITIAL_TIME);
   for (size_t i = 1; i <= 5; ++i)
-    timer.update(initial_time + std::chrono::seconds(i));
+    timer.update(INITIAL_TIME + std::chrono::seconds(i));
 
   EXPECT_EQ(timer.get_elapsed_time(), 5s);
 }
@@ -136,7 +136,7 @@ namespace
   {
   };
 
-  constexpr std::array extract_digits_from_seconds_test_suite = {
+  constexpr std::array EXTRACT_DIGITS_FROM_SECONDS_TEST_SUITE = {
     extract_digits_from_seconds_test_data{ .elapsed_time = 0s, .expected_digits = { 0, 0, 0 } },
     extract_digits_from_seconds_test_data{ .elapsed_time = 2s, .expected_digits = { 0, 0, 2 } },
     extract_digits_from_seconds_test_data{ .elapsed_time = 17s, .expected_digits = { 0, 1, 7 } },
@@ -152,8 +152,8 @@ TEST_P(as_digit_array_test, CorrectConvertation)
   const auto& [elapsed_time, expected_digits] = GetParam();
   mswpr::game_timer timer;
 
-  timer.start(initial_time);
-  timer.update(initial_time + elapsed_time);
+  timer.start(INITIAL_TIME);
+  timer.update(INITIAL_TIME + elapsed_time);
 
   const auto elapsed_time_in_seconds = std::chrono::duration_cast<std::chrono::seconds>(elapsed_time);
   EXPECT_EQ(timer.get_elapsed_time(), elapsed_time_in_seconds);
@@ -162,7 +162,7 @@ TEST_P(as_digit_array_test, CorrectConvertation)
 
 INSTANTIATE_TEST_SUITE_P(GameTimer,
                          as_digit_array_test,
-                         testing::ValuesIn(extract_digits_from_seconds_test_suite),
+                         testing::ValuesIn(EXTRACT_DIGITS_FROM_SECONDS_TEST_SUITE),
                          [](const testing::TestParamInfo<as_digit_array_test::ParamType>& i_info) {
                            const auto& t = i_info.param.elapsed_time;
                            const std::string name = "Elapsed_" + std::to_string(t.count()) + "ms";

@@ -45,8 +45,8 @@ namespace mswpr
 
   void cell_grid::reset()
   {
-    static constexpr cell empty_cell{};
-    std::fill(d_cells.begin(), d_cells.end(), empty_cell);
+    static constexpr cell EMPTY_CELL{};
+    std::fill(d_cells.begin(), d_cells.end(), EMPTY_CELL);
   }
 
   void mswpr::cell_grid::place_values_around_mines()
