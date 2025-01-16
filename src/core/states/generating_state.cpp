@@ -7,11 +7,12 @@ namespace mswpr
 {
   generating_state::generating_state(mswpr::state_machine& st_machine) : state_interface(st_machine)
   {
-    st_machine_.set_face(face_type::SMILE_NOT_PRESSED);
-    auto& field = st_machine_.get_field();
+    auto& state_machine = get_state_machine();
+    state_machine.set_face(face_type::SMILE_NOT_PRESSED);
+    auto& field = state_machine.get_field();
     field.reset();
-    st_machine_.get_counter().reset(field.get_bomb_cnt());
-    st_machine_.get_timer().reset();
+    state_machine.get_counter().reset(field.get_bomb_cnt());
+    state_machine.get_timer().reset();
   }
 
   void generating_state::on_left_face_click(bool is_released)
@@ -19,7 +20,7 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::SMILE_NOT_PRESSED))
       return;
 
-    st_machine_.set_state<generating_state>();
+    get_state_machine().set_state<generating_state>();
   }
 
   void generating_state::on_left_field_click(bool is_released, size_t x, size_t y)
@@ -29,12 +30,12 @@ namespace mswpr
       return;
     }
 
-    auto& field = st_machine_.get_field();
+    auto& field = get_state_machine().get_field();
     const mswpr::glade_generator glade_generator(field.get_width(), field.get_height(), field.get_bomb_cnt(), x, y);
     field.generate(glade_generator);
     field.reveal_closed(x, y);
 
-    st_machine_.set_state<playing_state>();
+    get_state_machine().set_state<playing_state>();
   }
 
 }  // namespace mswpr

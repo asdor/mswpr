@@ -14,7 +14,7 @@ namespace
 
 TEST(GameTimer, Constructor)
 {
-  mswpr::game_timer timer;
+  const mswpr::game_timer timer;
 
   EXPECT_FALSE(timer.is_running());
   EXPECT_EQ(timer.get_elapsed_time(), 0s);

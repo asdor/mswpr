@@ -7,8 +7,8 @@ namespace mswpr
   ending_state::ending_state(mswpr::state_machine& st_machine, ending_state::params state_params) :
     state_interface(st_machine)
   {
-    st_machine_.set_face(state_params.is_victory ? face_type::BOSS : face_type::DEAD);
-    st_machine_.get_timer().stop(game_timer::now());
+    get_state_machine().set_face(state_params.is_victory ? face_type::BOSS : face_type::DEAD);
+    get_state_machine().get_timer().stop(game_timer::now());
   }
 
   void ending_state::on_left_face_click(bool is_released)
@@ -16,7 +16,7 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::DEAD))
       return;
 
-    st_machine_.set_state<generating_state>();
+    get_state_machine().set_state<generating_state>();
   }
 
   void ending_state::on_right_field_click(bool /* is_released */, size_t /* x */, size_t /* y */)

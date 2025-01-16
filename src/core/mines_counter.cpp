@@ -1,5 +1,6 @@
 #include "core/mines_counter.hpp"
 
+#include <algorithm>
 #include <charconv>
 #include <cmath>
 #include <system_error>
@@ -11,8 +12,7 @@ namespace
     static constexpr std::array<int, 3> RANK_TABLE = { 9, 99, 999 };
 
     size_t rank = 0;
-
-    for (int x : RANK_TABLE)
+    for (const int x : RANK_TABLE)
     {
       if (counter <= x)
         return rank + 1;

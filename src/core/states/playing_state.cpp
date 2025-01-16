@@ -6,7 +6,7 @@ namespace mswpr
 {
   playing_state::playing_state(state_machine& st_machine) : state_interface(st_machine)
   {
-    st_machine_.get_timer().start(game_timer::now());
+    get_state_machine().get_timer().start(game_timer::now());
   }
 
   void playing_state::on_left_face_click(bool is_released)
@@ -14,7 +14,7 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::SMILE_PRESSED, face_type::SMILE_NOT_PRESSED))
       return;
 
-    st_machine_.set_state<generating_state>();
+    get_state_machine().set_state<generating_state>();
   }
 
   void playing_state::on_left_field_click(bool is_released, size_t x, size_t y)
@@ -22,18 +22,19 @@ namespace mswpr
     if (change_face_on_click(is_released, face_type::WAITING, face_type::SMILE_NOT_PRESSED))
       return;
 
-    auto& field = st_machine_.get_field();
+    auto& state_machine = get_state_machine();
+    auto& field = state_machine.get_field();
 
     if (field.reveal_closed(x, y) == open_cell_result::DETONATED)
     {
       field.reveal_bombs();
-      st_machine_.set_state<ending_state>(ending_state::params{ .is_victory = false });
+      state_machine.set_state<ending_state>(ending_state::params{ .is_victory = false });
     }
     else if (field.is_deminied())
     {
       field.flag_bombs();
-      st_machine_.get_counter().reset(0);
-      st_machine_.set_state<ending_state>(ending_state::params{ .is_victory = true });
+      state_machine.get_counter().reset(0);
+      state_machine.set_state<ending_state>(ending_state::params{ .is_victory = true });
     }
   }
 

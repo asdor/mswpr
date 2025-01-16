@@ -21,7 +21,10 @@ namespace mswpr
   protected:
     bool change_face_on_click(bool is_released, face_type pressed, face_type released);
 
-    state_machine& st_machine_;
+    state_machine& get_state_machine();
+
+  private:
+    state_machine& d_st_machine;
   };
 }  // namespace mswpr
 

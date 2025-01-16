@@ -150,9 +150,8 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
                                         .w = cfg::DIGIT_WIDTH,
                                         .h = cfg::DIGIT_HEIGHT };
 
-    display_digits_type sprite = digits[i] == '-'
-                                   ? display_digits_type::MINUS
-                                   : to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i] - '0');
+    const auto sprite = digits[i] == '-' ? display_digits_type::MINUS
+                                         : to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i] - '0');
     d_texture_manager.draw(sprite, first_digit_rect);
   }
 }

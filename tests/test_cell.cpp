@@ -4,14 +4,14 @@
 
 TEST(Cell, DefaultConstructor)
 {
-  mswpr::cell cell;
+  const mswpr::cell cell;
   EXPECT_EQ(cell.get_value(), mswpr::cell_value::EMPTY);
   EXPECT_EQ(cell.get_state(), mswpr::cell_state::CLOSED);
 }
 
 TEST(Cell, CellValueConstructor)
 {
-  mswpr::cell cell(mswpr::cell_value::THREE);
+  const mswpr::cell cell(mswpr::cell_value::THREE);
   EXPECT_EQ(cell.get_value(), mswpr::cell_value::THREE);
   EXPECT_EQ(cell.get_state(), mswpr::cell_state::CLOSED);
 }
@@ -38,7 +38,7 @@ TEST(Cell, MoveConstructor)
 
 TEST(Cell, SetValue)
 {
-  mswpr::cell cell(mswpr::cell_value::TWO);
+  const mswpr::cell cell(mswpr::cell_value::TWO);
   EXPECT_EQ(cell.get_value(), mswpr::cell_value::TWO);
 }
 
@@ -51,13 +51,13 @@ TEST(Cell, SetState)
 
 TEST(Cell, IsEmpty)
 {
-  mswpr::cell cell(mswpr::cell_value::EMPTY);
+  const mswpr::cell cell(mswpr::cell_value::EMPTY);
   EXPECT_TRUE(cell.is_empty());
 }
 
 TEST(Cell, IsBomb)
 {
-  mswpr::cell cell(mswpr::cell_value::BOMB);
+  const mswpr::cell cell(mswpr::cell_value::BOMB);
   EXPECT_TRUE(cell.is_bomb());
 }
 

@@ -11,7 +11,7 @@ namespace
 
 TEST(MinesCounter, Constructor)
 {
-  mines_counter counter(MINES);
+  const mines_counter counter(MINES);
 
   EXPECT_EQ(counter.get_value(), MINES);
 }
@@ -42,7 +42,7 @@ TEST(MinesCounter, Decrement)
 
 TEST(MinesCounter, ValueToString_ThreeDigits)
 {
-  mines_counter counter(119);
+  const mines_counter counter(119);
 
   static constexpr std::array DIGITS = { '1', '1', '9' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -50,7 +50,7 @@ TEST(MinesCounter, ValueToString_ThreeDigits)
 
 TEST(MinesCounter, ValueToString_TwoDigits)
 {
-  mines_counter counter(42);
+  const mines_counter counter(42);
 
   static constexpr std::array DIGITS = { '0', '4', '2' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -58,7 +58,7 @@ TEST(MinesCounter, ValueToString_TwoDigits)
 
 TEST(MinesCounter, ValueToString_OneDigit)
 {
-  mines_counter counter(7);
+  const mines_counter counter(7);
 
   static constexpr std::array DIGITS = { '0', '0', '7' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -88,7 +88,7 @@ TEST(MinesCounter, ValueToString_OneDigitNegative)
 
 TEST(MinesCounter, ValueToString_Zero)
 {
-  mines_counter counter(0);
+  const mines_counter counter(0);
 
   static constexpr std::array DIGITS = { '0', '0', '0' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -96,7 +96,7 @@ TEST(MinesCounter, ValueToString_Zero)
 
 TEST(MinesCounter, ValueToString_BigNumber)
 {
-  mines_counter counter(12345);
+  const mines_counter counter(12345);
 
   static constexpr std::array DIGITS = { '0', '0', '0' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);

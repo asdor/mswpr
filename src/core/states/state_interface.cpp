@@ -3,8 +3,13 @@
 
 namespace mswpr
 {
-  state_interface::state_interface(state_machine& st_machine) : st_machine_(st_machine)
+  state_interface::state_interface(state_machine& st_machine) : d_st_machine(st_machine)
   {
+  }
+
+  state_machine& state_interface::get_state_machine()
+  {
+    return d_st_machine;
   }
 
   void state_interface::on_left_face_click(bool /*is_released*/)
@@ -20,14 +25,14 @@ namespace mswpr
     if (!is_released)
       return;
 
-    auto& field = st_machine_.get_field();
+    auto& field = d_st_machine.get_field();
     if (field(x, y).is_flagged())
     {
-      ++st_machine_.get_counter();
+      ++d_st_machine.get_counter();
     }
     else if (field(x, y).is_closed())
     {
-      --st_machine_.get_counter();
+      --d_st_machine.get_counter();
     }
 
     field.toggle_flag(x, y);
@@ -37,11 +42,11 @@ namespace mswpr
   {
     if (is_released)
     {
-      st_machine_.set_face(released);
+      d_st_machine.set_face(released);
       return false;
     }
 
-    st_machine_.set_face(pressed);
+    d_st_machine.set_face(pressed);
     return true;
   }
 

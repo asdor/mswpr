@@ -9,7 +9,9 @@ Checks: "
   clang-analyzer-*,
   cert-*,
   bugprone-*,
-  -bugprone-easily-swappable-parameters
+  -bugprone-easily-swappable-parameters,
+  misc-*,
+  -misc-include-cleaner
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: '/(core|gui|test_utils)/'
@@ -46,3 +48,5 @@ CheckOptions:
     value: lower_case
   - key: readability-identifier-naming.ParameterCase
     value: lower_case
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: '1'

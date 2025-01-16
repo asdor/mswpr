@@ -84,7 +84,7 @@ TEST_P(fetch_adjacent_cells_test, AdjacentCells)
   static constexpr size_t MINES_CNT = 0;
 
   const auto& params = GetParam();
-  mswpr::minefield field(params.width, params.height, MINES_CNT);
+  const mswpr::minefield field(params.width, params.height, MINES_CNT);
 
   const auto adjacent_coords = mswpr::fetch_adjacent_cells(params.coord, params.width, params.height);
   EXPECT_EQ(adjacent_coords, params.expected_coords);

@@ -12,7 +12,7 @@ TEST(Minefield, MainConstructor)
   const size_t width = 3;
   const size_t height = 3;
   const size_t bomb_cnt = 1;
-  mswpr::minefield field(width, height, bomb_cnt);
+  const mswpr::minefield field(width, height, bomb_cnt);
 
   for (size_t x = 0; x < width; ++x)
   {
@@ -30,7 +30,7 @@ TEST(Minefield, Getters)
   const size_t width = 3;
   const size_t height = 5;
   const size_t bomb_cnt = 4;
-  mswpr::minefield field(width, height, bomb_cnt);
+  const mswpr::minefield field(width, height, bomb_cnt);
 
   EXPECT_EQ(field.get_width(), width);
   EXPECT_EQ(field.get_height(), height);
@@ -79,7 +79,7 @@ TEST(Minefield, IsClosed)
   const size_t width = 1;
   const size_t height = 1;
   const size_t bomb_cnt = 1;
-  mswpr::minefield field(width, height, bomb_cnt);
+  const mswpr::minefield field(width, height, bomb_cnt);
 
   const auto cell = field(0, 0);
 
