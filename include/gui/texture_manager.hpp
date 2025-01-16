@@ -11,9 +11,11 @@
 
 namespace mswpr
 {
+  // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
   class texture_manager
   {
   public:
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-member-init)
     texture_manager() = default;
 
     void init(mswpr::sdl_renderer_t renderer, std::string_view sprite_path);
@@ -34,7 +36,6 @@ namespace mswpr
 
     std::array<SDL_Rect, mswpr::FACES_COUNT> d_faces_config;
     std::array<SDL_Rect, mswpr::SPRITES_COUNT> d_sprites_config;
-
     std::array<SDL_Rect, mswpr::DIPLAY_DIGITS_COUNT> d_display_digits_config;
 
     mswpr::sdl_texture_t d_sprite_texture;

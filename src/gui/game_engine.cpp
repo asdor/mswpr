@@ -7,16 +7,14 @@
 namespace mswpr
 {
   game_engine::game_engine(std::string_view title, size_t xpos, size_t ypos) :
-
-    d_is_running(false),
     d_renderer(title, xpos, ypos),
     d_minefield(cfg::FIELD_WIDTH, cfg::FIELD_HEIGHT, cfg::MINES_CNT),
     d_face_type(face_type::SMILE_NOT_PRESSED),
     d_counter(cfg::MINES_CNT),
     d_state(d_minefield, d_face_type, d_counter, d_timer),
-    d_frame_start_ticks(0)
+    d_frame_start_ticks(0),
+    d_is_running(true)
   {
-    d_is_running = true;
   }
 
   bool game_engine::running() const

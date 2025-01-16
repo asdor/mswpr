@@ -28,8 +28,6 @@ namespace mswpr
   private:
     void process_click(bool is_released, int key);
 
-    bool d_is_running;
-
     mswpr::game_renderer d_renderer;
 
     mswpr::minefield d_minefield;
@@ -40,6 +38,8 @@ namespace mswpr
     mswpr::state_machine d_state;
 
     Uint32 d_frame_start_ticks;
+
+    bool d_is_running;
   };
 
 }  // mswpr
