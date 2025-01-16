@@ -15,9 +15,9 @@ std::vector<mswpr::cell_coord> mswpr::fetch_adjacent_cells(mswpr::cell_coord i_c
     if (x_i < -x_ind || y_i < -y_ind)
       continue;
 
-    const auto x = static_cast<size_t>(x_i + x_ind);
-    const auto y = static_cast<size_t>(y_i + y_ind);
-    if (x < i_width && y < i_height)
+    const int x = x_i + x_ind;
+    const int y = y_i + y_ind;
+    if (x < static_cast<int>(i_width) && y < static_cast<int>(i_height))
       neighbours.emplace_back(x, y);
   }
 

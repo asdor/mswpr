@@ -7,7 +7,9 @@ Checks: "
   -modernize-use-trailing-return-type,
   portability-*,
   clang-analyzer-*,
-  cert-*
+  cert-*,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: '/(core|gui|test_utils)/'

@@ -18,10 +18,10 @@ TEST(MinesCounter, Constructor)
 
 TEST(MinesCounter, Reset)
 {
+  static constexpr auto COUNTER_VALUE = static_cast<size_t>(2) * MINES;
   mines_counter counter(MINES);
-
-  counter.reset(MINES * 2);
-  EXPECT_EQ(counter.get_value(), MINES * 2);
+  counter.reset(COUNTER_VALUE);
+  EXPECT_EQ(counter.get_value(), COUNTER_VALUE);
 }
 
 TEST(MinesCounter, Increment)

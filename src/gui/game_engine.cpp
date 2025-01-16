@@ -65,8 +65,6 @@ namespace mswpr
           break;
         }
         break;
-      case SDL_MOUSEMOTION:
-        break;
       default:
         break;
       }
@@ -91,8 +89,8 @@ namespace mswpr
     }
     else if (d_renderer.is_inside_field(mouse_x, mouse_y))
     {
-      const int x = (mouse_x - cfg::BOARD_OFFSET_X) / cfg::CELL_WIDTH;
-      const int y = (mouse_y - cfg::BOARD_OFFSET_Y) / cfg::CELL_HEIGHT;
+      const auto x = static_cast<int>((mouse_x - cfg::BOARD_OFFSET_X) / cfg::CELL_WIDTH);
+      const auto y = static_cast<int>((mouse_y - cfg::BOARD_OFFSET_Y) / cfg::CELL_HEIGHT);
       if (is_left_btn)
       {
         d_state.on_left_field_click(is_released, x, y);

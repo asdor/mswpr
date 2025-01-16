@@ -35,7 +35,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   SDL_Log("sdl2_minesweeper version: %s\n", mswpr::get_game_version());
 
   const Uint32 window_mode = 0;
-  const size_t window_width = 2 * cfg::BOARD_OFFSET_X + cfg::CELL_WIDTH * cfg::FIELD_WIDTH;
+  const size_t window_width = static_cast<size_t>(2) * cfg::BOARD_OFFSET_X + cfg::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t window_height = cfg::BOARD_OFFSET_Y + cfg::BOARD_OFFSET_X + cfg::CELL_HEIGHT * cfg::FIELD_HEIGHT;
 
   d_window.reset(SDL_CreateWindow(
@@ -159,7 +159,7 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
 
 void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
 {
-  const size_t window_width = 2 * cfg::BOARD_OFFSET_X + cfg::CELL_WIDTH * cfg::FIELD_WIDTH;
+  const size_t window_width = static_cast<size_t>(2) * cfg::BOARD_OFFSET_X + cfg::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t x_timer = window_width - cfg::COUNTER_OFFSET_X - cfg::COUNTER_WIDTH - 2;
   const SDL_Rect empty_display_rect = {
     .x = static_cast<int>(x_timer), .y = cfg::HUD_OFFSET_Y, .w = cfg::COUNTER_WIDTH, .h = cfg::COUNTER_HEIGHT

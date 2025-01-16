@@ -23,7 +23,7 @@ void mswpr::debug::display_grid_to_stream(std::ostream& io_os,
       }
       else
       {
-        cell_name = '1' + (enum_to<char>(cell) - enum_to<char>(mswpr::cell_value::ONE));
+        cell_name = static_cast<char>('0' + (enum_to<std::size_t>(cell)));
       }
 
       io_os << cell_name;
