@@ -1,24 +1,24 @@
 ---
 # TODO: enable cppcoreguidelines-pro-type-vararg after https://github.com/asdor/sdl2_minesweeper/issues/15
 Checks: "
-  readability-identifier-naming,
+  bugprone-*,
+  -bugprone-easily-swappable-parameters,
+  cert-*,
+  clang-analyzer-*,
+  cppcoreguidelines-*,
+  -cppcoreguidelines-avoid-const-or-ref-data-members,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-type-vararg,
+  -cppcoreguidelines-use-default-member-init,
   modernize-*,
   -modernize-use-default-member-init,
   -modernize-use-nodiscard,
   -modernize-use-trailing-return-type,
   portability-*,
-  clang-analyzer-*,
-  cert-*,
-  bugprone-*,
-  -bugprone-easily-swappable-parameters,
   misc-*,
   -misc-include-cleaner,
-  cppcoreguidelines-*,
-  -cppcoreguidelines-avoid-magic-numbers,
-  -cppcoreguidelines-pro-type-vararg,
-  -cppcoreguidelines-use-default-member-init,
-  -cppcoreguidelines-avoid-const-or-ref-data-members,
-  -cppcoreguidelines-pro-bounds-constant-array-index
+  readability-identifier-naming
 "
 WarningsAsErrors: ''
 HeaderFilterRegex: '/(core|gui|test_utils)/'
