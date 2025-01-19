@@ -99,10 +99,9 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
   {
     for (size_t x = 0; x < cfg::FIELD_WIDTH; ++x)
     {
-      const SDL_Rect dst_rect = { int(x * cfg::CELL_WIDTH) + cfg::BOARD_OFFSET_X,
-                                  int(y * cfg::CELL_HEIGHT) + cfg::BOARD_OFFSET_Y,
-                                  cfg::CELL_WIDTH,
-                                  cfg::CELL_HEIGHT };
+      const auto cell_x = static_cast<int>(x * cfg::CELL_WIDTH) + cfg::BOARD_OFFSET_X;
+      const auto cell_y = static_cast<int>(y * cfg::CELL_HEIGHT) + cfg::BOARD_OFFSET_Y;
+      const SDL_Rect dst_rect = { .x = cell_x, .y = cell_y, .w = cfg::CELL_WIDTH, .h = cfg::CELL_HEIGHT };
 
       sprite_type sprite = sprite_type::EMPTY_CLOSED;
       auto state = field.get_cell_state(x, y);
