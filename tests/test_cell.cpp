@@ -31,7 +31,7 @@ TEST(Cell, MoveConstructor)
   mswpr::cell cell(mswpr::cell_value::TWO);
   cell.set_state(mswpr::cell_state::OPENED);
 
-  const mswpr::cell another_cell = std::move(cell);
+  const mswpr::cell another_cell(std::move(cell));  // NOLINT(performance-move-const-arg)
   EXPECT_EQ(another_cell.get_value(), mswpr::cell_value::TWO);
   EXPECT_EQ(another_cell.get_state(), mswpr::cell_state::OPENED);
 }
