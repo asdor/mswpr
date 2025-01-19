@@ -15,11 +15,6 @@ namespace mswpr
       SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
   }
 
-  bool sdl_init_t::is_init() const
-  {
-    return SDL_WasInit(INIT_FLAG);
-  }
-
   mswpr::sdl_init_t::~sdl_init_t()
   {
     SDL_Log("Cleaning up SDL");

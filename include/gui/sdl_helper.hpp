@@ -16,7 +16,6 @@ namespace mswpr
     sdl_init_t(sdl_init_t&&) = delete;
     sdl_init_t& operator=(const sdl_init_t&) = delete;
     sdl_init_t& operator=(sdl_init_t&&) = delete;
-    bool is_init() const;
     ~sdl_init_t();
   };
 

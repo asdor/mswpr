@@ -30,7 +30,7 @@ namespace mswpr
     int key = -1;
 
     SDL_Event event;
-    while (SDL_PollEvent(&event))
+    while (SDL_PollEvent(&event) != 0)
     {
       switch (event.type)
       {
@@ -110,7 +110,7 @@ namespace mswpr
     d_timer.update(game_timer::now());
   }
 
-  void game_engine::limit_fps()
+  void game_engine::limit_fps() const
   {
     const auto frame_ticks = SDL_GetTicks() - d_frame_start_ticks;
 

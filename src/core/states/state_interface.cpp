@@ -16,7 +16,7 @@ namespace mswpr
   {
   }
 
-  void state_interface::on_left_field_click(bool /*is_released*/, size_t, size_t)
+  void state_interface::on_left_field_click(bool /*is_released*/, size_t /*x*/, size_t /*y*/)
   {
   }
 

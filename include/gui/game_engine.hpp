@@ -23,7 +23,7 @@ namespace mswpr
     void handle_input();
     void update();
     void render();
-    void limit_fps();
+    void limit_fps() const;
 
   private:
     void process_click(bool is_released, int key);
