@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-using namespace mswpr;
-
 namespace
 {
   constexpr int MINES = 10;
@@ -11,7 +9,7 @@ namespace
 
 TEST(MinesCounter, Constructor)
 {
-  const mines_counter counter(MINES);
+  const mswpr::mines_counter counter(MINES);
 
   EXPECT_EQ(counter.get_value(), MINES);
 }
@@ -19,14 +17,14 @@ TEST(MinesCounter, Constructor)
 TEST(MinesCounter, Reset)
 {
   static constexpr auto COUNTER_VALUE = static_cast<size_t>(2) * MINES;
-  mines_counter counter(MINES);
+  mswpr::mines_counter counter(MINES);
   counter.reset(COUNTER_VALUE);
   EXPECT_EQ(counter.get_value(), COUNTER_VALUE);
 }
 
 TEST(MinesCounter, Increment)
 {
-  mines_counter counter(MINES);
+  mswpr::mines_counter counter(MINES);
 
   ++counter;
   EXPECT_EQ(counter.get_value(), MINES + 1);
@@ -34,7 +32,7 @@ TEST(MinesCounter, Increment)
 
 TEST(MinesCounter, Decrement)
 {
-  mines_counter counter(MINES);
+  mswpr::mines_counter counter(MINES);
 
   --counter;
   EXPECT_EQ(counter.get_value(), MINES - 1);
@@ -42,7 +40,7 @@ TEST(MinesCounter, Decrement)
 
 TEST(MinesCounter, ValueToString_ThreeDigits)
 {
-  const mines_counter counter(119);
+  const mswpr::mines_counter counter(119);
 
   static constexpr std::array DIGITS = { '1', '1', '9' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -50,7 +48,7 @@ TEST(MinesCounter, ValueToString_ThreeDigits)
 
 TEST(MinesCounter, ValueToString_TwoDigits)
 {
-  const mines_counter counter(42);
+  const mswpr::mines_counter counter(42);
 
   static constexpr std::array DIGITS = { '0', '4', '2' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -58,7 +56,7 @@ TEST(MinesCounter, ValueToString_TwoDigits)
 
 TEST(MinesCounter, ValueToString_OneDigit)
 {
-  const mines_counter counter(7);
+  const mswpr::mines_counter counter(7);
 
   static constexpr std::array DIGITS = { '0', '0', '7' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -66,7 +64,7 @@ TEST(MinesCounter, ValueToString_OneDigit)
 
 TEST(MinesCounter, ValueToString_TwoDigitsNegative)
 {
-  mines_counter counter(0);
+  mswpr::mines_counter counter(0);
 
   for (size_t i = 0; i < 42; ++i)
     --counter;
@@ -77,7 +75,7 @@ TEST(MinesCounter, ValueToString_TwoDigitsNegative)
 
 TEST(MinesCounter, ValueToString_OneDigitNegative)
 {
-  mines_counter counter(0);
+  mswpr::mines_counter counter(0);
 
   for (size_t i = 0; i < 7; ++i)
     --counter;
@@ -88,7 +86,7 @@ TEST(MinesCounter, ValueToString_OneDigitNegative)
 
 TEST(MinesCounter, ValueToString_Zero)
 {
-  const mines_counter counter(0);
+  const mswpr::mines_counter counter(0);
 
   static constexpr std::array DIGITS = { '0', '0', '0' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);
@@ -96,7 +94,7 @@ TEST(MinesCounter, ValueToString_Zero)
 
 TEST(MinesCounter, ValueToString_BigNumber)
 {
-  const mines_counter counter(12345);
+  const mswpr::mines_counter counter(12345);
 
   static constexpr std::array DIGITS = { '0', '0', '0' };
   EXPECT_EQ(counter.value_to_str(), DIGITS);

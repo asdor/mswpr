@@ -5,8 +5,6 @@
 
 #include <gtest/gtest.h>
 
-using namespace mswpr;
-
 TEST(MinefieldRevealCells, RevealCells)
 {
   const size_t width = 3;
