@@ -22,7 +22,7 @@ namespace
 
     return 3;
   }
-}
+}  // namespace
 
 mswpr::mines_counter::mines_counter(size_t counter) : d_counter(static_cast<int>(counter))
 {

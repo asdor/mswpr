@@ -32,6 +32,6 @@ namespace mswpr
     time_point_t d_current_time;
     bool d_is_running;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_GAME_TIMER_HPP

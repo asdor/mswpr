@@ -38,6 +38,6 @@ namespace mswpr
     SDL_Rect d_face_rect;
     SDL_Rect d_field_rect;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_GAME_RENDERER_HPP

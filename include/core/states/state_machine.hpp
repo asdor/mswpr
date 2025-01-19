@@ -52,6 +52,6 @@ namespace mswpr
     using state_t = std::variant<generating_state, playing_state, ending_state>;
     state_t d_state;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_STATE_MACHINE_HPP

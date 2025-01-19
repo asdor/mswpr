@@ -18,6 +18,6 @@ namespace mswpr::unit_tests
   private:
     std::vector<mswpr::cell_coord> d_mines;
   };
-}
+}  // namespace mswpr::unit_tests
 
 #endif  // MSWPR_MOCKED_MINES_GENERATOR_HPP

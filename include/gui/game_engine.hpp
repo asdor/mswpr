@@ -42,6 +42,6 @@ namespace mswpr
     bool d_is_running;
   };
 
-}  // mswpr
+}  // namespace mswpr
 
 #endif  // MSWPR_GAME_ENGINE_HPP

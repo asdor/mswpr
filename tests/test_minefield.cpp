@@ -159,7 +159,7 @@ namespace
 
     return count;
   }
-}
+}  // namespace
 
 TEST(Minefield, MinesCountAroundCell)
 {

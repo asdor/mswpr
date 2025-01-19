@@ -34,6 +34,6 @@ namespace mswpr
     std::size_t d_glade_center_x;
     std::size_t d_glade_center_y;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_MINES_GENERATOR_HPP

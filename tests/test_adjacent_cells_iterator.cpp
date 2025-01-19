@@ -77,7 +77,7 @@ namespace
              SLIM_VERTICAL_FIELD,
              POINT_LIKE_FIELD };
   }
-}
+}  // namespace
 
 TEST_P(fetch_adjacent_cells_test, AdjacentCells)
 {

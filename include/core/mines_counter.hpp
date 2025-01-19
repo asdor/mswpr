@@ -20,6 +20,6 @@ namespace mswpr
   private:
     int d_counter;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_MINES_COUNTER_HPP

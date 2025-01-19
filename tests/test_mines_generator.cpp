@@ -58,7 +58,7 @@ namespace
                                   .mines_cnt = 4,
                                   .clicked_cell = { 1, 2 },
                                   .expected_mines_cnt = 4 };
-}
+}  // namespace
 
 TEST_P(glade_generator_test, DifferentFieldCombinations)
 {

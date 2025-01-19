@@ -11,6 +11,7 @@ Checks: "
   -cppcoreguidelines-pro-bounds-constant-array-index,
   -cppcoreguidelines-pro-type-vararg,
   -cppcoreguidelines-use-default-member-init,
+  google-readability-namespace-comments,
   modernize-*,
   -modernize-use-default-member-init,
   -modernize-use-nodiscard,

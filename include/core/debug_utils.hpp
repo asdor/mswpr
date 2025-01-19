@@ -15,6 +15,6 @@ namespace mswpr
                                 std::size_t i_width,
                                 std::size_t i_height);
   }  // namespace debug
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_DEBUG_UTILS_HPP

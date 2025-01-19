@@ -51,4 +51,4 @@ namespace mswpr
   {
     return d_state == cell_state::NOT_FLAGGED_BOMB;
   }
-}
+}  // namespace mswpr

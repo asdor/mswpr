@@ -145,7 +145,7 @@ namespace
     extract_digits_from_seconds_test_data{ .elapsed_time = 17101ms, .expected_digits = { 0, 1, 7 } },
     extract_digits_from_seconds_test_data{ .elapsed_time = 17701ms, .expected_digits = { 0, 1, 7 } },
   };
-}
+}  // namespace
 
 TEST_P(as_digit_array_test, CorrectConvertation)
 {

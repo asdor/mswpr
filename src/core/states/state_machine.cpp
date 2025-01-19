@@ -47,4 +47,4 @@ namespace mswpr
   {
     std::visit([is_released, x, y](auto& st) { st.on_right_field_click(is_released, x, y); }, d_state);
   }
-}
+}  // namespace mswpr

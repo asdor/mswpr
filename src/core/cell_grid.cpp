@@ -68,6 +68,4 @@ namespace mswpr
       }
     }
   }
-}
-
-// namespace mswpr
+}  // namespace mswpr
