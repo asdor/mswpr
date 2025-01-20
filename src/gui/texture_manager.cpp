@@ -47,6 +47,25 @@ namespace mswpr
       const size_t rect_x = (DIGIT_WIDTH + 1) * (i - enum_to<size_t>(display_digits_type::ZERO));
       d_display_digits_config[i] = { static_cast<int>(rect_x), 33, DIGIT_WIDTH, DIGIT_HEIGHT };
     }
+
+    static constexpr int BORDER_WIDTH = 12;
+    static constexpr int BORDER_TOP_HEIGHT = 11;
+    static constexpr int BORDER_BOTTOM_HEIGHT = 12;
+    static constexpr int BORDER_STRIP_SIZE = 1;
+    d_border_config[enum_to<size_t>(border_type::TOP_LEFT)] = { 0, 82, BORDER_WIDTH, BORDER_TOP_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::TOP_RIGHT)] = { 15, 82, BORDER_WIDTH, BORDER_TOP_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::HUD_TOP)] = { 13, 82, BORDER_STRIP_SIZE, BORDER_TOP_HEIGHT };
+
+    d_border_config[enum_to<size_t>(border_type::HUD_LEFT)] = { 0, 94, BORDER_WIDTH, BORDER_STRIP_SIZE };
+    d_border_config[enum_to<size_t>(border_type::HUD_RIGHT)] = { 15, 94, BORDER_WIDTH, BORDER_STRIP_SIZE };
+    d_border_config[enum_to<size_t>(border_type::DIVIDER_LEFT)] = { 0, 96, BORDER_WIDTH, BORDER_TOP_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::DIVIDER_MIDDLE)] = { 13, 96, BORDER_STRIP_SIZE, BORDER_TOP_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::DIVIDER_RIGHT)] = { 15, 96, BORDER_WIDTH, BORDER_TOP_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::FIELD_LEFT)] = { 0, 108, BORDER_WIDTH, BORDER_STRIP_SIZE };
+    d_border_config[enum_to<size_t>(border_type::FIELD_RIGHT)] = { 15, 108, BORDER_WIDTH, BORDER_STRIP_SIZE };
+    d_border_config[enum_to<size_t>(border_type::BOTTOM_LEFT)] = { 0, 110, BORDER_WIDTH, BORDER_BOTTOM_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::BOTTOM_RIGHT)] = { 15, 110, BORDER_WIDTH, BORDER_BOTTOM_HEIGHT };
+    d_border_config[enum_to<size_t>(border_type::FIELD_BOTTOM)] = { 13, 110, BORDER_STRIP_SIZE, BORDER_BOTTOM_HEIGHT };
   }
 
   void texture_manager::draw(face_type i_face, SDL_Rect i_dst)
@@ -62,6 +81,11 @@ namespace mswpr
   void texture_manager::draw(mswpr::display_digits_type i_digits, SDL_Rect i_dst)
   {
     render_sprite(i_digits, i_dst, d_display_digits_config);
+  }
+
+  void texture_manager::draw(mswpr::border_type i_border, SDL_Rect i_dst)
+  {
+    render_sprite(i_border, i_dst, d_border_config);
   }
 
   mswpr::sdl_texture_t texture_manager::load_texture(mswpr::sdl_renderer_t renderer, std::string_view path)

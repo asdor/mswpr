@@ -23,6 +23,7 @@ namespace mswpr
     void draw(mswpr::face_type i_face, SDL_Rect i_dst);
     void draw(mswpr::sprite_type i_sprite, SDL_Rect i_dst);
     void draw(mswpr::display_digits_type i_digits, SDL_Rect i_dst);
+    void draw(mswpr::border_type i_border, SDL_Rect i_dst);
 
   private:
     static mswpr::sdl_texture_t load_texture(mswpr::sdl_renderer_t renderer, std::string_view path);
@@ -37,6 +38,7 @@ namespace mswpr
     std::array<SDL_Rect, mswpr::FACES_COUNT> d_faces_config;
     std::array<SDL_Rect, mswpr::SPRITES_COUNT> d_sprites_config;
     std::array<SDL_Rect, mswpr::DIPLAY_DIGITS_COUNT> d_display_digits_config;
+    std::array<SDL_Rect, mswpr::BORDER_TYPE_COUNT> d_border_config;
 
     mswpr::sdl_texture_t d_sprite_texture;
     mswpr::sdl_renderer_t d_renderer;

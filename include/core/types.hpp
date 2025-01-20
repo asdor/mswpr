@@ -76,6 +76,27 @@ namespace mswpr
 
   inline constexpr std::size_t DIPLAY_DIGITS_COUNT = enum_to<std::size_t>(display_digits_type::DIPLAY_DIGITS_COUNT);
 
+  enum class border_type : size_t
+  {
+    TOP_LEFT,
+    TOP_RIGHT,
+    HUD_TOP,
+    HUD_LEFT,
+    HUD_RIGHT,
+    DIVIDER_LEFT,
+    DIVIDER_MIDDLE,
+    DIVIDER_RIGHT,
+    FIELD_LEFT,
+    FIELD_RIGHT,
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT,
+    FIELD_BOTTOM,
+
+    BORDER_TYPE_COUNT
+  };
+
+  inline constexpr std::size_t BORDER_TYPE_COUNT = enum_to<std::size_t>(border_type::BORDER_TYPE_COUNT);
+
 }  // namespace mswpr
 
 #endif  // MSWPR_TYPES_HPP
