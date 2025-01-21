@@ -35,8 +35,11 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   SDL_Log("sdl2_minesweeper version: %s\n", mswpr::get_game_version());
 
   const Uint32 window_mode = 0;
-  const size_t window_width = static_cast<size_t>(2) * cfg::BOARD_OFFSET_X + cfg::CELL_WIDTH * cfg::FIELD_WIDTH;
-  const size_t window_height = cfg::BOARD_OFFSET_Y + cfg::BOARD_OFFSET_X + cfg::CELL_HEIGHT * cfg::FIELD_HEIGHT;
+  const size_t window_width =
+    static_cast<size_t>(2) * mswpr::layout::BOARD_OFFSET_X + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
+  const size_t window_height =
+    mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BOARD_OFFSET_X + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
+  SDL_Log("Window size: %zu x %zu\n", window_width, window_height);
 
   d_window.reset(SDL_CreateWindow(
     title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
@@ -60,12 +63,14 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 
   d_texture_manager.init(d_renderer, "assets/winxpskin.bmp");
 
-  const int face_x = cfg::FIELD_WIDTH * cfg::CELL_WIDTH / 2 - cfg::FACE_WIDTH / 2 + cfg::BOARD_OFFSET_X;
-  d_face_rect = { face_x, cfg::HUD_OFFSET_Y, cfg::FACE_WIDTH, cfg::FACE_HEIGHT };
+  const int face_x =
+    cfg::FIELD_WIDTH * mswpr::layout::CELL_WIDTH / 2 - mswpr::layout::FACE_WIDTH / 2 + mswpr::layout::BOARD_OFFSET_X;
+  d_face_rect = { face_x, mswpr::layout::HUD_OFFSET_Y, mswpr::layout::FACE_WIDTH, mswpr::layout::FACE_HEIGHT };
 
-  d_field_rect = {
-    cfg::BOARD_OFFSET_X, cfg::BOARD_OFFSET_Y, cfg::CELL_WIDTH * cfg::FIELD_WIDTH, cfg::CELL_HEIGHT * cfg::FIELD_HEIGHT
-  };
+  d_field_rect = { mswpr::layout::BOARD_OFFSET_X,
+                   mswpr::layout::BOARD_OFFSET_Y,
+                   mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH,
+                   mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT };
 }
 
 bool mswpr::game_renderer::is_inside_face(int mouse_x, int mouse_y)
@@ -99,9 +104,11 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
   {
     for (size_t x = 0; x < cfg::FIELD_WIDTH; ++x)
     {
-      const auto cell_x = static_cast<int>(x * cfg::CELL_WIDTH) + cfg::BOARD_OFFSET_X;
-      const auto cell_y = static_cast<int>(y * cfg::CELL_HEIGHT) + cfg::BOARD_OFFSET_Y;
-      const SDL_Rect dst_rect = { .x = cell_x, .y = cell_y, .w = cfg::CELL_WIDTH, .h = cfg::CELL_HEIGHT };
+      const auto cell_x = static_cast<int>(x * mswpr::layout::CELL_WIDTH) + mswpr::layout::BOARD_OFFSET_X;
+      const auto cell_y = static_cast<int>(y * mswpr::layout::CELL_HEIGHT) + mswpr::layout::BOARD_OFFSET_Y;
+      const SDL_Rect dst_rect = {
+        .x = cell_x, .y = cell_y, .w = mswpr::layout::CELL_WIDTH, .h = mswpr::layout::CELL_HEIGHT
+      };
 
       sprite_type sprite = sprite_type::EMPTY_CLOSED;
       auto state = field.get_cell_state(x, y);
@@ -134,20 +141,22 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
 
 void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counter)
 {
-  const SDL_Rect empty_display_rect = {
-    .x = cfg::COUNTER_OFFSET_X, .y = cfg::HUD_OFFSET_Y, .w = cfg::COUNTER_WIDTH, .h = cfg::COUNTER_HEIGHT
-  };
+  const SDL_Rect empty_display_rect = { .x = mswpr::layout::COUNTER_OFFSET_X,
+                                        .y = mswpr::layout::HUD_OFFSET_Y,
+                                        .w = mswpr::layout::COUNTER_WIDTH,
+                                        .h = mswpr::layout::COUNTER_HEIGHT };
   d_texture_manager.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
   const auto digits = counter.value_to_str();
 
   for (size_t i = 0; i < digits.size(); ++i)
   {
-    const size_t rect_x = cfg::COUNTER_OFFSET_X + cfg::DIGIT_OFFSET + (cfg::DIGIT_OFFSET + cfg::DIGIT_WIDTH) * i;
+    const size_t rect_x = mswpr::layout::COUNTER_OFFSET_X + mswpr::layout::DIGIT_OFFSET +
+                          (mswpr::layout::DIGIT_OFFSET + mswpr::layout::DIGIT_WIDTH) * i;
     const SDL_Rect first_digit_rect = { .x = static_cast<int>(rect_x),
-                                        .y = cfg::DIGIT_OFFSET + cfg::HUD_OFFSET_Y,
-                                        .w = cfg::DIGIT_WIDTH,
-                                        .h = cfg::DIGIT_HEIGHT };
+                                        .y = mswpr::layout::DIGIT_OFFSET + mswpr::layout::HUD_OFFSET_Y,
+                                        .w = mswpr::layout::DIGIT_WIDTH,
+                                        .h = mswpr::layout::DIGIT_HEIGHT };
 
     const auto sprite = digits[i] == '-' ? display_digits_type::MINUS
                                          : to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i] - '0');
@@ -157,22 +166,25 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
 
 void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
 {
-  const size_t window_width = static_cast<size_t>(2) * cfg::BOARD_OFFSET_X + cfg::CELL_WIDTH * cfg::FIELD_WIDTH;
-  const size_t x_timer = window_width - cfg::COUNTER_OFFSET_X - cfg::COUNTER_WIDTH - 2;
-  const SDL_Rect empty_display_rect = {
-    .x = static_cast<int>(x_timer), .y = cfg::HUD_OFFSET_Y, .w = cfg::COUNTER_WIDTH, .h = cfg::COUNTER_HEIGHT
-  };
+  const size_t window_width =
+    static_cast<size_t>(2) * mswpr::layout::BOARD_OFFSET_X + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
+  const size_t x_timer = window_width - mswpr::layout::COUNTER_OFFSET_X - mswpr::layout::COUNTER_WIDTH - 2;
+  const SDL_Rect empty_display_rect = { .x = static_cast<int>(x_timer),
+                                        .y = mswpr::layout::HUD_OFFSET_Y,
+                                        .w = mswpr::layout::COUNTER_WIDTH,
+                                        .h = mswpr::layout::COUNTER_HEIGHT };
   d_texture_manager.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
 
   const auto digits = i_timer.extract_digits_from_seconds();
 
   for (size_t i = 0; i < digits.size(); ++i)
   {
-    const size_t rect_x = x_timer + cfg::DIGIT_OFFSET + (cfg::DIGIT_OFFSET + cfg::DIGIT_WIDTH) * i;
+    const size_t rect_x =
+      x_timer + mswpr::layout::DIGIT_OFFSET + (mswpr::layout::DIGIT_OFFSET + mswpr::layout::DIGIT_WIDTH) * i;
     const SDL_Rect first_digit_rect = { .x = static_cast<int>(rect_x),
-                                        .y = cfg::DIGIT_OFFSET + cfg::HUD_OFFSET_Y,
-                                        .w = cfg::DIGIT_WIDTH,
-                                        .h = cfg::DIGIT_HEIGHT };
+                                        .y = mswpr::layout::DIGIT_OFFSET + mswpr::layout::HUD_OFFSET_Y,
+                                        .w = mswpr::layout::DIGIT_WIDTH,
+                                        .h = mswpr::layout::DIGIT_HEIGHT };
 
     const auto sprite = to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i]);
     d_texture_manager.draw(sprite, first_digit_rect);
