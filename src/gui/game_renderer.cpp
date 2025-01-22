@@ -1,5 +1,6 @@
 #include "gui/game_renderer.hpp"
 #include "core/game_config.hpp"
+#include "gui/border_renderer.hpp"
 #include "gui/game_version.hpp"
 
 #include <SDL.h>
@@ -94,6 +95,8 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
   draw_timer(i_timer);
   d_texture_manager.draw(face, d_face_rect);
   draw_field(field);
+  mswpr::border_renderer border(d_texture_manager);
+  border.draw();
 
   SDL_RenderPresent(d_renderer.get());
 }

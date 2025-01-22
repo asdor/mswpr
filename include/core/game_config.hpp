@@ -19,6 +19,8 @@ namespace mswpr::layout
   inline constexpr size_t FACE_HEIGHT = 26;
 
   inline constexpr int BOARD_OFFSET_X = 12;
+  inline constexpr int BOARD_TOP_HEIGHT = 11;
+  inline constexpr int BOARD_BOTTOM_HEIGHT = 12;
   inline constexpr int BOARD_OFFSET_Y = 55;
   inline constexpr size_t COUNTER_OFFSET_X = 16;
   inline constexpr size_t HUD_OFFSET_Y = 15;
