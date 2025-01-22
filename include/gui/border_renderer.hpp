@@ -16,8 +16,8 @@ namespace mswpr
     void draw();
 
   private:
-    void draw_row(std::size_t i_y,
-                  std::size_t i_h,
+    void draw_row(std::size_t i_row_y_pos,
+                  std::size_t i_row_height,
                   mswpr::border_type i_left,
                   std::optional<mswpr::border_type> i_middle,
                   mswpr::border_type i_right);
