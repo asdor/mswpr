@@ -37,9 +37,9 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 
   const Uint32 window_mode = 0;
   const size_t window_width =
-    static_cast<size_t>(2) * mswpr::layout::BOARD_OFFSET_X + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
+    static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t window_height =
-    mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BOARD_OFFSET_X + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
+    mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
   SDL_Log("Window size: %zu x %zu\n", window_width, window_height);
 
   d_window.reset(SDL_CreateWindow(
@@ -65,10 +65,10 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   d_texture_manager.init(d_renderer, "assets/winxpskin.bmp");
 
   const int face_x =
-    cfg::FIELD_WIDTH * mswpr::layout::CELL_WIDTH / 2 - mswpr::layout::FACE_WIDTH / 2 + mswpr::layout::BOARD_OFFSET_X;
+    cfg::FIELD_WIDTH * mswpr::layout::CELL_WIDTH / 2 - mswpr::layout::FACE_WIDTH / 2 + mswpr::layout::BORDER_WIDTH;
   d_face_rect = { face_x, mswpr::layout::HUD_OFFSET_Y, mswpr::layout::FACE_WIDTH, mswpr::layout::FACE_HEIGHT };
 
-  d_field_rect = { mswpr::layout::BOARD_OFFSET_X,
+  d_field_rect = { mswpr::layout::BORDER_WIDTH,
                    mswpr::layout::BOARD_OFFSET_Y,
                    mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH,
                    mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT };
@@ -107,7 +107,7 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
   {
     for (size_t x = 0; x < cfg::FIELD_WIDTH; ++x)
     {
-      const auto cell_x = static_cast<int>(x * mswpr::layout::CELL_WIDTH) + mswpr::layout::BOARD_OFFSET_X;
+      const auto cell_x = static_cast<int>(x * mswpr::layout::CELL_WIDTH) + mswpr::layout::BORDER_WIDTH;
       const auto cell_y = static_cast<int>(y * mswpr::layout::CELL_HEIGHT) + mswpr::layout::BOARD_OFFSET_Y;
       const SDL_Rect dst_rect = {
         .x = cell_x, .y = cell_y, .w = mswpr::layout::CELL_WIDTH, .h = mswpr::layout::CELL_HEIGHT
@@ -170,7 +170,7 @@ void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counte
 void mswpr::game_renderer::draw_timer(const mswpr::game_timer& i_timer)
 {
   const size_t window_width =
-    static_cast<size_t>(2) * mswpr::layout::BOARD_OFFSET_X + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
+    static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t x_timer = window_width - mswpr::layout::COUNTER_OFFSET_X - mswpr::layout::COUNTER_WIDTH - 2;
   const SDL_Rect empty_display_rect = { .x = static_cast<int>(x_timer),
                                         .y = mswpr::layout::HUD_OFFSET_Y,

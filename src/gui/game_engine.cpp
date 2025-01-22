@@ -87,7 +87,7 @@ namespace mswpr
     }
     else if (d_renderer.is_inside_field(mouse_x, mouse_y))
     {
-      const auto x = static_cast<int>((mouse_x - mswpr::layout::BOARD_OFFSET_X) / mswpr::layout::CELL_WIDTH);
+      const auto x = static_cast<int>((mouse_x - mswpr::layout::BORDER_WIDTH) / mswpr::layout::CELL_WIDTH);
       const auto y = static_cast<int>((mouse_y - mswpr::layout::BOARD_OFFSET_Y) / mswpr::layout::CELL_HEIGHT);
       if (is_left_btn)
       {

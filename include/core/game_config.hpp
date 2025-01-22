@@ -15,23 +15,27 @@ namespace cfg
 
 namespace mswpr::layout
 {
+  // Sizes of game components
   inline constexpr size_t FACE_WIDTH = 26;
   inline constexpr size_t FACE_HEIGHT = 26;
-
-  inline constexpr int BOARD_OFFSET_X = 12;
-  inline constexpr int BOARD_TOP_HEIGHT = 11;
-  inline constexpr int BOARD_BOTTOM_HEIGHT = 12;
-  inline constexpr int BOARD_OFFSET_Y = 55;
-  inline constexpr size_t COUNTER_OFFSET_X = 16;
-  inline constexpr size_t HUD_OFFSET_Y = 15;
-
-  inline constexpr size_t CELL_WIDTH = 16;
-  inline constexpr size_t CELL_HEIGHT = 16;
-
   inline constexpr size_t COUNTER_WIDTH = 41;
   inline constexpr size_t COUNTER_HEIGHT = 25;
   inline constexpr size_t DIGIT_WIDTH = 11;
   inline constexpr size_t DIGIT_HEIGHT = 21;
+  inline constexpr size_t CELL_WIDTH = 16;
+  inline constexpr size_t CELL_HEIGHT = 16;
+
+  // Border dimensions
+  inline constexpr int BORDER_WIDTH = 12;
+  inline constexpr int BORDER_HEIGHT_TOP = 11;
+  inline constexpr int BORDER_HEIGHT_BOTTOM = 12;
+  inline constexpr int DIVIDER_HEIGHT = BORDER_HEIGHT_TOP;
+
+  // Element offsets
+  inline constexpr int BOARD_OFFSET_Y = 55;
+  inline constexpr size_t COUNTER_OFFSET_X = 16;
+  inline constexpr size_t COUNTER_OFFSET_Y = 4;
+  inline constexpr size_t HUD_OFFSET_Y = 15;
   inline constexpr size_t DIGIT_OFFSET = 2;
 }  // namespace mswpr::layout
 
