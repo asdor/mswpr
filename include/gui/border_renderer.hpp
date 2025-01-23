@@ -18,9 +18,9 @@ namespace mswpr
   private:
     void draw_row(std::size_t i_row_y_pos,
                   std::size_t i_row_height,
-                  mswpr::border_type i_left,
-                  std::optional<mswpr::border_type> i_middle,
-                  mswpr::border_type i_right);
+                  mswpr::border_type i_left_segment,
+                  std::optional<mswpr::border_type> i_middle_segment,
+                  mswpr::border_type i_right_segment);
 
     mswpr::texture_manager& d_texture_manager;
   };

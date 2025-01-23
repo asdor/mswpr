@@ -37,9 +37,9 @@ void mswpr::border_renderer::draw()
 
 void mswpr::border_renderer::draw_row(std::size_t i_row_y_pos,
                                       std::size_t i_row_height,
-                                      mswpr::border_type i_left,
-                                      std::optional<mswpr::border_type> i_middle,
-                                      mswpr::border_type i_right)
+                                      mswpr::border_type i_left_segment,
+                                      std::optional<mswpr::border_type> i_middle_segment,
+                                      mswpr::border_type i_right_segment)
 {
   const auto row_y_pos_int = static_cast<int>(i_row_y_pos);
   const auto row_height_int = static_cast<int>(i_row_height);
@@ -47,20 +47,20 @@ void mswpr::border_renderer::draw_row(std::size_t i_row_y_pos,
     static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
 
   const SDL_Rect left_rect = { .x = 0, .y = row_y_pos_int, .w = mswpr::layout::BORDER_WIDTH, .h = row_height_int };
-  d_texture_manager.draw(i_left, left_rect);
+  d_texture_manager.draw(i_left_segment, left_rect);
 
-  if (i_middle)
+  if (i_middle_segment)
   {
     const SDL_Rect middle_rect = { .x = mswpr::layout::BORDER_WIDTH,
                                    .y = row_y_pos_int,
                                    .w = mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH,
                                    .h = row_height_int };
-    d_texture_manager.draw(*i_middle, middle_rect);
+    d_texture_manager.draw(*i_middle_segment, middle_rect);
   }
 
   const SDL_Rect right_rect = { .x = window_width - mswpr::layout::BORDER_WIDTH,
                                 .y = row_y_pos_int,
                                 .w = mswpr::layout::BORDER_WIDTH,
                                 .h = row_height_int };
-  d_texture_manager.draw(i_right, right_rect);
+  d_texture_manager.draw(i_right_segment, right_rect);
 }
