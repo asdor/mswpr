@@ -59,6 +59,7 @@ class Sdl2MinesweeperRecipe(ConanFile):
         self.requires("gtest/1.15.0")
         self.requires("sdl/2.28.3")
         self.requires("sdl_image/2.8.2")
+        self.requires("spdlog/1.15.0")
 
     def generate(self):
         for dep in self.dependencies.values():

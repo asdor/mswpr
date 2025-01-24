@@ -20,10 +20,11 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
+find_package(spdlog REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-        SDL2::SDL2 SDL2_image::SDL2_image ${PROJECT_NAME}-core
+        SDL2::SDL2 SDL2_image::SDL2_image spdlog::spdlog ${PROJECT_NAME}-core
 )
 
 add_custom_command(

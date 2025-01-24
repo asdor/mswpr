@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include <SDL_image.h>
+#include <spdlog/spdlog.h>
 
 #include <stdexcept>
 #include <string>
@@ -94,7 +95,7 @@ namespace mswpr
     if (!texture)
     {
       const std::string err = "Failed to open " + std::string(path);
-      SDL_Log("%s, error: %s\n", err.c_str(), IMG_GetError());
+      spdlog::error("{}, error: {}", err.c_str(), IMG_GetError());
       throw std::runtime_error(err.c_str());
     }
 
