@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <spdlog/spdlog.h>
 
+#include <format>
 #include <stdexcept>
 #include <string>
 
@@ -95,9 +96,9 @@ namespace mswpr
     mswpr::sdl_texture_t texture(IMG_LoadTexture(renderer.get(), path.data()), mswpr::sdl_deleter{});
     if (!texture)
     {
-      const std::string err = "Failed to open " + std::string(path);
-      spdlog::get("engine")->error("{}, error: {}", err.c_str(), IMG_GetError());
-      throw std::runtime_error(err.c_str());
+      const auto err_msg = std::format("Failed to open {}, error: {}.", path, IMG_GetError());
+      spdlog::get("engine")->error(err_msg);
+      throw std::runtime_error(err_msg);
     }
 
     return texture;
