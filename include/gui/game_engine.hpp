@@ -1,6 +1,8 @@
 #ifndef MSWPR_GAME_ENGINE_HPP
 #define MSWPR_GAME_ENGINE_HPP
 
+#define SDL_MAIN_HANDLED
+
 #include "core/game_timer.hpp"
 #include "core/minefield.hpp"
 #include "core/mines_counter.hpp"

@@ -4,10 +4,14 @@ file(GLOB GAME_GUI_SRC
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
 
-add_executable(${PROJECT_NAME}
+add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32
     ${GAME_GUI_SRC}
     ${CMAKE_BINARY_DIR}/src/gui/game_version.cpp
 )
+
+if (MSVC)
+    target_link_options(${PROJECT_NAME} PRIVATE "/SUBSYSTEM:WINDOWS" "/ENTRY:mainCRTStartup")
+endif()
 
 set_target_properties(${PROJECT_NAME}
     PROPERTIES
