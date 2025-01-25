@@ -34,34 +34,34 @@ namespace
 
 mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : d_face_rect(), d_field_rect()
 {
-  get_mswpr_logger()->info("sdl2_minesweeper version: {}", mswpr::get_game_version());
+  spdlog::get("engine")->info("sdl2_minesweeper version: {}", mswpr::get_game_version());
 
   const Uint32 window_mode = 0;
   const size_t window_width =
     static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t window_height =
     mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
-  get_mswpr_logger()->debug("Window size: {} x {}", window_width, window_height);
+  spdlog::get("engine")->debug("Window size: {} x {}", window_width, window_height);
 
   d_window.reset(SDL_CreateWindow(
     title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
   if (!d_window)
   {
-    get_mswpr_logger()->error("Unable to create SDL_window: {}", SDL_GetError());
+    spdlog::get("engine")->error("Unable to create SDL_window: {}", SDL_GetError());
     return;
   }
 
-  get_mswpr_logger()->debug("Window created!");
+  spdlog::get("engine")->debug("Window created!");
 
   d_renderer.reset(SDL_CreateRenderer(d_window.get(), -1, 0), mswpr::sdl_deleter{});
   if (!d_renderer)
   {
-    get_mswpr_logger()->error("Unable to create SDL_Renderer: {}", SDL_GetError());
+    spdlog::get("engine")->error("Unable to create SDL_Renderer: {}", SDL_GetError());
     return;
   }
 
   SDL_SetRenderDrawColor(d_renderer.get(), 190, 190, 190, 0);
-  get_mswpr_logger()->debug("Renderer created!");
+  spdlog::get("engine")->debug("Renderer created!");
 
   d_texture_manager.init(d_renderer, "assets/winxpskin.bmp");
 

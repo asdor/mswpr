@@ -7,7 +7,11 @@
 
 namespace mswpr
 {
-  std::shared_ptr<spdlog::logger> get_mswpr_logger();
+  class logging_system
+  {
+  public:
+    logging_system();
+  };
 }
 
 #endif  // MSWPR_LOGGER_HPP

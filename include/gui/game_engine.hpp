@@ -9,6 +9,7 @@
 #include "core/states/playing_state.hpp"
 #include "core/states/state_machine.hpp"
 #include "gui/game_renderer.hpp"
+#include "gui/logger.hpp"
 
 #include <string_view>
 
@@ -28,6 +29,7 @@ namespace mswpr
   private:
     void process_click(bool is_released, int key);
 
+    mswpr::logging_system d_loggers;
     mswpr::game_renderer d_renderer;
 
     mswpr::minefield d_minefield;
