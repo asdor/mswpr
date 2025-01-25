@@ -14,7 +14,7 @@ target_include_directories(${PROJECT_NAME}-test
 )
 
 target_link_libraries(${PROJECT_NAME}-test
-    PUBLIC
+    PRIVATE
         gtest::gtest ${PROJECT_NAME}-core
 )
 

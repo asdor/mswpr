@@ -14,7 +14,7 @@ set_target_properties(${PROJECT_NAME}
         RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC
+target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/include
 )
 
@@ -23,7 +23,7 @@ find_package(SDL2_image CONFIG REQUIRED)
 find_package(spdlog REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
-    PUBLIC
+    PRIVATE
         SDL2::SDL2 SDL2_image::SDL2_image spdlog::spdlog ${PROJECT_NAME}-core
 )
 
