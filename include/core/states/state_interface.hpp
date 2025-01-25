@@ -1,7 +1,10 @@
 #ifndef MSWPR_STATE_INTERFACE_HPP
 #define MSWPR_STATE_INTERFACE_HPP
 
+#include <spdlog/fwd.h>
+
 #include <cstddef>
+#include <memory>
 
 namespace mswpr
 {
@@ -22,6 +25,8 @@ namespace mswpr
     bool change_face_on_click(bool is_released, face_type pressed, face_type released);
 
     state_machine& get_state_machine();
+
+    std::shared_ptr<spdlog::logger> get_logger();
 
   private:
     state_machine& d_st_machine;

@@ -10,6 +10,7 @@
 #include <vector>
 
 #include <gtest/gtest.h>
+#include <spdlog/spdlog.h>
 
 namespace
 {
@@ -17,6 +18,12 @@ namespace
   constexpr size_t FIELD_HEIGHT = 5;
   constexpr bool RELEASED = true;
   constexpr bool PRESSED = false;
+
+  auto init_test_logger()
+  {
+    spdlog::set_level(spdlog::level::off);
+    return spdlog::default_logger();
+  }
 }
 
 class state_machine_transition_test : public ::testing::Test
@@ -27,7 +34,7 @@ protected:
     field(FIELD_WIDTH, FIELD_HEIGHT, mocked_mines_generator.get_mines_cnt()),
     face(mswpr::face_type::SMILE_NOT_PRESSED),
     counter(field.get_bomb_cnt()),
-    st_machine(field, face, counter, timer)
+    st_machine(field, face, counter, timer, init_test_logger())
   {
     field.generate(mocked_mines_generator);
   }

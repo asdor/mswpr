@@ -1,6 +1,8 @@
 #include "core/states/state_interface.hpp"
 #include "core/states/state_machine.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace mswpr
 {
   state_interface::state_interface(state_machine& st_machine) : d_st_machine(st_machine)
@@ -10,6 +12,11 @@ namespace mswpr
   state_machine& state_interface::get_state_machine()
   {
     return d_st_machine;
+  }
+
+  std::shared_ptr<spdlog::logger> state_interface::get_logger()
+  {
+    return d_st_machine.get_logger();
   }
 
   void state_interface::on_left_face_click(bool /*is_released*/)

@@ -10,6 +10,9 @@
 #include "core/mines_counter.hpp"
 #include "core/types.hpp"
 
+#include <spdlog/fwd.h>
+
+#include <memory>
 #include <variant>
 
 namespace mswpr
@@ -20,7 +23,8 @@ namespace mswpr
     state_machine(mswpr::minefield& minefield,
                   mswpr::face_type& face_type,
                   mswpr::mines_counter& counter,
-                  mswpr::game_timer& timer);
+                  mswpr::game_timer& timer,
+                  std::shared_ptr<spdlog::logger> i_logger);
 
     template<class NewState, class... Args>
     void set_state(Args&&... args)
@@ -42,12 +46,14 @@ namespace mswpr
     void set_face(mswpr::face_type face);
     mswpr::mines_counter& get_counter();
     mswpr::game_timer& get_timer();
+    std::shared_ptr<spdlog::logger> get_logger();
 
   private:
     mswpr::minefield& d_minefield;
     mswpr::face_type& d_face_type;
     mswpr::mines_counter& d_counter;
     mswpr::game_timer& d_timer;
+    std::shared_ptr<spdlog::logger> d_logger;
 
     using state_t = std::variant<generating_state, playing_state, ending_state>;
     state_t d_state;

@@ -3,6 +3,8 @@
 #include "core/states/playing_state.hpp"
 #include "core/states/state_machine.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace mswpr
 {
   generating_state::generating_state(mswpr::state_machine& st_machine) : state_interface(st_machine)
@@ -13,6 +15,11 @@ namespace mswpr
     field.reset();
     state_machine.get_counter().reset(field.get_bomb_cnt());
     state_machine.get_timer().reset();
+
+    get_logger()->info("Generating field with width: {}, height: {}, mines: {}.",
+                       field.get_width(),
+                       field.get_height(),
+                       field.get_bomb_cnt());
   }
 
   void generating_state::on_left_face_click(bool is_released)

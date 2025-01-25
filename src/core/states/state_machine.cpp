@@ -1,15 +1,19 @@
 #include "core/states/state_machine.hpp"
 
+#include <spdlog/spdlog.h>
+
 namespace mswpr
 {
   state_machine::state_machine(mswpr::minefield& minefield,
                                mswpr::face_type& face_type,
                                mswpr::mines_counter& counter,
-                               mswpr::game_timer& timer) :
+                               mswpr::game_timer& timer,
+                               std::shared_ptr<spdlog::logger> i_logger) :
     d_minefield(minefield),
     d_face_type(face_type),
     d_counter(counter),
     d_timer(timer),
+    d_logger(i_logger),
     d_state(std::in_place_type<generating_state>, *this)
   {
   }
@@ -32,6 +36,11 @@ namespace mswpr
   mswpr::game_timer& state_machine::get_timer()
   {
     return d_timer;
+  }
+
+  std::shared_ptr<spdlog::logger> state_machine::get_logger()
+  {
+    return d_logger;
   }
 
   void state_machine::on_left_face_click(bool is_released)
