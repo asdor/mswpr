@@ -1,5 +1,6 @@
 #include "gui/texture_manager.hpp"
 #include "core/types.hpp"
+#include "gui/logger.hpp"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -95,7 +96,7 @@ namespace mswpr
     if (!texture)
     {
       const std::string err = "Failed to open " + std::string(path);
-      spdlog::error("{}, error: {}", err.c_str(), IMG_GetError());
+      get_mswpr_logger()->error("{}, error: {}", err.c_str(), IMG_GetError());
       throw std::runtime_error(err.c_str());
     }
 

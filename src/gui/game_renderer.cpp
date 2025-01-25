@@ -2,6 +2,7 @@
 #include "core/game_config.hpp"
 #include "gui/border_renderer.hpp"
 #include "gui/game_version.hpp"
+#include "gui/logger.hpp"
 
 #include <SDL.h>
 #include <spdlog/spdlog.h>
@@ -29,39 +30,38 @@ namespace
     const auto index = mswpr::enum_to<size_t>(value);
     return to_sprite<To, Base>(index);
   }
-
 }  // namespace
 
 mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : d_face_rect(), d_field_rect()
 {
-  spdlog::info("sdl2_minesweeper version: {}", mswpr::get_game_version());
+  get_mswpr_logger()->info("sdl2_minesweeper version: {}", mswpr::get_game_version());
 
   const Uint32 window_mode = 0;
   const size_t window_width =
     static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t window_height =
     mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
-  spdlog::debug("Window size: {} x {}", window_width, window_height);
+  get_mswpr_logger()->debug("Window size: {} x {}", window_width, window_height);
 
   d_window.reset(SDL_CreateWindow(
     title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
   if (!d_window)
   {
-    spdlog::error("Unable to create SDL_window: {}", SDL_GetError());
+    get_mswpr_logger()->error("Unable to create SDL_window: {}", SDL_GetError());
     return;
   }
 
-  spdlog::debug("Window created!");
+  get_mswpr_logger()->debug("Window created!");
 
   d_renderer.reset(SDL_CreateRenderer(d_window.get(), -1, 0), mswpr::sdl_deleter{});
   if (!d_renderer)
   {
-    spdlog::error("Unable to create SDL_Renderer: {}", SDL_GetError());
+    get_mswpr_logger()->error("Unable to create SDL_Renderer: {}", SDL_GetError());
     return;
   }
 
   SDL_SetRenderDrawColor(d_renderer.get(), 190, 190, 190, 0);
-  spdlog::debug("Renderer created!");
+  get_mswpr_logger()->debug("Renderer created!");
 
   d_texture_manager.init(d_renderer, "assets/winxpskin.bmp");
 
