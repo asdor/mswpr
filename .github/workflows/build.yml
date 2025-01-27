@@ -12,15 +12,31 @@ jobs:
   build:
     strategy:
       matrix:
-        build_type: [release, debug]
-        os: [ubuntu-latest, windows-latest, macos-15]
         include:
           - os: ubuntu-latest
+            build_type: release
             compiler: gcc
-          - os: windows-latest
-            compiler: msvc
-          - os: macos-15
+          - os: ubuntu-latest
+            build_type: debug
+            compiler: gcc
+          - os: ubuntu-latest
+            build_type: release
             compiler: clang
+          - os: ubuntu-latest
+            build_type: debug
+            compiler: clang
+          - os: macos-15
+            build_type: release
+            compiler: clang
+          - os: macos-15
+            build_type: debug
+            compiler: clang
+          - os: windows-latest
+            build_type: release
+            compiler: msvc
+          - os: windows-latest
+            build_type: debug
+            compiler: msvc
 
     runs-on: ${{ matrix.os }}
     name: '${{ matrix.os }}: ${{ matrix.compiler }} + ${{ matrix.build_type }}'
