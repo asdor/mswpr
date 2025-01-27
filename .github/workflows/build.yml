@@ -100,7 +100,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-gcc_debug-${{ hashFiles('conanfile.py') }}
+          key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-gcc_debug-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
         run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_COVERAGE=ON --preset gcc_debug
