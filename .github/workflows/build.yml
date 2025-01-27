@@ -45,7 +45,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-${{ env.CMAKE_PRESET_NAME }}-${{ hashFiles('conanfile.py') }}
+          key: conan-${{ env.CONAN_PIP_VERSION }}-${{ matrix.os }}-${{ env.CMAKE_PRESET_NAME }}-${{ hashFiles('conanfile.py') }}
 
       - name: Configure environment for Windows
         if: matrix.os == 'windows-latest'
