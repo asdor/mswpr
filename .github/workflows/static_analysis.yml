@@ -1,0 +1,41 @@
+name: Run static_analysis
+
+on:
+  schedule:
+    - cron: '0 18 * * 5'
+  workflow_dispatch:
+
+jobs:
+  clang_tidy:
+    name: Run clang-tidy on ubuntu-latest with clang_debug
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get specific version CMake, v3.28.1
+        uses: lukka/get-cmake@v3.28.1
+
+      - name: Check clang-tidy
+        shell: bash
+        run: |
+           clang-tidy --version
+
+      - name: Install conan
+        shell: bash
+        run: |
+           pipx install conan
+           CONAN_PIP_VERSION=$(conan version --format=json | jq -r '.version' | tr . _)
+           echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
+
+      - name: Cache Conan packages
+        uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/.conan_local_cache
+          key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-clang_debug-${{ hashFiles('conanfile.py') }}
+
+      - name: Configure CMake
+        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_CLANG_TIDY=ON --preset clang_debug
+
+      - name: Compile
+        run: cmake --build --preset clang_debug
