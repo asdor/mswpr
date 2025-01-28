@@ -24,7 +24,7 @@ namespace
     spdlog::set_level(spdlog::level::off);
     return spdlog::default_logger();
   }
-}
+}  // namespace
 
 class state_machine_transition_test : public ::testing::Test
 {

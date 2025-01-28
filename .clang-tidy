@@ -17,6 +17,7 @@ Checks: "
   -google-readability-braces-around-statements,
   -google-readability-avoid-underscore-in-googletest-name,
   modernize-*,
+  -modernize-pass-by-value,
   -modernize-use-default-member-init,
   -modernize-use-nodiscard,
   -modernize-use-trailing-return-type,
@@ -71,4 +72,4 @@ CheckOptions:
   - key: readability-braces-around-statements.ShortStatementLines
     value: 2
   - key: performance-unnecessary-value-param.AllowedTypes
-    value: mswpr::sdl_renderer_t
+    value: mswpr::sdl_renderer_t;shared_ptr
