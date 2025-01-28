@@ -2,12 +2,12 @@ name: Run static_analysis
 
 on:
   schedule:
-    - cron: '0 18 * * 5'
+    - cron: '30 18 * * 5'
   workflow_dispatch:
 
 jobs:
   clang_tidy:
-    name: Run clang-tidy on ubuntu-latest with gcc_debug
+    name: Run clang-tidy on ubuntu-latest with clang_debug
     runs-on: ubuntu-latest
 
     steps:
@@ -32,10 +32,10 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-gcc_debug-${{ hashFiles('conanfile.py') }}
+          key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-clang_debug-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
-        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_CLANG_TIDY=ON --preset gcc_debug
+        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_CLANG_TIDY=ON --preset clang_debug
 
       - name: Compile
-        run: cmake --build --preset gcc_debug
+        run: cmake --build --preset clang_debug
