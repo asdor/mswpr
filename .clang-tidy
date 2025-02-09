@@ -1,5 +1,4 @@
 ---
-# TODO: enable cppcoreguidelines-pro-type-vararg after https://github.com/asdor/mswpr/issues/15
 Checks: "
   bugprone-*,
   -bugprone-easily-swappable-parameters,
@@ -10,7 +9,6 @@ Checks: "
   -cppcoreguidelines-avoid-const-or-ref-data-members,
   -cppcoreguidelines-avoid-magic-numbers,
   -cppcoreguidelines-pro-bounds-constant-array-index,
-  -cppcoreguidelines-pro-type-vararg,
   -cppcoreguidelines-use-default-member-init,
   google-*,
   -google-explicit-constructor,
