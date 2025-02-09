@@ -119,7 +119,7 @@ jobs:
           key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-gcc_debug-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
-        run: cmake -UCONAN_COMMAND -DSDL2_MINESWEEPER_ENABLE_COVERAGE=ON --preset gcc_debug
+        run: cmake -UCONAN_COMMAND -DMSWPR_ENABLE_COVERAGE=ON --preset gcc_debug
 
       - name: Compile
         run: cmake --build --preset gcc_debug

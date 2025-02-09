@@ -4,6 +4,6 @@ namespace mswpr
 {
   const char* get_game_version() noexcept
   {
-    return "@SDL2_MINESWEEPER_VERSION@";
+    return "@MSWPR_VERSION@";
   }
 }

@@ -34,7 +34,7 @@ namespace
 
 mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : d_face_rect(), d_field_rect()
 {
-  spdlog::get("engine")->info("sdl2_minesweeper version: {}.", mswpr::get_game_version());
+  spdlog::get("engine")->info("mswpr version: {}.", mswpr::get_game_version());
 
   const Uint32 window_mode = 0;
   const size_t window_width =

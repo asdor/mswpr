@@ -1,5 +1,5 @@
 ---
-# TODO: enable cppcoreguidelines-pro-type-vararg after https://github.com/asdor/sdl2_minesweeper/issues/15
+# TODO: enable cppcoreguidelines-pro-type-vararg after https://github.com/asdor/mswpr/issues/15
 Checks: "
   bugprone-*,
   -bugprone-easily-swappable-parameters,

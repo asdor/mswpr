@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.28)
-project(sdl2_minesweeper VERSION 0.3.0 LANGUAGES CXX)
+project(mswpr VERSION 0.3.0 LANGUAGES CXX)
 
-set(SDL2_MINESWEEPER_VERSION ${CMAKE_PROJECT_VERSION})
+set(MSWPR_VERSION ${CMAKE_PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-option(SDL2_MINESWEEPER_ENABLE_COVERAGE "Enable coverage generation" OFF)
-option(SDL2_MINESWEEPER_ENABLE_CLANG_TIDY "Enable clang-tidy checks" OFF)
+option(MSWPR_ENABLE_COVERAGE "Enable coverage generation" OFF)
+option(MSWPR_ENABLE_CLANG_TIDY "Enable clang-tidy checks" OFF)
 
-if (SDL2_MINESWEEPER_ENABLE_CLANG_TIDY)
+if (MSWPR_ENABLE_CLANG_TIDY)
     include(cmake/static_analyzers.cmake)
     enable_clang_tidy()
 endif()
@@ -22,7 +22,7 @@ if(BUILD_TESTING)
      add_subdirectory(tests)
 endif()
 
-if(SDL2_MINESWEEPER_ENABLE_COVERAGE)
+if(MSWPR_ENABLE_COVERAGE)
     include(cmake/CodeCoverage.cmake)
     setup_target_for_coverage_lcov(${PROJECT_NAME}-core)
 endif()

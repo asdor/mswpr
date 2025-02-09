@@ -14,7 +14,7 @@ namespace
 mswpr::logging_system::logging_system()
 {
   const std::filesystem::path path_to_binary = SDL_GetBasePath();
-  const std::filesystem::path log_file = path_to_binary / "sdl2_minesweeper.log";
+  const std::filesystem::path log_file = path_to_binary / "mswpr.log";
   for (const auto* const logger_name : LOGGER_NAMES)
   {
     auto logger = spdlog::basic_logger_st(logger_name, log_file.string());

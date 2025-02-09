@@ -3,7 +3,7 @@ from conan.tools.files import copy
 import pathlib
 
 
-class Sdl2MinesweeperRecipe(ConanFile):
+class MswprRecipe(ConanFile):
     settings = 'os', 'compiler', 'build_type', 'arch'
     generators = 'CMakeDeps'
     default_options = {
