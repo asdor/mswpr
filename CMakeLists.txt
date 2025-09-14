@@ -46,7 +46,12 @@ install(
         [[api-ms-win-.*]]
         [[ext-ms-.*]]
         [[hvsifiletrust\.dll]]
-        [[kernel32\.dll]]
+        [[vcruntime.*\.dll]]
+        [[msvcp.*\.dll]]
+        [[setupapi\.dll]]
+        [[version\.dll]]
+        [[winmm\.dll]]
+        [[.*32\.dll]]
         [[libc\.so\..*]] [[libgcc_s\.so\..*]] [[libm\.so\..*]] [[libstdc\+\+\.so\..*]]
     POST_EXCLUDE_REGEXES
         [[.*/system32/.*\.dll]]
