@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 project(mswpr VERSION 0.3.0 LANGUAGES CXX)
 
+message(STATUS "CMake version: ${CMAKE_VERSION}")
+
 set(MSWPR_VERSION ${CMAKE_PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 20)

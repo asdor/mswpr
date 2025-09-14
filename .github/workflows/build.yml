@@ -77,6 +77,7 @@ jobs:
 
       - name: Get specific version CMake, v3.28.1
         uses: lukka/get-cmake@v3.28.1
+        if: false
 
       - name: Configure CMake
         run: cmake -UCONAN_COMMAND --preset ${{ env.CMAKE_PRESET_NAME }}
@@ -100,6 +101,7 @@ jobs:
 
       - name: Get specific version CMake, v3.28.1
         uses: lukka/get-cmake@v3.28.1
+        if: false
 
       - name: Install lcov
         run: |
