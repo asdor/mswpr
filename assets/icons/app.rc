@@ -1,0 +1,3 @@
+#define MSWPR_ICON 103
+
+MSWPR_ICON ICON DISCARDABLE "mswpr.ico"
