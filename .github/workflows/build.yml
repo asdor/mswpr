@@ -50,10 +50,15 @@ jobs:
             CMAKE_PRESET_NAME=${{ matrix.compiler }}_${{ matrix.build_type }}
             echo "CMAKE_PRESET_NAME=$CMAKE_PRESET_NAME" >> "$GITHUB_ENV"
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
       - name: Install conan
         shell: bash
         run: |
-           pipx install conan
+           uv tool install conan
            CONAN_PIP_VERSION=$(conan version --format=json | jq -r '.version' | tr . _)
            echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
 
@@ -107,10 +112,15 @@ jobs:
         run: |
            sudo apt install -y lcov
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
       - name: Install conan
         shell: bash
         run: |
-           pipx install conan
+           uv tool install conan
            CONAN_PIP_VERSION=$(conan version --format=json | jq -r '.version' | tr . _)
            echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
 
