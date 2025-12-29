@@ -30,8 +30,8 @@ jobs:
       - name: Install conan
         shell: bash
         run: |
-           uv tool install conan
-           CONAN_PIP_VERSION=$(conan version --format=json | jq -r '.version' | tr . _)
+           uv sync --locked --dev
+           CONAN_PIP_VERSION=$(uv run conan version --format=json | jq -r '.version' | tr . _)
            echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
 
       - name: Cache Conan packages
@@ -41,7 +41,7 @@ jobs:
           key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-clang_debug-${{ hashFiles('conanfile.py') }}
 
       - name: Configure CMake
-        run: cmake -UCONAN_COMMAND -DMSWPR_ENABLE_CLANG_TIDY=ON --preset clang_debug
+        run: cmake -DMSWPR_ENABLE_CLANG_TIDY=ON --preset clang_debug
 
       - name: Compile
         run: cmake --build --preset clang_debug
