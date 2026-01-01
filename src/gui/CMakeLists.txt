@@ -39,9 +39,11 @@ add_custom_command(
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/icons/mswpr.ico")
+    configure_file(${CMAKE_SOURCE_DIR}/assets/icons/app.rc.in "${CMAKE_BINARY_DIR}/assets/icons/app.rc")
+
     target_sources(${PROJECT_NAME}
         PRIVATE
-            ${CMAKE_SOURCE_DIR}/assets/icons/mswpr.ico
-            ${CMAKE_SOURCE_DIR}/assets/icons/app.rc
+            ${CMAKE_BINARY_DIR}/assets/icons/app.rc
     )
 endif()

@@ -1,0 +1,39 @@
+#include <winver.h>
+
+#define MSWPR_ICON 102
+
+#define MSWPR_VERSION @PROJECT_VERSION_MAJOR@,@PROJECT_VERSION_MINOR@,@PROJECT_VERSION_PATCH@,0
+#define MSWPR_VERSION_STR "@MSWPR_VERSION@"
+
+#if defined(DEBUG) || defined(_DEBUG)
+#define VER_DEBUG VS_FF_DEBUG
+#else
+#define VER_DEBUG 0
+#endif
+
+MSWPR_ICON ICON DISCARDABLE "@MSWPR_ICON_FILE@"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION MSWPR_VERSION
+ PRODUCTVERSION MSWPR_VERSION
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+ FILEFLAGS VER_DEBUG
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "FileDescription", "mswpr, an open source C++ clone of Minesweeper X"
+            VALUE "FileVersion",      MSWPR_VERSION_STR
+            VALUE "OriginalFilename", "mswpr.exe"
+            VALUE "ProductName",      "mswpr"
+            VALUE "ProductVersion",   MSWPR_VERSION_STR
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
