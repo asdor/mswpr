@@ -1,4 +1,4 @@
-<img src="./assets/icons/mswpr.ico" height="32"> mspwr
+<img src="./assets/do_not_ship/icons/mswpr.ico" height="32"> mspwr
 ===
 
 [![Build and test](https://github.com/asdor/mswpr/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/asdor/mswpr/actions/workflows/build.yml)

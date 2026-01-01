@@ -34,13 +34,13 @@ target_link_libraries(${PROJECT_NAME}
 add_custom_command(
     TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${PROJECT_SOURCE_DIR}/assets
+    ${PROJECT_SOURCE_DIR}/assets/ship
     ${CMAKE_BINARY_DIR}/assets
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/icons/mswpr.ico")
-    configure_file(${CMAKE_SOURCE_DIR}/assets/icons/app.rc.in "${CMAKE_BINARY_DIR}/assets/icons/app.rc")
+    set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/do_not_ship/icons/mswpr.ico")
+    configure_file(${CMAKE_SOURCE_DIR}/assets/do_not_ship/icons/app.rc.in "${CMAKE_BINARY_DIR}/assets/icons/app.rc")
 
     target_sources(${PROJECT_NAME}
         PRIVATE
