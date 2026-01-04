@@ -8,6 +8,7 @@
 #include <spdlog/spdlog.h>
 
 #include <concepts>
+#include <filesystem>
 
 namespace
 {
@@ -63,7 +64,9 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   SDL_SetRenderDrawColor(d_renderer.get(), 190, 190, 190, 0);
   spdlog::get("engine")->info("Renderer created.");
 
-  d_texture_manager.init(d_renderer, "assets/winxpskin.bmp");
+  const std::filesystem::path path_to_binary = SDL_GetBasePath();
+  const std::filesystem::path path_to_skin = path_to_binary / "assets/winxpskin.bmp";
+  d_texture_manager.init(d_renderer, path_to_skin.string());
 
   const int face_x =
     cfg::FIELD_WIDTH * mswpr::layout::CELL_WIDTH / 2 - mswpr::layout::FACE_WIDTH / 2 + mswpr::layout::BORDER_WIDTH;
