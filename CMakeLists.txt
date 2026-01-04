@@ -66,7 +66,7 @@ install(
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/assets/ship/
-    DESTINATION $<IF:$<PLATFORM_ID:Darwin>,${PROJECT_NAME}.app/Contents/Resources,${CMAKE_INSTALL_BINDIR}/assets>
+    DESTINATION $<IF:$<PLATFORM_ID:Darwin>,${PROJECT_NAME}.app/Contents/Resources,${CMAKE_INSTALL_BINDIR}>/assets
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
