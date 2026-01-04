@@ -61,6 +61,7 @@ install(
         [[^/usr/lib.*]]
     DIRECTORIES ${CONAN_RUNTIME_LIB_DIRS}
     LIBRARY DESTINATION ${CMAKE_INSTALL_BINDIR}
+    FRAMEWORK DESTINATION ${PROJECT_NAME}.app/Contents/Frameworks
 )
 
 install(
