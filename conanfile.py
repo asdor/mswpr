@@ -64,13 +64,9 @@ class MswprRecipe(ConanFile):
     def generate(self):
         for dep in self.dependencies.values():
             dst_folder = pathlib.Path(self.build_folder).parent
-            copy(
-                self, pattern='*.dll',
-                src=dep.cpp_info.bindir,
-                dst=dst_folder
-            )
-            copy(
-                self, pattern='*.so',
-                src=dep.cpp_info.bindir,
-                dst=dst_folder
-            )
+            for so_extension in ['dll', 'so', 'dylib']:
+                copy(
+                    self, pattern=f'*.{so_extension}',
+                    src=dep.cpp_info.bindir,
+                    dst=dst_folder
+                )

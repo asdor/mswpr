@@ -60,13 +60,13 @@ install(
         [[^/lib.*]]
         [[^/usr/lib.*]]
     DIRECTORIES ${CONAN_RUNTIME_LIB_DIRS}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_BINDIR}
-    FRAMEWORK DESTINATION ${PROJECT_NAME}.app/Contents/Frameworks
+    LIBRARY DESTINATION
+        $<IF:$<PLATFORM_ID:Darwin>,${PROJECT_NAME}.app/Contents/Frameworks,${CMAKE_INSTALL_BINDIR}>
 )
 
 install(
     DIRECTORY ${CMAKE_SOURCE_DIR}/assets/ship/
-    DESTINATION ${CMAKE_INSTALL_BINDIR}/assets
+    DESTINATION $<IF:$<PLATFORM_ID:Darwin>,${PROJECT_NAME}.app/Contents/Resources,${CMAKE_INSTALL_BINDIR}/assets>
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
