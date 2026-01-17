@@ -70,7 +70,8 @@ install(
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(CPACK_GENERATOR TGZ)
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "asdor")
+    set(CPACK_GENERATOR TGZ DEB)
 else()
     set(CPACK_GENERATOR ZIP)
 endif()

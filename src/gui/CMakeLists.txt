@@ -46,4 +46,15 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
         PRIVATE
             ${CMAKE_BINARY_DIR}/assets/icons/app.rc
     )
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.png")
+    set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.desktop")
+    install(
+        FILES ${MSWPR_ICON_FILE}
+        DESTINATION share/pixmaps
+    )
+    install(
+        FILES ${MSWPR_MANIFEST_FILE}
+        DESTINATION share/applications
+    )
 endif()

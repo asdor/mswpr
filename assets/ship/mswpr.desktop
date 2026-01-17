@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=mswpr
+GenericName=mswpr
+Comment=Minesweeper game
+Exec=mswpr
+Icon=mswpr
+Type=Application
+Categories=Game;Miscellaneous;
