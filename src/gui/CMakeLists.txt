@@ -62,10 +62,13 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.icns")
     set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/Info.plist")
 
-
+    set_source_files_properties(${MSWPR_ICON_FILE}
+     PROPERTIES
+        MACOSX_PACKAGE_LOCATION "Resources"
+    )
     set_target_properties(${PROJECT_NAME}
         PROPERTIES
-            MACOSX_BUNDLE_ICON_FILE ${MSWPR_ICON_FILE}
+            MACOSX_BUNDLE_ICON_FILE "mswpr.icns"
             MACOSX_BUNDLE_INFO_PLIST ${MSWPR_MANIFEST_FILE}
     )
 endif()
