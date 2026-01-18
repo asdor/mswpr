@@ -49,6 +49,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.png")
     set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.desktop")
+
     install(
         FILES ${MSWPR_ICON_FILE}
         DESTINATION share/pixmaps
@@ -56,5 +57,15 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     install(
         FILES ${MSWPR_MANIFEST_FILE}
         DESTINATION share/applications
+    )
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.icns")
+    set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/Info.plist")
+
+
+    set_target_properties(${PROJECT_NAME}
+        PROPERTIES
+            MACOSX_BUNDLE_ICON_FILE ${MSWPR_ICON_FILE}
+            MACOSX_BUNDLE_INFO_PLIST ${MSWPR_MANIFEST_FILE}
     )
 endif()
