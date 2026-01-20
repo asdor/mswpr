@@ -63,6 +63,10 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/Info.plist")
 
     target_sources(${PROJECT_NAME} PRIVATE ${MSWPR_ICON_FILE})
+    set_source_files_properties(${MSWPR_ICON_FILE}
+        PROPERTIES
+            MACOSX_PACKAGE_LOCATION "Resources"
+    )
     set_target_properties(${PROJECT_NAME}
         PROPERTIES
             INSTALL_RPATH @executable_path/../Frameworks
