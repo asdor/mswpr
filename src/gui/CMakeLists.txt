@@ -49,6 +49,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.png")
     set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.desktop")
+    configure_file("${MSWPR_MANIFEST_FILE}.in" "${MSWPR_MANIFEST_FILE}")
 
     install(
         FILES ${MSWPR_ICON_FILE}

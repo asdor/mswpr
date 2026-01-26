@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=mswpr
-GenericName=mswpr
-Comment=Minesweeper game
+GenericName=@PROJECT_NAME@
+Comment=@PROJECT_DESCRIPTION@
 Exec=mswpr
 Icon=mswpr
 Type=Application

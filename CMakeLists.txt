@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
-project(mswpr VERSION 0.4.0 LANGUAGES CXX)
+project(mswpr VERSION 0.4.0 LANGUAGES CXX DESCRIPTION "mswpr, an open source C++ clone of Minesweeper X")
 
 message(STATUS "CMake version: ${CMAKE_VERSION}")
+message(STATUS "Description: ${PROJECT_DESCRIPTION}")
 
 set(PROJECT_COMPANY_NAMESPACE "com.github.asdor")
 set(MSWPR_VERSION ${CMAKE_PROJECT_VERSION})
