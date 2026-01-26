@@ -61,6 +61,7 @@ elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(MSWPR_ICON_FILE "${CMAKE_SOURCE_DIR}/assets/ship/mswpr.icns")
     set(MSWPR_MANIFEST_FILE "${CMAKE_SOURCE_DIR}/assets/ship/Info.plist.in")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")
 
     target_sources(${PROJECT_NAME} PRIVATE ${MSWPR_ICON_FILE})
     set_source_files_properties(${MSWPR_ICON_FILE}
