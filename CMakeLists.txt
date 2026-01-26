@@ -3,6 +3,7 @@ project(mswpr VERSION 0.4.0 LANGUAGES CXX)
 
 message(STATUS "CMake version: ${CMAKE_VERSION}")
 
+set(PROJECT_COMPANY_NAMESPACE "com.github.asdor")
 set(MSWPR_VERSION ${CMAKE_PROJECT_VERSION})
 
 set(CMAKE_CXX_STANDARD 20)
