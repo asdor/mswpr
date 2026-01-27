@@ -35,11 +35,11 @@ namespace mswpr
     {
       switch (event.type)
       {
-      case SDL_KEYUP:
+      case SDL_EVENT_KEY_UP:
         is_released = true;
         [[fallthrough]];
-      case SDL_KEYDOWN:
-        switch (event.key.keysym.sym)
+      case SDL_EVENT_KEY_DOWN:
+        switch (event.key.key)
         {
         case SDLK_ESCAPE:
           d_is_running = false;
@@ -48,21 +48,15 @@ namespace mswpr
           break;
         }
         break;
-      case SDL_MOUSEBUTTONUP:
+      case SDL_EVENT_MOUSE_BUTTON_UP:
         is_released = true;
         [[fallthrough]];
-      case SDL_MOUSEBUTTONDOWN:
+      case SDL_EVENT_MOUSE_BUTTON_DOWN:
         key = event.button.button;
         break;
-      case SDL_WINDOWEVENT:
-        switch (event.window.event)
-        {
-        case SDL_WINDOWEVENT_CLOSE:
-          d_is_running = false;
-          return;
-        default:
-          break;
-        }
+      case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+        d_is_running = false;
+        return;
         break;
       default:
         break;

@@ -96,7 +96,7 @@ namespace mswpr
     mswpr::sdl_texture_t texture(IMG_LoadTexture(renderer.get(), path.data()), mswpr::sdl_deleter{});
     if (!texture)
     {
-      const auto err_msg = std::format("Failed to open {}, error: {}.", path, IMG_GetError());
+      const auto err_msg = std::format("Failed to open {}, error: {}.", path, SDL_GetError());
       spdlog::get("engine")->error(err_msg);
       throw std::runtime_error(err_msg);
     }
