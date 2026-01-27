@@ -13,7 +13,7 @@ namespace mswpr
 {
   sdl_init_t::sdl_init_t()
   {
-    if (SDL_Init(INIT_FLAG) != 0)
+    if (!SDL_Init(INIT_FLAG))
       spdlog::get("engine")->error("Unable to initialize SDL: {}.", SDL_GetError());
   }
 

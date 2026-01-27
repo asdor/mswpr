@@ -31,7 +31,7 @@ namespace mswpr
     int key = -1;
 
     SDL_Event event;
-    while (SDL_PollEvent(&event) != 0)
+    while (SDL_PollEvent(&event))
     {
       switch (event.type)
       {
