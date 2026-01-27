@@ -32,7 +32,16 @@ namespace mswpr
     void render_sprite(Enum i_index_val, SDL_Rect i_dst_rect, const std::array<SDL_Rect, N>& i_sprites_config)
     {
       const auto index = enum_to<size_t>(i_index_val);
-      SDL_RenderCopy(d_renderer.get(), d_sprite_texture.get(), &i_sprites_config[index], &i_dst_rect);
+      // TODO: #28 Maybe some smarter way to convert SDL_Rect to SDL_FRect?
+      const SDL_FRect src_rect = { static_cast<float>(i_sprites_config[index].x),
+                                   static_cast<float>(i_sprites_config[index].y),
+                                   static_cast<float>(i_sprites_config[index].w),
+                                   static_cast<float>(i_sprites_config[index].h) };
+      const SDL_FRect dst_rect = { static_cast<float>(i_dst_rect.x),
+                                   static_cast<float>(i_dst_rect.y),
+                                   static_cast<float>(i_dst_rect.w),
+                                   static_cast<float>(i_dst_rect.h) };
+      SDL_RenderTexture(d_renderer.get(), d_sprite_texture.get(), &src_rect, &dst_rect);
     }
 
     std::array<SDL_Rect, mswpr::FACES_COUNT> d_faces_config;
