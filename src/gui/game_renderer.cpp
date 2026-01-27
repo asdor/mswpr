@@ -37,15 +37,20 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 {
   spdlog::get("engine")->info("mswpr version: {}.", mswpr::get_game_version());
 
-  const Uint32 window_mode = 0;
   const size_t window_width =
     static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
   const size_t window_height =
     mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
   spdlog::get("engine")->debug("Window size: {} x {}.", window_width, window_height);
 
-  d_window.reset(SDL_CreateWindow(
-    title.data(), static_cast<int>(xpos), static_cast<int>(ypos), window_width, window_height, window_mode));
+  SDL_PropertiesID props = SDL_CreateProperties();
+  SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, title.data());
+  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_X_NUMBER, xpos);
+  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_Y_NUMBER, ypos);
+  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, window_width);
+  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER, window_height);
+  d_window.reset(SDL_CreateWindowWithProperties(props));
+  SDL_DestroyProperties(props);
   if (!d_window)
   {
     spdlog::get("engine")->error("Unable to create SDL_window: {}.", SDL_GetError());
