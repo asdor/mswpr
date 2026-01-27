@@ -22,13 +22,13 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/include
 )
 
-find_package(SDL2 CONFIG REQUIRED)
-find_package(SDL2_image CONFIG REQUIRED)
+find_package(SDL3 CONFIG REQUIRED)
+find_package(SDL3_image CONFIG REQUIRED)
 find_package(spdlog REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        SDL2::SDL2 SDL2_image::SDL2_image spdlog::spdlog ${PROJECT_NAME}-core
+        SDL3::SDL3 SDL3_image::SDL3_image spdlog::spdlog ${PROJECT_NAME}-core
 )
 
 add_custom_command(
