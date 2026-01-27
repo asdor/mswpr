@@ -54,7 +54,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 
   spdlog::get("engine")->info("Window created.");
 
-  d_renderer.reset(SDL_CreateRenderer(d_window.get(), -1, 0), mswpr::sdl_deleter{});
+  d_renderer.reset(SDL_CreateRenderer(d_window.get(), nullptr), mswpr::sdl_deleter{});
   if (!d_renderer)
   {
     spdlog::get("engine")->error("Unable to create SDL_Renderer: {}.", SDL_GetError());
