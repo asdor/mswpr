@@ -2,8 +2,8 @@
 #include "core/types.hpp"
 #include "gui/logger.hpp"
 
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 #include <spdlog/spdlog.h>
 
 #include <format>

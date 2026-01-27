@@ -2,7 +2,7 @@
 #include "core/game_config.hpp"
 #include "core/states/state_machine.hpp"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <spdlog/spdlog.h>
 
 namespace mswpr

@@ -1,7 +1,7 @@
 #include "gui/border_renderer.hpp"
 #include "core/game_config.hpp"
 
-#include <SDL_rect.h>
+#include <SDL3/SDL_rect.h>
 
 mswpr::border_renderer::border_renderer(mswpr::texture_manager& i_texture_manager) :
   d_texture_manager(i_texture_manager)

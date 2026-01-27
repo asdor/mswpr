@@ -7,7 +7,7 @@
 #include "core/types.hpp"
 #include "gui/sdl_helper.hpp"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 
 namespace mswpr
 {

@@ -1,7 +1,7 @@
 #include "gui/sdl_helper.hpp"
 #include "gui/logger.hpp"
 
-#include <SDL.h>
+#include <SDL3/SDL.h>
 #include <spdlog/spdlog.h>
 
 namespace
