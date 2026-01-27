@@ -68,9 +68,13 @@ namespace mswpr
 
   void game_engine::process_click(bool is_released, int key)
   {
-    int mouse_x = 0;
-    int mouse_y = 0;
-    SDL_GetMouseState(&mouse_x, &mouse_y);
+    // TODO: #28 Refactor float to int comparision
+    float mouse_x_float = 0;
+    float mouse_y_float = 0;
+
+    SDL_GetMouseState(&mouse_x_float, &mouse_y_float);
+    int mouse_x = static_cast<int>(mouse_x_float);
+    int mouse_y = static_cast<int>(mouse_y_float);
     const bool is_left_btn = key == SDL_BUTTON_LEFT;
     const bool is_right_btn = key == SDL_BUTTON_RIGHT;
     if (!(is_left_btn || is_right_btn))
