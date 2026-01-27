@@ -107,7 +107,8 @@ namespace mswpr
 
   void game_engine::limit_fps() const
   {
-    const auto frame_ticks = SDL_GetTicks() - d_frame_start_ticks;
+    // TODO: #28 Remove Uint32 to Uint64 comparision
+    const auto frame_ticks = static_cast<Uint32>(SDL_GetTicks() - d_frame_start_ticks);
 
     if (cfg::FRAME_DELAY > frame_ticks)
     {

@@ -41,7 +41,7 @@ namespace mswpr
 
     mswpr::state_machine d_state;
 
-    Uint32 d_frame_start_ticks;
+    Uint64 d_frame_start_ticks;
 
     bool d_is_running;
   };
