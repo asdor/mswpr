@@ -13,6 +13,7 @@ class MswprRecipe(ConanFile):
         "sdl_image/*:with_libtiff": False,
         "sdl_image/*:with_libpng": False,
         "sdl_image/*:with_libwebp": False,
+        "sdl_image/*:with_avif": False,
         'sdl/*:gpu': False,
         'sdl/*:x11': False,
         'sdl/*:alsa': False,
