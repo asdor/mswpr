@@ -62,11 +62,12 @@ class MswprRecipe(ConanFile):
         for dep in self.dependencies.values():
             dst_folder = pathlib.Path(self.build_folder).parent
             for so_extension in ['dll', 'so', 'dylib']:
-                self.output.info(
-                    f'Looking for *.{so_extension} in {dep.cpp_info.bindir}')
-                copied_files = copy(
-                    self, pattern=f'*.{so_extension}',
-                    src=dep.cpp_info.bindir,
-                    dst=dst_folder
-                )
-                self.output.info(f'Copied files: {copied_files}')
+                if dep.cpp_info.bindirs:
+                    self.output.info(
+                        f'Looking for *.{so_extension} in {dep.cpp_info.bindir}')
+                    copied_files = copy(
+                        self, pattern=f'*.{so_extension}',
+                        src=dep.cpp_info.bindir,
+                        dst=dst_folder
+                    )
+                    self.output.info(f'Copied files: {copied_files}')
