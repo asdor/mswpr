@@ -56,7 +56,7 @@
             "cacheVariables": {
                 "CONAN_COMMAND": "${sourceDir}/.venv/bin/conan",
                 "CMAKE_PROJECT_TOP_LEVEL_INCLUDES": "${sourceDir}/cmake/conan_provider.cmake",
-                "CONAN_INSTALL_ARGS": "--build=missing;-c tools.system.package_manager:mode=install"
+                "CONAN_INSTALL_ARGS": "--build=missing;-c tools.system.package_manager:tool=apt-get;-c tools.system.package_manager:mode=install;-c tools.system.package_manager:sudo=True"
             },
             "vendor": {
                 "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
