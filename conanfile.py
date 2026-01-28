@@ -50,8 +50,6 @@ class MswprRecipe(ConanFile):
 
     def config_options(self):
         self.options["sdl/*"].x11 = self.settings.os == "Linux"
-        # Work around for https://github.com/libsdl-org/SDL/issues/6226
-        # self.options["sdl/*"].opengl = self.settings.os == "Macos"
 
     def requirements(self):
         self.requires("gtest/1.15.0")
