@@ -50,7 +50,7 @@ class MswprRecipe(ConanFile):
     def config_options(self):
         self.options["sdl/*"].x11 = self.settings.os == "Linux"
         # Work around for https://github.com/libsdl-org/SDL/issues/6226
-        self.options["sdl/*"].opengl = self.settings.os == "Macos"
+        # self.options["sdl/*"].opengl = self.settings.os == "Macos"
 
     def requirements(self):
         self.requires("gtest/1.15.0")
@@ -59,15 +59,18 @@ class MswprRecipe(ConanFile):
         self.requires("spdlog/1.15.0")
 
     def generate(self):
+        if not self.settings.os == "Windows":
+            return
+
         for dep in self.dependencies.values():
-            dst_folder = pathlib.Path(self.build_folder).parent
-            for so_extension in ['dll', 'so', 'dylib']:
-                if dep.cpp_info.bindirs:
-                    self.output.info(
-                        f'Looking for *.{so_extension} in {dep.cpp_info.bindir}')
-                    copied_files = copy(
-                        self, pattern=f'*.{so_extension}',
-                        src=dep.cpp_info.bindir,
-                        dst=dst_folder
-                    )
-                    self.output.info(f'Copied files: {copied_files}')
+            if dep.cpp_info.bindirs:
+                dst_folder = pathlib.Path(self.build_folder).parent
+                extension = 'dll'
+                self.output.info(
+                    f'Looking by mask *.{extension} in bindir: {dep.cpp_info.bindir}')
+                copied_files = copy(
+                    self, pattern=f'*.{extension}',
+                    src=dep.cpp_info.bindir,
+                    dst=dst_folder
+                )
+                self.output.info(f'Copied files: {copied_files}')
