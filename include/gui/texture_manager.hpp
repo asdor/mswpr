@@ -28,19 +28,20 @@ namespace mswpr
   private:
     static mswpr::sdl_texture_t load_texture(mswpr::sdl_renderer_t renderer, std::string_view path);
 
+    static constexpr SDL_FRect rect_to_float_rect(SDL_Rect i_rect) noexcept
+    {
+      return { static_cast<float>(i_rect.x),
+               static_cast<float>(i_rect.y),
+               static_cast<float>(i_rect.w),
+               static_cast<float>(i_rect.h) };
+    }
+
     template<mswpr::Enumeration Enum, size_t N>
     void render_sprite(Enum i_index_val, SDL_Rect i_dst_rect, const std::array<SDL_Rect, N>& i_sprites_config)
     {
       const auto index = enum_to<size_t>(i_index_val);
-      // TODO: #28 Maybe some smarter way to convert SDL_Rect to SDL_FRect?
-      const SDL_FRect src_rect = { static_cast<float>(i_sprites_config[index].x),
-                                   static_cast<float>(i_sprites_config[index].y),
-                                   static_cast<float>(i_sprites_config[index].w),
-                                   static_cast<float>(i_sprites_config[index].h) };
-      const SDL_FRect dst_rect = { static_cast<float>(i_dst_rect.x),
-                                   static_cast<float>(i_dst_rect.y),
-                                   static_cast<float>(i_dst_rect.w),
-                                   static_cast<float>(i_dst_rect.h) };
+      const auto src_rect = rect_to_float_rect(i_sprites_config[index]);
+      const auto dst_rect = rect_to_float_rect(i_dst_rect);
       SDL_RenderTexture(d_renderer.get(), d_sprite_texture.get(), &src_rect, &dst_rect);
     }
 
