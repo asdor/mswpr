@@ -101,6 +101,9 @@ namespace mswpr
       throw std::runtime_error(err_msg);
     }
 
+    // Issue with subpixel rendering: https://github.com/libsdl-org/SDL/issues/13329
+    SDL_SetTextureScaleMode(texture.get(), SDL_SCALEMODE_NEAREST);
+
     return texture;
   }
 
