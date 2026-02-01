@@ -3,6 +3,7 @@
 #include "gui/border_renderer.hpp"
 #include "gui/game_version.hpp"
 #include "gui/logger.hpp"
+#include "gui/sdl_helper.hpp"
 
 #include <SDL3/SDL.h>
 #include <spdlog/spdlog.h>
@@ -31,6 +32,25 @@ namespace
     const auto index = mswpr::enum_to<size_t>(value);
     return to_sprite<To, Base>(index);
   }
+
+  mswpr::sdl_window_t init_window(std::string_view title,
+                                  size_t xpos,
+                                  size_t ypos,
+                                  size_t window_width,
+                                  size_t window_height)
+  {
+    const SDL_PropertiesID props = SDL_CreateProperties();
+    SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, title.data());
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_X_NUMBER, static_cast<int64_t>(xpos));
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_Y_NUMBER, static_cast<int64_t>(ypos));
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, window_width);
+    SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER, window_height);
+
+    auto* window = SDL_CreateWindowWithProperties(props);
+    SDL_DestroyProperties(props);
+
+    return mswpr::sdl_window_t(window, mswpr::sdl_deleter{});
+  }
 }  // namespace
 
 mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t ypos) : d_face_rect(), d_field_rect()
@@ -43,14 +63,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
     mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
   spdlog::get("engine")->debug("Window size: {} x {}.", window_width, window_height);
 
-  const SDL_PropertiesID props = SDL_CreateProperties();
-  SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, title.data());
-  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_X_NUMBER, static_cast<int64_t>(xpos));
-  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_Y_NUMBER, static_cast<int64_t>(ypos));
-  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, window_width);
-  SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER, window_height);
-  d_window.reset(SDL_CreateWindowWithProperties(props));
-  SDL_DestroyProperties(props);
+  d_window = std::move(init_window(title, xpos, ypos, window_width, window_height));
   if (!d_window)
   {
     spdlog::get("engine")->error("Unable to create SDL_window: {}.", SDL_GetError());
