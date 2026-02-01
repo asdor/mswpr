@@ -33,12 +33,14 @@ namespace
     return to_sprite<To, Base>(index);
   }
 
-  mswpr::sdl_window_t init_window(std::string_view title,
-                                  size_t xpos,
-                                  size_t ypos,
-                                  size_t window_width,
-                                  size_t window_height)
+  mswpr::sdl_window_t init_window(std::string_view title, size_t xpos, size_t ypos)
   {
+    const size_t window_width =
+      static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
+    const size_t window_height =
+      mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
+    spdlog::get("engine")->debug("Window size: {} x {}.", window_width, window_height);
+
     const SDL_PropertiesID props = SDL_CreateProperties();
     SDL_SetStringProperty(props, SDL_PROP_WINDOW_CREATE_TITLE_STRING, title.data());
     SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_X_NUMBER, static_cast<int64_t>(xpos));
@@ -58,13 +60,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 {
   spdlog::get("engine")->info("mswpr version: {}.", mswpr::get_game_version());
 
-  const size_t window_width =
-    static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
-  const size_t window_height =
-    mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
-  spdlog::get("engine")->debug("Window size: {} x {}.", window_width, window_height);
-
-  d_window = std::move(init_window(title, xpos, ypos, window_width, window_height));
+  d_window = std::move(init_window(title, xpos, ypos));
   if (!d_window)
   {
     spdlog::get("engine")->error("Unable to create SDL_window: {}.", SDL_GetError());
