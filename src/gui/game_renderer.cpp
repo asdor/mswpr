@@ -60,7 +60,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 {
   spdlog::get("engine")->info("mswpr version: {}.", mswpr::get_game_version());
 
-  d_window = std::move(init_window(title, xpos, ypos));
+  d_window = init_window(title, xpos, ypos);
   if (!d_window)
   {
     spdlog::get("engine")->error("Unable to create SDL_window: {}.", SDL_GetError());
