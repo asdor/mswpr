@@ -45,6 +45,7 @@ namespace
     SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_Y_NUMBER, static_cast<int64_t>(ypos));
     SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER, window_width);
     SDL_SetNumberProperty(props, SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER, window_height);
+    SDL_SetBooleanProperty(props, SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN, true);
 
     auto* window = SDL_CreateWindowWithProperties(props);
     SDL_DestroyProperties(props);
@@ -94,6 +95,12 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
                    mswpr::layout::BOARD_OFFSET_Y,
                    mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH,
                    mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT };
+
+  if (!SDL_ShowWindow(d_window.get()))
+  {
+    spdlog::get("engine")->error("Unable to show SDL_Window: {}.", SDL_GetError());
+    return;
+  }
 }
 
 bool mswpr::game_renderer::is_inside_face(int mouse_x, int mouse_y)
