@@ -1,0 +1,27 @@
+name: 'Setup Conan'
+description: 'Install Conan and cache Conan packages'
+inputs:
+  cmake-preset-name:
+    description: 'CMake preset name'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+      with:
+        enable-cache: true
+
+    - name: Install conan
+      shell: bash
+      run: |
+          uv sync --locked --dev
+          CONAN_PIP_VERSION=$(uv run conan version --format=json | jq -r '.version' | tr . _)
+          echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
+
+    - name: Cache Conan packages
+      uses: actions/cache@v4
+      with:
+        path: ${{ github.workspace }}/.conan_local_cache
+        key: conan-${{ env.CONAN_PIP_VERSION }}-${{ runner.os }}-${{ inputs.cmake-preset-name }}-${{ hashFiles('conanfile.py') }}

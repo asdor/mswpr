@@ -22,23 +22,9 @@ jobs:
         run: |
            clang-tidy --version
 
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
+      - uses: ./.github/actions/setup_conan
         with:
-          enable-cache: true
-
-      - name: Install conan
-        shell: bash
-        run: |
-           uv sync --locked --dev
-           CONAN_PIP_VERSION=$(uv run conan version --format=json | jq -r '.version' | tr . _)
-           echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
-
-      - name: Cache Conan packages
-        uses: actions/cache/restore@v4
-        with:
-          path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-ubuntu-latest-clang_debug-${{ hashFiles('conanfile.py') }}
+          cmake-preset-name: ubuntu-latest-clang_debug
 
       - name: Configure CMake
         run: cmake -DMSWPR_ENABLE_CLANG_TIDY=ON --preset clang_debug

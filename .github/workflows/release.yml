@@ -39,22 +39,10 @@ jobs:
         run: |
             CMAKE_PRESET_NAME=${{ matrix.compiler }}_${{ matrix.build_type }}
             echo "CMAKE_PRESET_NAME=$CMAKE_PRESET_NAME" >> "$GITHUB_ENV"
-      - name: Install uv
-        uses: astral-sh/setup-uv@v7
-        with:
-          enable-cache: true
 
-      - name: Install conan
-        shell: bash
-        run: |
-           uv sync --locked --dev
-           CONAN_PIP_VERSION=$(uv run conan version --format=json | jq -r '.version' | tr . _)
-           echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
-      - name: Cache Conan packages
-        uses: actions/cache@v4
+      - uses: ./.github/actions/setup_conan
         with:
-          path: ${{ github.workspace }}/.conan_local_cache
-          key: conan-${{ env.CONAN_PIP_VERSION }}-${{ matrix.os }}-${{ env.CMAKE_PRESET_NAME }}-${{ hashFiles('conanfile.py') }}
+          cmake-preset-name: ${{ env.CMAKE_PRESET_NAME }}
 
       - name: Configure environment for Windows
         if: matrix.os == 'windows-latest'
