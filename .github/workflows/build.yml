@@ -42,7 +42,7 @@ jobs:
     name: '${{ matrix.os }}: ${{ matrix.compiler }} + ${{ matrix.build_type }}'
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Select CMake preset name
         shell: bash
@@ -89,7 +89,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install lcov
         run: |
