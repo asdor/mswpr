@@ -70,10 +70,6 @@ jobs:
           export CC=$(brew --prefix llvm@18)/bin/clang
           export CXX=$(brew --prefix llvm@18)/bin/clang++
 
-      - name: Get specific version CMake, v3.28.1
-        uses: lukka/get-cmake@v3.28.1
-        if: false
-
       - name: Configure CMake
         run: cmake --preset ${{ env.CMAKE_PRESET_NAME }}
 
@@ -93,10 +89,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-
-      - name: Get specific version CMake, v3.28.1
-        uses: lukka/get-cmake@v3.28.1
-        if: false
 
       - name: Install lcov
         run: |

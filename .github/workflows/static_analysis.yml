@@ -13,10 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Get specific version CMake, v3.28.1
-        uses: lukka/get-cmake@v3.28.1
-        if: false
-
       - name: Check clang-tidy
         shell: bash
         run: |
