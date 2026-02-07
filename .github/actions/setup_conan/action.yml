@@ -24,4 +24,4 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ github.workspace }}/.conan_local_cache
-        key: conan-${{ env.CONAN_PIP_VERSION }}-${{ runner.os }}-${{ inputs.cmake-preset-name }}-${{ hashFiles('conanfile.py') }}
+        key: conan-${{ env.CONAN_PIP_VERSION }}-${{ runner.os }}-${{ runner.arch }}-${{ inputs.cmake-preset-name }}-${{ hashFiles('conanfile.py') }}
