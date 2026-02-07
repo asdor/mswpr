@@ -96,7 +96,7 @@ jobs:
 
       - uses: ./.github/actions/setup_conan
         with:
-          cmake-preset-name: ubuntu-latest-gcc_debug
+          cmake-preset-name: gcc_debug
 
       - name: Configure CMake
         run: cmake -DMSWPR_ENABLE_COVERAGE=ON --preset gcc_debug

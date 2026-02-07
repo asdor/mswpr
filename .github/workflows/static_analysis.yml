@@ -20,7 +20,7 @@ jobs:
 
       - uses: ./.github/actions/setup_conan
         with:
-          cmake-preset-name: ubuntu-latest-clang_debug
+          cmake-preset-name: clang_debug
 
       - name: Configure CMake
         run: cmake -DMSWPR_ENABLE_CLANG_TIDY=ON --preset clang_debug
