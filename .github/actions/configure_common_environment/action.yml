@@ -1,0 +1,18 @@
+name: 'Configure common environment'
+description: 'Configure environment for current OS'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure environment for Windows
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Configure environment for MacOS
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        echo "$(brew --prefix llvm@18)/bin" >> $GITHUB_PATH
+        export PATH=$(brew --prefix llvm@18)/bin:$PATH
+        export CC=$(brew --prefix llvm@18)/bin/clang
+        export CXX=$(brew --prefix llvm@18)/bin/clang++

@@ -45,17 +45,9 @@ jobs:
         with:
           cmake-preset-name: ${{ env.CMAKE_PRESET_NAME }}
 
-      - name: Configure environment for Windows
-        if: matrix.os == 'windows-latest'
-        uses: ilammy/msvc-dev-cmd@v1
+      - name: Configure environment for current OS
+        uses: ./.github/actions/configure_common_environment
 
-      - name: Configure environment for MacOS
-        if: matrix.os == 'macos-15'
-        run: |
-          echo "$(brew --prefix llvm@18)/bin" >> $GITHUB_PATH
-          export PATH=$(brew --prefix llvm@18)/bin:$PATH
-          export CC=$(brew --prefix llvm@18)/bin/clang
-          export CXX=$(brew --prefix llvm@18)/bin/clang++
       - name: Configure CMake
         run: cmake -DBUILD_TESTING=OFF --preset ${{ env.CMAKE_PRESET_NAME }}
 
