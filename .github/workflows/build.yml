@@ -50,7 +50,8 @@ jobs:
             CMAKE_PRESET_NAME=${{ matrix.compiler }}_${{ matrix.build_type }}
             echo "CMAKE_PRESET_NAME=$CMAKE_PRESET_NAME" >> "$GITHUB_ENV"
 
-      - uses: ./.github/actions/setup_conan
+      - name: Setup conan
+        uses: ./.github/actions/setup_conan
         with:
           cmake-preset-name: ${{ env.CMAKE_PRESET_NAME }}
 
@@ -94,7 +95,8 @@ jobs:
         run: |
            sudo apt install -y lcov
 
-      - uses: ./.github/actions/setup_conan
+      - name: Setup conan
+        uses: ./.github/actions/setup_conan
         with:
           cmake-preset-name: gcc_debug
 

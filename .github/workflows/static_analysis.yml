@@ -18,7 +18,8 @@ jobs:
         run: |
            clang-tidy --version
 
-      - uses: ./.github/actions/setup_conan
+      - name: Setup conan
+        uses: ./.github/actions/setup_conan
         with:
           cmake-preset-name: clang_debug
 
