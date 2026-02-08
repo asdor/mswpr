@@ -39,7 +39,7 @@ jobs:
       - name: Setup conan
         uses: ./.github/actions/setup_conan
         with:
-          cmake-preset-name: ${{ env.CMAKE_PRESET_NAME }}
+          preset-name: ${{ env.CMAKE_PRESET_NAME }}
 
       - name: Configure environment for current OS
         uses: ./.github/actions/configure_common_environment

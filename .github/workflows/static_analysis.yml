@@ -21,7 +21,7 @@ jobs:
       - name: Setup conan
         uses: ./.github/actions/setup_conan
         with:
-          cmake-preset-name: clang_debug
+          preset-name: clang_debug
 
       - name: Build with CMake
         uses: ./.github/actions/run_cmake
