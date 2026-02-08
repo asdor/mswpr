@@ -88,7 +88,8 @@ jobs:
         with:
           preset-name: gcc_debug
           configure-options: '-DMSWPR_ENABLE_COVERAGE=ON'
-          custom-target: merge-coverage
+          run-coverage: true
+          run-tests: false
 
       - name: Upload code coverage info
         uses: codecov/codecov-action@v5

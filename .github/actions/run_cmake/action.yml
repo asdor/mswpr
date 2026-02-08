@@ -8,10 +8,10 @@ inputs:
     description: 'Optional configuration options for CMake'
     required: false
     default: ''
-  custom-target:
-    description: 'Optional build target for CMake'
+  run-coverage:
+    description: 'Whether to generate coverage report'
     required: false
-    default: ''
+    default: false
   run-tests:
     description: 'Whether to run tests with CTest'
     required: false
@@ -31,12 +31,12 @@ runs:
 
     - name: Compile
       shell: bash
-      run: |
-        if [[ -n "${{ inputs.custom-target }}" ]]; then
-          cmake --build --preset "${{ inputs.preset-name }}" --target ${{ inputs.custom-target }}
-        else
-          cmake --build --preset "${{ inputs.preset-name }}"
-        fi
+      run: cmake --build --preset ${{ inputs.preset-name }}
+
+    - name: Run coverage task
+      if: inputs.run-coverage == 'true'
+      shell: bash
+      run: cmake --build --preset ${{ inputs.preset-name }} --target merge-coverage
 
     - name: Run tests
       if: inputs.run-tests == 'true'
