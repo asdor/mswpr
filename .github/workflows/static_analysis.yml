@@ -23,8 +23,9 @@ jobs:
         with:
           cmake-preset-name: clang_debug
 
-      - name: Configure CMake
-        run: cmake -DMSWPR_ENABLE_CLANG_TIDY=ON --preset clang_debug
-
-      - name: Compile
-        run: cmake --build --preset clang_debug
+      - name: Build with CMake
+        uses: ./.github/actions/run_cmake
+        with:
+          preset-name: clang_debug
+          configure-options: '-DMSWPR_ENABLE_CLANG_TIDY=ON'
+          run-tests: false

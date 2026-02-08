@@ -48,14 +48,13 @@ jobs:
       - name: Configure environment for current OS
         uses: ./.github/actions/configure_common_environment
 
-      - name: Configure CMake
-        run: cmake -DBUILD_TESTING=OFF --preset ${{ env.CMAKE_PRESET_NAME }}
-
-      - name: Compile
-        run: cmake --build --preset ${{ env.CMAKE_PRESET_NAME }}
-
-      - name: Pack
-        run: cpack --preset ${{ env.CMAKE_PRESET_NAME }}
+      - name: Build with CMake
+        uses: ./.github/actions/run_cmake
+        with:
+          preset-name: ${{ env.CMAKE_PRESET_NAME }}
+          configure-options: '-DBUILD_TESTING=OFF'
+          run-tests: false
+          run-packaging: true
 
       - name: Upload the built artifact
         if: matrix.build_type == 'release'

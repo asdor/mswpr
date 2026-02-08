@@ -1,0 +1,49 @@
+name: 'Build application withCMake'
+description: 'Common CMake CI steps'
+inputs:
+  preset-name:
+    description: 'CMake preset name'
+    required: true
+  configure-options:
+    description: 'Optional configuration options for CMake'
+    required: false
+    default: ''
+  custom-target:
+    description: 'Optional build target for CMake'
+    required: false
+    default: ''
+  run-tests:
+    description: 'Whether to run tests with CTest'
+    required: false
+    default: true
+  run-packaging:
+    description: 'Whether to package with CPack'
+    required: false
+    default: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure CMake
+      shell: bash
+      run: |
+        cmake ${{ inputs.configure-options }} --preset ${{ inputs.preset-name }}
+
+    - name: Compile
+      shell: bash
+      run: |
+        if [[ -n "${{ inputs.custom-target }}" ]]; then
+          cmake --build --preset "${{ inputs.preset-name }}" --target ${{ inputs.custom-target }}
+        else
+          cmake --build --preset "${{ inputs.preset-name }}"
+        fi
+
+    - name: Run tests
+      if: inputs.run-tests == 'true'
+      shell: bash
+      run: ctest --preset ${{ inputs.preset-name }}
+
+    - name: Pack
+      if: inputs.run-packaging == 'true'
+      shell: bash
+      run: cpack --preset ${{ inputs.preset-name }}

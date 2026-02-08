@@ -58,14 +58,10 @@ jobs:
       - name: Configure environment for current OS
         uses: ./.github/actions/configure_common_environment
 
-      - name: Configure CMake
-        run: cmake --preset ${{ env.CMAKE_PRESET_NAME }}
-
-      - name: Compile
-        run: cmake --build --preset ${{ env.CMAKE_PRESET_NAME }}
-
-      - name: Run tests
-        run: ctest --preset ${{ env.CMAKE_PRESET_NAME }}
+      - name: Build with CMake
+        uses: ./.github/actions/run_cmake
+        with:
+          preset-name: ${{ env.CMAKE_PRESET_NAME }}
 
 #------------------------------------------------------------------------------
 # Build with coverage
@@ -87,14 +83,12 @@ jobs:
         with:
           cmake-preset-name: gcc_debug
 
-      - name: Configure CMake
-        run: cmake -DMSWPR_ENABLE_COVERAGE=ON --preset gcc_debug
-
-      - name: Compile
-        run: cmake --build --preset gcc_debug
-
-      - name: Run coverage task
-        run: cmake --build --preset gcc_debug --target merge-coverage
+      - name: Build with CMake
+        uses: ./.github/actions/run_cmake
+        with:
+          preset-name: gcc_debug
+          configure-options: '-DMSWPR_ENABLE_COVERAGE=ON'
+          custom-target: merge-coverage
 
       - name: Upload code coverage info
         uses: codecov/codecov-action@v5
