@@ -3,6 +3,7 @@ name: Build and test
 on:
   schedule:
     - cron: '0 18 * * 5'
+  pull_request:
   push:
     branches:
         - main
