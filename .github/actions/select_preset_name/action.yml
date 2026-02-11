@@ -1,0 +1,23 @@
+name: 'Select preset name'
+description: 'Select CMake preset name'
+inputs:
+  compiler:
+    description: 'Compiler name'
+    required: true
+  build-type:
+    description: 'Build type'
+    required: true
+outputs:
+  cmake-preset-name:
+    description: "Selected CMake preset name"
+    value: ${{ steps.select-preset.outputs.cmake-preset-name }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Select CMake preset name
+      id: select-preset
+      shell: bash
+      run: |
+          CMAKE_PRESET_NAME=${{ inputs.compiler }}_${{ inputs.build-type }}
+          echo "cmake-preset-name=$CMAKE_PRESET_NAME" >> $GITHUB_OUTPUT

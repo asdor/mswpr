@@ -31,15 +31,16 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Select CMake preset name
-        shell: bash
-        run: |
-            CMAKE_PRESET_NAME=${{ matrix.compiler }}_${{ matrix.build_type }}
-            echo "CMAKE_PRESET_NAME=$CMAKE_PRESET_NAME" >> "$GITHUB_ENV"
+        id: preset-name
+        uses: ./.github/actions/select_preset_name
+        with:
+          compiler: ${{ matrix.compiler }}
+          build-type: ${{ matrix.build_type }}
 
       - name: Setup conan
         uses: ./.github/actions/setup_conan
         with:
-          preset-name: ${{ env.CMAKE_PRESET_NAME }}
+          preset-name: ${{ steps.preset-name.outputs.cmake-preset-name }}
 
       - name: Configure environment for current OS
         uses: ./.github/actions/configure_common_environment
@@ -47,7 +48,7 @@ jobs:
       - name: Build with CMake
         uses: ./.github/actions/run_cmake
         with:
-          preset-name: ${{ env.CMAKE_PRESET_NAME }}
+          preset-name: ${{ steps.preset-name.outputs.cmake-preset-name }}
           configure-options: '-DBUILD_TESTING=OFF'
           run-tests: false
           run-packaging: true
