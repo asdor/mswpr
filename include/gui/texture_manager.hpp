@@ -8,6 +8,7 @@
 #include "gui/sdl_helper.hpp"
 
 #include <SDL3/SDL.h>
+#include <spdlog/spdlog.h>
 
 namespace mswpr
 {
@@ -42,7 +43,12 @@ namespace mswpr
       const auto index = enum_to<size_t>(i_index_val);
       const auto src_rect = rect_to_float_rect(i_sprites_config[index]);
       const auto dst_rect = rect_to_float_rect(i_dst_rect);
-      SDL_RenderTexture(d_renderer.get(), d_sprite_texture.get(), &src_rect, &dst_rect);
+      if (!SDL_RenderTexture(d_renderer.get(), d_sprite_texture.get(), &src_rect, &dst_rect))
+      {
+        const auto err_msg = std::format("Failed to render texture, error: {}.", SDL_GetError());
+        spdlog::get("engine")->error(err_msg);
+        throw std::runtime_error(err_msg);
+      }
     }
 
     std::array<SDL_Rect, mswpr::FACES_COUNT> d_faces_config;
