@@ -60,11 +60,12 @@ class MswprRecipe(ConanFile):
 
     def config_options(self):
         self.options["sdl/*"].x11 = self.settings.os == "Linux"
+        self.options["sdl/*"].xinput = self.settings.os == "Linux"
 
     def requirements(self):
         self.requires("gtest/1.17.0")
-        self.requires("sdl/3.2.20")
-        self.requires("sdl_image/3.2.4")
+        self.requires("sdl/3.4.0")
+        self.requires("sdl_image/3.4.0")
         self.requires("spdlog/1.17.0")
 
     def generate(self):
