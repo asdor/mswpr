@@ -12,10 +12,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(MSWPR_ENABLE_COVERAGE "Enable coverage generation" OFF)
 option(MSWPR_ENABLE_CLANG_TIDY "Enable clang-tidy checks" OFF)
+option(MSWPR_ENABLE_LTO "Enable LTO" ON)
 
 if (MSWPR_ENABLE_CLANG_TIDY)
     include(cmake/static_analyzers.cmake)
     enable_clang_tidy()
+endif()
+
+if (MSWPR_ENABLE_LTO)
+    include(cmake/lto_support.cmake)
+    enable_ipo_for_mswpr()
 endif()
 
 add_subdirectory(src/core)
