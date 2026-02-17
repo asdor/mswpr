@@ -29,6 +29,7 @@ class MswprRecipe(ConanFile):
         "sdl/*:power": False,
         "sdl/*:sensor": False,
         "sdl/*:dialog": False,
+        "sdl/*:tray": False,
         # Audio
         # Linux only
         "sdl/*:alsa": False,
