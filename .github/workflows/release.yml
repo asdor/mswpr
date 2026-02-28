@@ -55,7 +55,7 @@ jobs:
 
       - name: Upload the built artifact
         if: matrix.build_type == 'release'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: mswpr-${{ matrix.os }}-${{ matrix.compiler }}
           path: |
