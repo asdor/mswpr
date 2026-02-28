@@ -63,7 +63,7 @@ wheels = [
 
 [[package]]
 name = "conan"
-version = "2.25.2"
+version = "2.26.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama" },
@@ -76,7 +76,7 @@ dependencies = [
     { name = "requests" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/02/2e/a6539fbf525dafd73e7a43df6a678da7bc456ca1ef0fe646cf5afbe844ed/conan-2.25.2.tar.gz", hash = "sha256:3a5214a095cee5c3d21ed45ea31139705703e49fa9c4bb45c4c73f5ee17a1031", size = 561890, upload-time = "2026-02-04T09:06:43.619Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/8b/d0/8a33f18c9010f78bb9c57772fd0cfd2ee31606017462543524ea6ac97819/conan-2.26.1.tar.gz", hash = "sha256:5692b1d8badd516878354e9e6134f4df65cf119285b86652e9f3eb810e20838f", size = 567974, upload-time = "2026-02-27T13:16:59.81Z" }
 
 [[package]]
 name = "distro"
