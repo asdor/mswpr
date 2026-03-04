@@ -1,11 +1,11 @@
 #ifndef MSWPR_MINES_COUNTER_RENDERER_HPP
 #define MSWPR_MINES_COUNTER_RENDERER_HPP
 
+#include "core/fwd.hpp"
+#include "gui/fwd.hpp"
+
 namespace mswpr
 {
-  class mines_counter;
-  class texture_manager;
-
   class mines_counter_renderer
   {
   public:

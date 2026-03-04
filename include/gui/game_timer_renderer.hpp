@@ -1,11 +1,11 @@
 #ifndef MSWPR_GAME_TIMER_RENDERER_HPP
 #define MSWPR_GAME_TIMER_RENDERER_HPP
 
+#include "core/fwd.hpp"
+#include "gui/fwd.hpp"
+
 namespace mswpr
 {
-  class game_timer;
-  class texture_manager;
-
   class game_timer_renderer
   {
   public:

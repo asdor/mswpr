@@ -1,11 +1,11 @@
 #ifndef MSWPR_MINEFIELD_RENDERER_HPP
 #define MSWPR_MINEFIELD_RENDERER_HPP
 
+#include "core/fwd.hpp"
+#include "gui/fwd.hpp"
+
 namespace mswpr
 {
-  class minefield;
-  class texture_manager;
-
   class minefield_renderer
   {
   public:
