@@ -26,7 +26,6 @@ namespace mswpr
 
   private:
     void draw_field(const mswpr::minefield& field);
-    void draw_mines_counter(const mswpr::mines_counter& counter);
     void draw_timer(const mswpr::game_timer& i_timer);
 
     mswpr::sdl_init_t d_sdl_init;

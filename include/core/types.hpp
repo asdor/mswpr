@@ -1,6 +1,7 @@
 #ifndef MSWPR_TYPES_HPP
 #define MSWPR_TYPES_HPP
 
+#include <concepts>
 #include <cstddef>
 #include <type_traits>
 
@@ -97,6 +98,20 @@ namespace mswpr
 
   inline constexpr std::size_t BORDER_TYPE_COUNT = enum_to<std::size_t>(border_type::BORDER_TYPE_COUNT);
 
+  template<mswpr::Enumeration To, To Base, std::integral Index>
+  constexpr To to_sprite(Index index_integral)
+  {
+    const auto index = static_cast<size_t>(index_integral);
+    constexpr auto BASE_INDEX = mswpr::enum_to<size_t>(Base);
+    return mswpr::to_enum<To>(BASE_INDEX + index);
+  }
+
+  template<mswpr::Enumeration To, To Base, mswpr::Enumeration From>
+  constexpr To to_sprite(From value)
+  {
+    const auto index = mswpr::enum_to<size_t>(value);
+    return to_sprite<To, Base>(index);
+  }
 }  // namespace mswpr
 
 #endif  // MSWPR_TYPES_HPP

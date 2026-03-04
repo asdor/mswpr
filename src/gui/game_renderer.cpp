@@ -3,12 +3,12 @@
 #include "gui/border_renderer.hpp"
 #include "gui/game_version.hpp"
 #include "gui/logger.hpp"
+#include "gui/mines_counter_renderer.hpp"
 #include "gui/sdl_helper.hpp"
 
 #include <SDL3/SDL.h>
 #include <spdlog/spdlog.h>
 
-#include <concepts>
 #include <filesystem>
 
 namespace
@@ -16,21 +16,6 @@ namespace
   bool is_inside(const SDL_Rect& rect, int x, int y)
   {
     return x >= rect.x && x < rect.x + rect.w && y >= rect.y && y < rect.y + rect.h;
-  }
-
-  template<mswpr::Enumeration To, To Base, std::integral Index>
-  constexpr To to_sprite(Index index_integral)
-  {
-    const auto index = static_cast<size_t>(index_integral);
-    constexpr auto BASE_INDEX = mswpr::enum_to<size_t>(Base);
-    return mswpr::to_enum<To>(BASE_INDEX + index);
-  }
-
-  template<mswpr::Enumeration To, To Base, mswpr::Enumeration From>
-  constexpr To to_sprite(From value)
-  {
-    const auto index = mswpr::enum_to<size_t>(value);
-    return to_sprite<To, Base>(index);
   }
 
   mswpr::sdl_window_t init_window(std::string_view title, size_t xpos, size_t ypos)
@@ -116,7 +101,10 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
 {
   SDL_RenderClear(d_renderer.get());
 
-  draw_mines_counter(counter);
+  // draw_mines_counter(counter);
+  mswpr::mines_counter_renderer counter_renderer(d_texture_manager);
+  counter_renderer.draw(counter);
+
   draw_timer(i_timer);
   d_texture_manager.draw(face, d_face_rect);
   draw_field(field);
@@ -164,31 +152,6 @@ void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
 
       d_texture_manager.draw(sprite, dst_rect);
     }
-  }
-}
-
-void mswpr::game_renderer::draw_mines_counter(const mswpr::mines_counter& counter)
-{
-  const SDL_Rect empty_display_rect = { .x = mswpr::layout::COUNTER_OFFSET_X,
-                                        .y = mswpr::layout::HUD_OFFSET_Y,
-                                        .w = mswpr::layout::COUNTER_WIDTH,
-                                        .h = mswpr::layout::COUNTER_HEIGHT };
-  d_texture_manager.draw(mswpr::display_digits_type::EMPTY_DISPLAY, empty_display_rect);
-
-  const auto digits = counter.value_to_str();
-
-  for (size_t i = 0; i < digits.size(); ++i)
-  {
-    const size_t rect_x = mswpr::layout::COUNTER_OFFSET_X + mswpr::layout::DIGIT_OFFSET +
-                          (mswpr::layout::DIGIT_OFFSET + mswpr::layout::DIGIT_WIDTH) * i;
-    const SDL_Rect first_digit_rect = { .x = static_cast<int>(rect_x),
-                                        .y = mswpr::layout::DIGIT_OFFSET + mswpr::layout::HUD_OFFSET_Y,
-                                        .w = mswpr::layout::DIGIT_WIDTH,
-                                        .h = mswpr::layout::DIGIT_HEIGHT };
-
-    const auto sprite = digits[i] == '-' ? display_digits_type::MINUS
-                                         : to_sprite<display_digits_type, display_digits_type::ZERO>(digits[i] - '0');
-    d_texture_manager.draw(sprite, first_digit_rect);
   }
 }
 
