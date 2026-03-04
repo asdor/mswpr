@@ -95,6 +95,7 @@ jobs:
 
       - name: Upload code coverage info
         uses: codecov/codecov-action@v5
+        if: github.event_name != 'pull_request'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./build/coverage_report_lcov/total.info
