@@ -19,14 +19,12 @@ namespace mswpr
     void render(const mswpr::minefield& field,
                 mswpr::face_type face,
                 const mswpr::mines_counter& counter,
-                const mswpr::game_timer& i_timer);
+                const mswpr::game_timer& timer);
 
     bool is_inside_face(int mouse_x, int mouse_y);
     bool is_inside_field(int mouse_x, int mouse_y);
 
   private:
-    void draw_field(const mswpr::minefield& field);
-
     mswpr::sdl_init_t d_sdl_init;
     mswpr::sdl_window_t d_window;
     mswpr::sdl_renderer_t d_renderer;

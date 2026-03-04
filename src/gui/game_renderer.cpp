@@ -4,6 +4,7 @@
 #include "gui/game_timer_renderer.hpp"
 #include "gui/game_version.hpp"
 #include "gui/logger.hpp"
+#include "gui/minefield_renderer.hpp"
 #include "gui/mines_counter_renderer.hpp"
 #include "gui/sdl_helper.hpp"
 
@@ -98,7 +99,7 @@ bool mswpr::game_renderer::is_inside_field(int mouse_x, int mouse_y)
 void mswpr::game_renderer::render(const mswpr::minefield& field,
                                   mswpr::face_type face,
                                   const mswpr::mines_counter& counter,
-                                  const mswpr::game_timer& i_timer)
+                                  const mswpr::game_timer& timer)
 {
   SDL_RenderClear(d_renderer.get());
 
@@ -106,53 +107,15 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
   counter_renderer.draw(counter);
 
   mswpr::game_timer_renderer timer_renderer(d_texture_manager);
-  timer_renderer.draw(i_timer);
+  timer_renderer.draw(timer);
 
   d_texture_manager.draw(face, d_face_rect);
-  draw_field(field);
+
+  mswpr::minefield_renderer field_renderer(d_texture_manager);
+  field_renderer.draw(field);
+
   mswpr::border_renderer border(d_texture_manager);
   border.draw();
 
   SDL_RenderPresent(d_renderer.get());
-}
-
-void mswpr::game_renderer::draw_field(const mswpr::minefield& field)
-{
-  for (size_t y = 0; y < cfg::FIELD_HEIGHT; ++y)
-  {
-    for (size_t x = 0; x < cfg::FIELD_WIDTH; ++x)
-    {
-      const auto cell_x = static_cast<int>(x * mswpr::layout::CELL_WIDTH) + mswpr::layout::BORDER_WIDTH;
-      const auto cell_y = static_cast<int>(y * mswpr::layout::CELL_HEIGHT) + mswpr::layout::BOARD_OFFSET_Y;
-      const SDL_Rect dst_rect = {
-        .x = cell_x, .y = cell_y, .w = mswpr::layout::CELL_WIDTH, .h = mswpr::layout::CELL_HEIGHT
-      };
-
-      sprite_type sprite = sprite_type::EMPTY_CLOSED;
-      auto state = field.get_cell_state(x, y);
-
-      switch (state)
-      {
-      case cell_state::CLOSED:
-        sprite = sprite_type::EMPTY_CLOSED;
-        break;
-      case cell_state::FLAGGED:
-        sprite = sprite_type::FLAG;
-        break;
-      case cell_state::OPENED:
-        sprite = to_sprite<sprite_type, sprite_type::EMPTY_OPENED>(field.get_cell_value(x, y));
-        break;
-      case cell_state::DETONATED:
-        sprite = sprite_type::BOMB_RED;
-        break;
-      case cell_state::NOT_FLAGGED_BOMB:
-        sprite = sprite_type::BOMB_FAILED;
-        break;
-      default:
-        break;
-      }
-
-      d_texture_manager.draw(sprite, dst_rect);
-    }
-  }
 }
