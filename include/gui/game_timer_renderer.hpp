@@ -15,6 +15,6 @@ namespace mswpr
   private:
     mswpr::texture_manager& d_texture_manager;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_GAME_TIMER_RENDERER_HPP

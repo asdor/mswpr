@@ -15,6 +15,6 @@ namespace mswpr
   private:
     mswpr::texture_manager& d_texture_manager;
   };
-}
+}  // namespace mswpr
 
 #endif  // MSWPR_MINES_COUNTER_RENDERER_HPP
