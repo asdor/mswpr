@@ -1,6 +1,9 @@
 #include "core/states/state_interface.hpp"
 #include "core/states/state_machine.hpp"
 
+#include "core/minefield.hpp"
+#include "core/mines_counter.hpp"
+
 #include <spdlog/spdlog.h>
 
 namespace mswpr

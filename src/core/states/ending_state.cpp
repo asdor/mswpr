@@ -2,6 +2,8 @@
 #include "core/states/generating_state.hpp"
 #include "core/states/state_machine.hpp"
 
+#include "core/game_timer.hpp"
+
 namespace mswpr
 {
   ending_state::ending_state(mswpr::state_machine& st_machine, ending_state::params state_params) :

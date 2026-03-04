@@ -2,6 +2,10 @@
 #include "core/states/ending_state.hpp"
 #include "core/states/state_machine.hpp"
 
+#include "core/game_timer.hpp"
+#include "core/minefield.hpp"
+#include "core/mines_counter.hpp"
+
 namespace mswpr
 {
   playing_state::playing_state(state_machine& st_machine) : state_interface(st_machine)

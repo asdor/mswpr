@@ -5,9 +5,7 @@
 #include "core/states/generating_state.hpp"
 #include "core/states/playing_state.hpp"
 
-#include "core/game_timer.hpp"
-#include "core/minefield.hpp"
-#include "core/mines_counter.hpp"
+#include "core/fwd.hpp"
 #include "core/types.hpp"
 
 #include <spdlog/fwd.h>
