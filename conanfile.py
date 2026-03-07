@@ -73,10 +73,32 @@ class MswprRecipe(ConanFile):
         self.requires('sdl/3.4.0')
         self.requires('sdl_image/3.4.0')
         self.requires('spdlog/1.17.0')
+        self.requires('imgui/1.92.5')
+
+    def _copy_imgui_backends(
+        self,
+    ):
+        imgui_bindings_dir = pathlib.Path(
+            self.dependencies['imgui'].package_folder) / 'res' / 'bindings'
+        imgui_output_dir = pathlib.Path(
+            self.build_folder).parent / 'imgui' / 'backends'
+
+        copied_files = list()
+        for pattern in ['*sdl3*', '*sdlrenderer3*']:
+            copied_files += copy(
+                self,
+                pattern=pattern,
+                src=imgui_bindings_dir,
+                dst=imgui_output_dir
+            )
+
+        self.output.info(f'Copied ImGui files: {copied_files}')
 
     def generate(
         self,
     ):
+        self._copy_imgui_backends()
+
         if not self.settings.os == 'Windows':
             return
 
@@ -87,7 +109,8 @@ class MswprRecipe(ConanFile):
                 self.output.info(
                     f'Looking by mask *.{extension} in bindir: {dep.cpp_info.bindir}')
                 copied_files = copy(
-                    self, pattern=f'*.{extension}',
+                    self,
+                    pattern=f'*.{extension}',
                     src=dep.cpp_info.bindir,
                     dst=dst_folder
                 )

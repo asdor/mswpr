@@ -4,8 +4,13 @@ file(GLOB GAME_GUI_SRC
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
 
+file(GLOB IMGUI_BACKENDS_SRC
+    "${CMAKE_BINARY_DIR}/imgui/backends/*.cpp"
+)
+
 add_executable(${PROJECT_NAME} MACOSX_BUNDLE WIN32
     ${GAME_GUI_SRC}
+    ${IMGUI_BACKENDS_SRC}
     ${CMAKE_BINARY_DIR}/src/gui/game_version.cpp
 )
 
@@ -20,15 +25,17 @@ set_target_properties(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/include
+    "${CMAKE_BINARY_DIR}/imgui/backends"
 )
 
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_image CONFIG REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(imgui CONFIG REQUIRED)
 
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
-        SDL3::SDL3 SDL3_image::SDL3_image spdlog::spdlog ${PROJECT_NAME}-core
+        SDL3::SDL3 SDL3_image::SDL3_image spdlog::spdlog imgui::imgui ${PROJECT_NAME}-core
 )
 
 add_custom_command(
