@@ -27,6 +27,7 @@ namespace mswpr
     mswpr::sdl_init_t d_sdl_init;
     mswpr::sdl_window_t d_window;
     mswpr::sdl_renderer_t d_renderer;
+    mswpr::imgui_context_t d_imgui_context_t;
 
     mswpr::texture_manager d_texture_manager;
 

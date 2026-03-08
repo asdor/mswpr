@@ -3,6 +3,7 @@
 #include "core/states/state_machine.hpp"
 
 #include <SDL3/SDL.h>
+#include <imgui_impl_sdl3.h>
 #include <spdlog/spdlog.h>
 
 namespace mswpr
@@ -33,6 +34,7 @@ namespace mswpr
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+      ImGui_ImplSDL3_ProcessEvent(&event);
       switch (event.type)
       {
       case SDL_EVENT_KEY_UP:

@@ -26,9 +26,22 @@ namespace mswpr
   };
 
   using sdl_texture_t = std::shared_ptr<SDL_Texture>;
-  using sdl_window_t = std::unique_ptr<SDL_Window, sdl_deleter>;
+  using sdl_window_t = std::shared_ptr<SDL_Window>;
   using sdl_renderer_t = std::shared_ptr<SDL_Renderer>;
 
+  struct imgui_context_raii
+  {
+    imgui_context_raii(sdl_window_t window, sdl_renderer_t renderer);
+    ~imgui_context_raii();
+
+    imgui_context_raii() = delete;
+    imgui_context_raii& operator=(imgui_context_raii&&) = delete;
+    imgui_context_raii(const imgui_context_raii&) = delete;
+    imgui_context_raii(imgui_context_raii&&) = delete;
+    imgui_context_raii& operator=(const imgui_context_raii&) = delete;
+  };
+
+  using imgui_context_t = std::unique_ptr<imgui_context_raii>;
 }  // namespace mswpr
 
 #endif  // MSWPR_SDL_HELPER_HPP

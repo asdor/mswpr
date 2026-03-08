@@ -4,11 +4,15 @@
 #include "gui/game_timer_renderer.hpp"
 #include "gui/game_version.hpp"
 #include "gui/logger.hpp"
+#include "gui/menu_bar_renderer.hpp"
 #include "gui/minefield_renderer.hpp"
 #include "gui/mines_counter_renderer.hpp"
 #include "gui/sdl_helper.hpp"
 
 #include <SDL3/SDL.h>
+#include <imgui.h>
+#include <imgui_impl_sdl3.h>
+#include <imgui_impl_sdlrenderer3.h>
 #include <spdlog/spdlog.h>
 
 #include <filesystem>
@@ -66,6 +70,9 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
   SDL_SetRenderDrawColor(d_renderer.get(), 190, 190, 190, 0);
   spdlog::get("engine")->info("Renderer created.");
 
+  d_imgui_context_t = std::make_unique<mswpr::imgui_context_raii>(d_window, d_renderer);
+  spdlog::get("engine")->info("ImGui context created.");
+
   const std::filesystem::path path_to_binary = SDL_GetBasePath();
   const std::filesystem::path path_to_skin = path_to_binary / "assets/winxpskin.bmp";
   d_texture_manager.init(d_renderer, path_to_skin.string());
@@ -116,6 +123,9 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
 
   mswpr::border_renderer border(d_texture_manager);
   border.draw();
+
+  mswpr::menu_bar_renderer menu_bar;
+  menu_bar.draw(d_renderer);
 
   SDL_RenderPresent(d_renderer.get());
 }
