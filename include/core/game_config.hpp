@@ -37,6 +37,8 @@ namespace mswpr::layout
   inline constexpr size_t COUNTER_OFFSET_Y = 4;
   inline constexpr size_t HUD_OFFSET_Y = 15;
   inline constexpr size_t DIGIT_OFFSET = 2;
+
+  inline constexpr size_t MENU_BAR_HEIGHT = 19;
 }  // namespace mswpr::layout
 
 #endif  // MSWPR_GAME_CONFIG_HPP

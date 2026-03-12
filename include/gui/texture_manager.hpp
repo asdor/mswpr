@@ -4,6 +4,7 @@
 #include <array>
 #include <string_view>
 
+#include "core/game_config.hpp"
 #include "core/types.hpp"
 #include "gui/sdl_helper.hpp"
 
@@ -42,7 +43,8 @@ namespace mswpr
     {
       const auto index = enum_to<size_t>(i_index_val);
       const auto src_rect = rect_to_float_rect(i_sprites_config[index]);
-      const auto dst_rect = rect_to_float_rect(i_dst_rect);
+      auto dst_rect = rect_to_float_rect(i_dst_rect);
+      dst_rect.y += mswpr::layout::MENU_BAR_HEIGHT;
       if (!SDL_RenderTexture(d_renderer.get(), d_sprite_texture.get(), &src_rect, &dst_rect))
       {
         const auto err_msg = std::format("Failed to render texture, error: {}.", SDL_GetError());

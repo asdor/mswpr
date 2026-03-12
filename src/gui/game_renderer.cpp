@@ -28,8 +28,8 @@ namespace
   {
     const size_t window_width =
       static_cast<size_t>(2) * mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_WIDTH * cfg::FIELD_WIDTH;
-    const size_t window_height =
-      mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH + mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT;
+    const size_t window_height = mswpr::layout::BOARD_OFFSET_Y + mswpr::layout::BORDER_WIDTH +
+                                 mswpr::layout::CELL_HEIGHT * cfg::FIELD_HEIGHT + mswpr::layout::MENU_BAR_HEIGHT;
     spdlog::get("engine")->debug("Window size: {} x {}.", window_width, window_height);
 
     const SDL_PropertiesID props = SDL_CreateProperties();

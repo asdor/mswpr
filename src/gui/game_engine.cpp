@@ -75,7 +75,8 @@ namespace mswpr
     SDL_GetMouseState(&mouse_x_subpixel, &mouse_y_subpixel);
 
     const int mouse_x = static_cast<int>(mouse_x_subpixel);
-    const int mouse_y = static_cast<int>(mouse_y_subpixel);
+    int mouse_y = static_cast<int>(mouse_y_subpixel);
+    mouse_y -= mswpr::layout::MENU_BAR_HEIGHT;
     const bool is_left_btn = key == SDL_BUTTON_LEFT;
     const bool is_right_btn = key == SDL_BUTTON_RIGHT;
     if (!(is_left_btn || is_right_btn))
