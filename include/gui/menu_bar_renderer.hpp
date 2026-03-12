@@ -12,6 +12,8 @@ namespace mswpr
 
     void draw(mswpr::sdl_renderer_t renderer);
 
+    int get_menu_bar_height() const;
+
   private:
     static void draw_menu_bar();
   };

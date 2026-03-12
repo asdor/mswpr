@@ -4,6 +4,12 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_sdlrenderer3.h>
 
+int mswpr::menu_bar_renderer::get_menu_bar_height() const
+{
+  const float menu_bar_frame_height = ImGui::GetFrameHeight();
+  return static_cast<int>(menu_bar_frame_height);
+}
+
 void mswpr::menu_bar_renderer::draw_menu_bar()
 {
   if (ImGui::BeginMainMenuBar())
@@ -28,7 +34,7 @@ void mswpr::menu_bar_renderer::draw_menu_bar()
       ImGui::EndMenu();
     }
 
-    if (ImGui::BeginMenu("Extra"))
+    if (ImGui::BeginMenu("Extras"))
     {
       if (ImGui::MenuItem("Dummy item"))
       {
