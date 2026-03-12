@@ -8,7 +8,7 @@ namespace mswpr
   class menu_bar_renderer
   {
   public:
-    menu_bar_renderer() = default;
+    menu_bar_renderer();
 
     void draw(mswpr::sdl_renderer_t renderer);
 
@@ -16,6 +16,7 @@ namespace mswpr
 
   private:
     static void draw_menu_bar();
+    void set_menu_bar_style() const;
   };
 
 }  // namespace mswpr
