@@ -94,7 +94,7 @@ jobs:
           run-tests: false
 
       - name: Upload code coverage info
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         if: github.event_name != 'pull_request'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
