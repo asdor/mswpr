@@ -63,7 +63,7 @@ wheels = [
 
 [[package]]
 name = "conan"
-version = "2.27.0"
+version = "2.28.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama" },
@@ -76,7 +76,10 @@ dependencies = [
     { name = "requests" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5e/ba/119878141be5e92b0db8a8a05270a277a68222527c28b87107e0c992a680/conan-2.27.0.tar.gz", hash = "sha256:41a403c68f2990ffed8b3135769dcd393748f266991f42f048c0fb267bc9d205", size = 570540, upload-time = "2026-03-25T15:07:15.406Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/54/89/5b9d6cca677e57b67560aa3b7f82728127889ce74bb91171ded6f28e42b8/conan-2.28.1.tar.gz", hash = "sha256:e4ed10123751bf2931c32c33cadafe4881c72e1c22a1c97b19cb75780692fae5", size = 575674, upload-time = "2026-04-30T11:24:57.195Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b4/a9/a01c6ffbdcbcae845e574e2ec073aa0ada67bf5d57f9d692b92eee9f09a5/conan-2.28.1-py3-none-any.whl", hash = "sha256:9dea478d853f675a924933771d55434d3fefb4f629b334be37b7c9cacfc3f5b3", size = 716362, upload-time = "2026-04-30T11:24:55.318Z" },
+]
 
 [[package]]
 name = "distro"
@@ -182,7 +185,7 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "conan", specifier = ">=2.24.0" }]
+dev = [{ name = "conan", specifier = ">=2.28.1" }]
 
 [[package]]
 name = "patch-ng"
