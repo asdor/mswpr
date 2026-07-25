@@ -8,5 +8,5 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "conan>=2.30.0",
+    "conan>=2.31.1",
 ]
