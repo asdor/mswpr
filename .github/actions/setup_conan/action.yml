@@ -21,7 +21,7 @@ runs:
           echo "CONAN_PIP_VERSION=$CONAN_PIP_VERSION" >> "$GITHUB_ENV"
 
     - name: Cache Conan packages
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: ${{ github.workspace }}/.conan_local_cache
         key: conan-${{ env.CONAN_PIP_VERSION }}-${{ runner.os }}-${{ runner.arch }}-${{ inputs.preset-name }}-${{ hashFiles('conanfile.py') }}
