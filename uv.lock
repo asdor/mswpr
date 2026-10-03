@@ -63,7 +63,7 @@ wheels = [
 
 [[package]]
 name = "conan"
-version = "2.31.2"
+version = "2.33.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama" },
@@ -74,11 +74,12 @@ dependencies = [
     { name = "python-dateutil" },
     { name = "pyyaml" },
     { name = "requests" },
+    { name = "truststore" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f0/2f/f88c73d7042b87924e482cf2081645dfdc4ee4c20071f3d3b4aa08ca2f5e/conan-2.31.2.tar.gz", hash = "sha256:d820e9f5ac44eca1567874f6a7c83586c16a3df5ebca006d9c0c6933fbb375b1", size = 587648, upload-time = "2026-08-04T19:10:50.334Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9f/7c/f7cb78bc0a292bb041b8b1e44130afcf8ae798913722a189ecf29783c271/conan-2.33.0.tar.gz", hash = "sha256:2e0f890b736d42049f40ef5b96225bac5866cd71a504ca3eca620b25d8333a72", size = 608134, upload-time = "2026-09-29T15:14:47.79Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/a8/95abd79b1171ab3fe9403f4a432c0475ae4ad448238143b152ba0328f554/conan-2.31.2-py3-none-any.whl", hash = "sha256:87a8ae0b492c4fd4291d4146bf80522a00d6157637bed7ec055787e1a51f75d6", size = 729425, upload-time = "2026-08-04T19:10:48.792Z" },
+    { url = "https://files.pythonhosted.org/packages/38/bb/9a9024f0328171fc0aeb5b2711ffda50abd40c3545091a756ff8b378049d/conan-2.33.0-py3-none-any.whl", hash = "sha256:42da05f6cd12e0404d38463b2fa1f6ae3f809700fbbf8b704d0c597f0175ae87", size = 748195, upload-time = "2026-09-29T15:14:46.367Z" },
 ]
 
 [[package]]
@@ -263,6 +264,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
+]
+
+[[package]]
+name = "truststore"
+version = "0.10.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/a3/1585216310e344e8102c22482f6060c7a6ea0322b63e026372e6dcefcfd6/truststore-0.10.4.tar.gz", hash = "sha256:9d91bd436463ad5e4ee4aba766628dd6cd7010cf3e2461756b3303710eebc301", size = 26169, upload-time = "2025-08-12T18:49:02.73Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/97/56608b2249fe206a67cd573bc93cd9896e1efb9e98bce9c163bcdc704b88/truststore-0.10.4-py3-none-any.whl", hash = "sha256:adaeaecf1cbb5f4de3b1959b42d41f6fab57b2b1666adb59e89cb0b53361d981", size = 18660, upload-time = "2025-08-12T18:49:01.46Z" },
 ]
 
 [[package]]
