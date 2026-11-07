@@ -70,7 +70,7 @@ class MswprRecipe(ConanFile):
         self,
     ):
         self.requires('gtest/1.18.0')
-        self.requires('sdl/3.4.0')
+        self.requires('sdl/3.4.16')
         self.requires('sdl_image/3.4.4')
         self.requires('spdlog/1.17.0')
         self.requires('imgui/1.92.5')
