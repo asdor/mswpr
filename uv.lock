@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 
 [[package]]
@@ -63,7 +63,7 @@ wheels = [
 
 [[package]]
 name = "conan"
-version = "2.31.2"
+version = "2.34.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "colorama" },
@@ -71,14 +71,14 @@ dependencies = [
     { name = "fasteners" },
     { name = "jinja2" },
     { name = "patch-ng" },
-    { name = "python-dateutil" },
     { name = "pyyaml" },
     { name = "requests" },
+    { name = "truststore" },
     { name = "urllib3" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f0/2f/f88c73d7042b87924e482cf2081645dfdc4ee4c20071f3d3b4aa08ca2f5e/conan-2.31.2.tar.gz", hash = "sha256:d820e9f5ac44eca1567874f6a7c83586c16a3df5ebca006d9c0c6933fbb375b1", size = 587648, upload-time = "2026-08-04T19:10:50.334Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/63/d5/d7d5bd89e5870923be85940bf63885fc0b80d2c347ea236325003488a8e1/conan-2.34.0.tar.gz", hash = "sha256:9c65681300550638be20a25908673b8683533e8fc2dbbdac38ea0d9642a8124d", size = 612999, upload-time = "2026-10-28T11:55:47.006Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/91/a8/95abd79b1171ab3fe9403f4a432c0475ae4ad448238143b152ba0328f554/conan-2.31.2-py3-none-any.whl", hash = "sha256:87a8ae0b492c4fd4291d4146bf80522a00d6157637bed7ec055787e1a51f75d6", size = 729425, upload-time = "2026-08-04T19:10:48.792Z" },
+    { url = "https://files.pythonhosted.org/packages/e0/12/c1e94f9c47eda7276a4d6c21e757e46a8c77f64e96f652f7f7849a973cf3/conan-2.34.0-py3-none-any.whl", hash = "sha256:4e268bb9ad38614141c7274a769c7226122e3660e4d5eb545a0c7f7170b53272", size = 750722, upload-time = "2026-10-28T11:55:45.076Z" },
 ]
 
 [[package]]
@@ -194,18 +194,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ee/c0/53a2f017ac5b5397a7064c2654b73c3334ac8461315707cbede6c12199eb/patch-ng-1.18.1.tar.gz", hash = "sha256:52fd46ee46f6c8667692682c1fd7134edc65a2d2d084ebec1d295a6087fc0291", size = 17913, upload-time = "2024-10-25T12:20:10.591Z" }
 
 [[package]]
-name = "python-dateutil"
-version = "2.9.0.post0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432, upload-time = "2024-03-01T18:36:20.211Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427", size = 229892, upload-time = "2024-03-01T18:36:18.57Z" },
-]
-
-[[package]]
 name = "pyyaml"
 version = "6.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -257,12 +245,12 @@ wheels = [
 ]
 
 [[package]]
-name = "six"
-version = "1.17.0"
+name = "truststore"
+version = "0.10.5"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/94/e7/b2c673351809dca68a0e064b6af791aa332cf192da575fd474ed7d6f16a2/six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81", size = 34031, upload-time = "2024-12-04T17:35:28.174Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ee/9f/c5201d42a484c061e528825fc8e2d565f5abd50a4ced6fb7d29c4ec99b2b/truststore-0.10.5.tar.gz", hash = "sha256:30d36967ccaded5cbb38d602c433f53600036c79d502f4533a49b60a03bbefcd", size = 28091, upload-time = "2026-10-12T22:27:31.808Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274", size = 11050, upload-time = "2024-12-04T17:35:26.475Z" },
+    { url = "https://files.pythonhosted.org/packages/51/e9/3a7820be2bb0fe53b6bc9c3be26d3d1158004e4c3ab953aa6840b955b1e9/truststore-0.10.5-py3-none-any.whl", hash = "sha256:9aaaedaefaf06d8b206278cf8b5012bc897f485a874503501e12d776df78951c", size = 19017, upload-time = "2026-10-12T22:27:30.377Z" },
 ]
 
 [[package]]
