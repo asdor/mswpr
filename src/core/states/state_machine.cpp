@@ -43,6 +43,11 @@ namespace mswpr
     return d_logger;
   }
 
+  void state_machine::new_game()
+  {
+    set_state<mswpr::generating_state>();
+  }
+
   void state_machine::on_left_face_click(bool is_released)
   {
     std::visit([is_released](auto& st) { st.on_left_face_click(is_released); }, d_state);

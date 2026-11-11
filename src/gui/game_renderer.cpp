@@ -72,6 +72,7 @@ mswpr::game_renderer::game_renderer(std::string_view title, size_t xpos, size_t 
 
   d_imgui_context_t = std::make_unique<mswpr::imgui_context_raii>(d_window, d_renderer);
   spdlog::get("engine")->info("ImGui context created.");
+  d_menu_bar.set_menu_bar_style();
 
   const std::filesystem::path path_to_binary = SDL_GetBasePath();
   const std::filesystem::path path_to_skin = path_to_binary / "assets/winxpskin.bmp";
@@ -103,6 +104,11 @@ bool mswpr::game_renderer::is_inside_field(int mouse_x, int mouse_y)
   return is_inside(d_field_rect, mouse_x, mouse_y);
 }
 
+mswpr::menu_clicked_item mswpr::game_renderer::get_menu_clicked_item() const
+{
+  return d_menu_bar.get_clicked_item();
+}
+
 void mswpr::game_renderer::render(const mswpr::minefield& field,
                                   mswpr::face_type face,
                                   const mswpr::mines_counter& counter,
@@ -124,8 +130,7 @@ void mswpr::game_renderer::render(const mswpr::minefield& field,
   mswpr::border_renderer border(d_texture_manager);
   border.draw();
 
-  mswpr::menu_bar_renderer menu_bar;
-  menu_bar.draw(d_renderer);
+  d_menu_bar.draw(d_renderer);
 
   SDL_RenderPresent(d_renderer.get());
 }

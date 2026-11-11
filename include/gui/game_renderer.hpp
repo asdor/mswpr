@@ -3,6 +3,7 @@
 
 #include "core/fwd.hpp"
 #include "core/mines_counter.hpp"
+#include "gui/menu_bar_renderer.hpp"
 #include "gui/sdl_helper.hpp"
 #include "gui/texture_manager.hpp"
 
@@ -23,6 +24,8 @@ namespace mswpr
     bool is_inside_face(int mouse_x, int mouse_y);
     bool is_inside_field(int mouse_x, int mouse_y);
 
+    mswpr::menu_clicked_item get_menu_clicked_item() const;
+
   private:
     mswpr::sdl_init_t d_sdl_init;
     mswpr::sdl_window_t d_window;
@@ -33,6 +36,8 @@ namespace mswpr
 
     SDL_Rect d_face_rect;
     SDL_Rect d_field_rect;
+
+    mswpr::menu_bar_renderer d_menu_bar;
   };
 }  // namespace mswpr
 

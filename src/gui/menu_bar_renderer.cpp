@@ -11,9 +11,9 @@ namespace
   constexpr ImColor GRAY_COLOR{ 245, 245, 245 };
 }  // namespace
 
-mswpr::menu_bar_renderer::menu_bar_renderer()
+mswpr::menu_bar_renderer::menu_bar_renderer() : d_clicked_item(mswpr::menu_clicked_item::NONE)
 {
-  set_menu_bar_style();
+  // set_menu_bar_style();
 }
 
 void mswpr::menu_bar_renderer::set_menu_bar_style() const
@@ -32,6 +32,11 @@ int mswpr::menu_bar_renderer::get_menu_bar_height() const
   return static_cast<int>(menu_bar_frame_height);
 }
 
+mswpr::menu_clicked_item mswpr::menu_bar_renderer::get_clicked_item() const
+{
+  return d_clicked_item;
+}
+
 void mswpr::menu_bar_renderer::draw_menu_bar()
 {
   if (ImGui::BeginMainMenuBar())
@@ -40,6 +45,7 @@ void mswpr::menu_bar_renderer::draw_menu_bar()
     {
       if (ImGui::MenuItem("New"))
       {
+        d_clicked_item = mswpr::menu_clicked_item::NEW_GAME;
       }
 
       ImGui::Separator();
@@ -60,6 +66,7 @@ void mswpr::menu_bar_renderer::draw_menu_bar()
 
       if (ImGui::MenuItem("Exit"))
       {
+        d_clicked_item = mswpr::menu_clicked_item::EXIT;
       }
       ImGui::EndMenu();
     }
@@ -90,6 +97,7 @@ void mswpr::menu_bar_renderer::draw(mswpr::sdl_renderer_t renderer)
   ImGui_ImplSDL3_NewFrame();
   ImGui::NewFrame();
 
+  d_clicked_item = mswpr::menu_clicked_item::NONE;
   draw_menu_bar();
 
   ImGui::Render();

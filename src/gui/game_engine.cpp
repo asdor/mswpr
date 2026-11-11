@@ -31,6 +31,20 @@ namespace mswpr
     bool is_released = false;
     int key = -1;
 
+    switch (d_renderer.get_menu_clicked_item())
+    {
+    case mswpr::menu_clicked_item::NEW_GAME:
+      d_state.new_game();
+      break;
+    case mswpr::menu_clicked_item::EXIT:
+      d_is_running = false;
+      return;
+    default:
+      break;
+    }
+
+    const bool imgui_wants_mouse = ImGui::GetIO().WantCaptureMouse;
+
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
@@ -51,9 +65,13 @@ namespace mswpr
         }
         break;
       case SDL_EVENT_MOUSE_BUTTON_UP:
+        if (imgui_wants_mouse)
+          break;
         is_released = true;
         [[fallthrough]];
       case SDL_EVENT_MOUSE_BUTTON_DOWN:
+        if (imgui_wants_mouse)
+          break;
         key = event.button.button;
         break;
       case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
